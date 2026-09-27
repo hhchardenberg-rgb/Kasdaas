@@ -33,9 +33,14 @@ export interface MapZone {
   point?: [number, number];
 }
 
-/** Base map tiles. Change here to use another provider. */
+/**
+ * Base map tiles (CARTO Voyager). CARTO requires an API key, set in the
+ * NEXT_PUBLIC_CARTO_API_KEY environment variable (it is sent with every tile
+ * request, so it is public by nature — restrict it to your domain in CARTO).
+ */
+const CARTO_KEY = process.env.NEXT_PUBLIC_CARTO_API_KEY;
 const TILES = {
-  url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+  url: `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png${CARTO_KEY ? `?key=${encodeURIComponent(CARTO_KEY)}` : ""}`,
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
 };
 

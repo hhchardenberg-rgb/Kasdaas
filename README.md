@@ -130,4 +130,5 @@ manual is never indexed.
 
 Any Node host works; Vercel is the simplest. Set the environment variables from `.env.example`.
 `BOAT_TOKEN_SECRET` is required in production, and without it every boat link is rejected. Map tiles
-come from CARTO/OpenStreetMap (see `components/map/map-view.tsx`).
+come from CARTO/OpenStreetMap (see `components/map/map-view.tsx`) and need a CARTO Basemaps API key in
+`NEXT_PUBLIC_CARTO_API_KEY`.
