@@ -91,7 +91,8 @@ Bestand: `content/house/sections.ts` → `arrival`, `content/house/stay.ts`, `co
 - [x] Toegang: 2 tags (buiten- en binnendeuren), 2 sleutels voor de kluis (geen code), 2 waterdichte polsbandjes met tag
 - [ ] Hoe krijgen gasten de tags en sleutels bij aankomst (overhandiging?) en waar staat de kluis
 - [ ] Overige aandachtspunten bij aankomst (bijv. welkomstpakket)
-- [ ] **WiFi-netwerk** en **wachtwoord** (`content/house/stay.ts`) — de QR-code wordt dan automatisch gemaakt
+- [x] WiFi-netwerk (KASDAAS) en wachtwoord — QR-code, iPhone-profiel en printbare wifi-kaart worden automatisch gemaakt
+- [ ] Wifi-kaart printen en in de villa ophangen (`/nl/villa/wifi/card`)
 - [ ] WiFi-bereik en locatie router / wat te doen bij storing
 
 ## 5. Apparatuur (comfort)

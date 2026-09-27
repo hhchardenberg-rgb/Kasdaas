@@ -13,8 +13,8 @@ export const stay = {
 };
 
 export const wifi = {
-  network: todo("WIFI-NETWERK", "WIFI NETWORK"),
-  password: todo("WIFI-WACHTWOORD", "WIFI PASSWORD"),
+  network: "KASDAAS",
+  password: "beachhousebonaire",
   /** "WPA" (most common), "WEP" or "nopass" — used for the WiFi QR code. */
   security: "WPA" as "WPA" | "WEP" | "nopass",
   /** Optional second network (e.g. outdoor / pool area). */

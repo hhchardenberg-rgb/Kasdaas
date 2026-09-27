@@ -6,7 +6,9 @@ import { wifi } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
 import { qrSvg, wifiPayload } from "@/lib/qr";
 import { Tx } from "@/components/ui/tx";
-import { CopyButton } from "@/components/ui/copy-button";
+import Link from "next/link";
+import { Printer } from "lucide-react";
+import { WifiConnect } from "@/components/villa/wifi-connect";
 import { BackButton } from "@/components/ui/back-button";
 
 export const metadata: Metadata = { title: "WiFi" };
@@ -38,18 +40,20 @@ export default async function WifiPage({ params }: PageProps<"/[locale]/villa/wi
               <dd className="mt-1 break-all font-mono text-xl font-semibold tracking-wide"><Tx value={wifi.password} locale={locale} /></dd>
             </div>
           </dl>
-          {hasValue(wifi.password) ? (
-            <CopyButton value={tx(wifi.password, locale)} label={t.wifi.copyPassword} className="relative mt-6 w-full !bg-sand-50 !text-ocean-900" />
+          {ready ? (
+            <div className="relative mt-6">
+              <WifiConnect ssid={tx(wifi.network, locale)} password={tx(wifi.password, locale)} />
+            </div>
           ) : (
             <p className="relative mt-6 rounded-2xl bg-white/10 p-3 text-sm text-sand-100">{t.wifi.notSet}</p>
           )}
         </div>
         {qr && (
           <div className="flex items-center gap-4 bg-white/5 px-6 py-5">
-            <div className="h-28 w-28 shrink-0 overflow-hidden rounded-xl bg-white p-1.5" dangerouslySetInnerHTML={{ __html: qr }} />
+            <div className="h-32 w-32 shrink-0 overflow-hidden rounded-xl bg-white p-1.5" dangerouslySetInnerHTML={{ __html: qr }} />
             <div>
-              <p className="font-semibold">{t.wifi.scan}</p>
-              <p className="mt-1 text-sm text-sand-200/80">{t.wifi.scanHint}</p>
+              <p className="font-semibold">{t.wifi.scanTitle}</p>
+              <p className="mt-1 text-sm leading-snug text-sand-200/80">{t.wifi.scanText}</p>
             </div>
           </div>
         )}
@@ -72,6 +76,11 @@ export default async function WifiPage({ params }: PageProps<"/[locale]/villa/wi
           <p className="mt-1 text-[0.92rem]"><Tx value={wifi.router} locale={locale} /></p>
         </div>
         <p className="rounded-2xl bg-sand-100 p-4 text-[0.88rem] leading-relaxed text-ink-soft">{tx(wifi.tip, locale)}</p>
+        {ready && (
+          <Link href={`/${locale}/villa/wifi/card`} className="flex min-h-12 items-center justify-center gap-2 text-sm font-semibold text-muted">
+            <Printer className="h-4 w-4" aria-hidden /> {t.wifi.printCard}
+          </Link>
+        )}
       </div>
     </div>
   );

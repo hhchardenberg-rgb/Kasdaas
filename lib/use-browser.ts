@@ -40,3 +40,17 @@ export function useInitialSearchParam(name: string): string | null {
 export function useOrigin(): string {
   return useSyncExternalStore(noSubscribe, () => window.location.origin, () => "");
 }
+
+export type Platform = "ios" | "android" | "other";
+
+function detectPlatform(): Platform {
+  const ua = navigator.userAgent;
+  if (/iphone|ipad|ipod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) return "ios";
+  if (/android/i.test(ua)) return "android";
+  return "other";
+}
+
+/** Phone platform (for platform-specific instructions). "other" on the server and on desktops. */
+export function usePlatform(): Platform {
+  return useSyncExternalStore(noSubscribe, detectPlatform, () => "other");
+}

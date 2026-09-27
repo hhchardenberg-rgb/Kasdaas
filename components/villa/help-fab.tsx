@@ -9,7 +9,7 @@ export function HelpFab() {
   return (
     <Link
       href={`/${locale}/help`}
-      className="fixed right-4 z-30 inline-flex h-12 items-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-white shadow-[var(--shadow-lift)] bottom-[calc(var(--nav-h)+var(--safe-bottom)+0.9rem)]"
+      className="fixed right-4 z-30 inline-flex h-12 print:hidden items-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-white shadow-[var(--shadow-lift)] bottom-[calc(var(--nav-h)+var(--safe-bottom)+0.9rem)]"
     >
       <LifeBuoy className="h-4.5 w-4.5" aria-hidden />
       {t.help.needHelp}

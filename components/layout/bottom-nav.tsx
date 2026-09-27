@@ -16,7 +16,7 @@ export function BottomNav() {
     { href: `${base}/more`, label: t.nav.more, Icon: LayoutGrid, match: (p: string) => /^\/\w\w\/(more|favorites|good-to-know|search)/.test(p) },
   ];
   return (
-    <nav aria-label="Main" className="glass fixed inset-x-0 bottom-0 z-40 border-t border-sand-200/80 pb-[var(--safe-bottom)]">
+    <nav aria-label="Main" className="print:hidden glass fixed inset-x-0 bottom-0 z-40 border-t border-sand-200/80 pb-[var(--safe-bottom)]">
       <ul className="mx-auto grid h-[var(--nav-h)] max-w-3xl grid-cols-5">
         {items.map(({ href, label, Icon, match }) => {
           const active = match(pathname);

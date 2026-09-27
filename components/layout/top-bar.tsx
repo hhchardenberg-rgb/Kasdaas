@@ -7,7 +7,7 @@ import { LangSwitch } from "./lang-switch";
 export function TopBar() {
   const { locale, t } = useDict();
   return (
-    <div className="glass fixed inset-x-0 top-0 z-40 pt-safe shadow-[0_1px_0_rgb(28_38_41/0.06)]">
+    <div className="glass fixed inset-x-0 top-0 z-40 pt-safe print:hidden shadow-[0_1px_0_rgb(28_38_41/0.06)]">
       <div className="mx-auto flex h-14 max-w-3xl items-center justify-between gap-3 px-4">
         <Link href={`/${locale}`} className="flex items-baseline gap-2 py-2" aria-label="Kas Daas — home">
           <span className="font-display text-[1.35rem] font-medium tracking-tight text-ink">Kas Daas</span>
