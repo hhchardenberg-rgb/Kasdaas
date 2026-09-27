@@ -6,8 +6,6 @@ import { wifi } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
 import { qrSvg, wifiPayload } from "@/lib/qr";
 import { Tx } from "@/components/ui/tx";
-import Link from "next/link";
-import { Printer } from "lucide-react";
 import { WifiConnect } from "@/components/villa/wifi-connect";
 import { BackButton } from "@/components/ui/back-button";
 
@@ -76,11 +74,6 @@ export default async function WifiPage({ params }: PageProps<"/[locale]/villa/wi
           <p className="mt-1 text-[0.92rem]"><Tx value={wifi.router} locale={locale} /></p>
         </div>
         <p className="rounded-2xl bg-sand-100 p-4 text-[0.88rem] leading-relaxed text-ink-soft">{tx(wifi.tip, locale)}</p>
-        {ready && (
-          <Link href={`/${locale}/villa/wifi/card`} className="flex min-h-12 items-center justify-center gap-2 text-sm font-semibold text-muted">
-            <Printer className="h-4 w-4" aria-hidden /> {t.wifi.printCard}
-          </Link>
-        )}
       </div>
     </div>
   );
