@@ -78,22 +78,22 @@ export const arrival: HouseSection = {
       id: "access",
       icon: "key",
       title: l("Sleutel & toegang", "Keys & access"),
-      summary: l("Twee sleutels, twee tags en twee waterdichte polsbandjes", "Two keys, two tags and two waterproof wristbands"),
+      summary: l("Tags voor de deuren, sleutels voor de kluis, waterdichte polsbandjes", "Tags for the doors, keys for the safe, waterproof wristbands"),
       body: [
         l(
-          "Je krijgt twee sleutels uit de kluis, met twee tags voor de buiten- en binnendeuren van het huis.",
-          "You'll receive two keys from the key safe, with two tags for the outer and inner doors of the house.",
+          "Je krijgt twee tags voor de buiten- en binnendeuren van het huis, en twee sleutels voor de kluis. De kluis heeft geen code — hij gaat alleen open met de sleutel.",
+          "You'll receive two tags for the outer and inner doors of the house, and two keys for the safe. The safe has no code — it only opens with the key.",
         ),
         l(
           "Daarnaast krijg je twee waterdichte polsbandjes met een tag erin — die kun je gewoon omhouden als je gaat zwemmen of snorkelen.",
           "You'll also get two waterproof wristbands with a tag inside — you can simply keep them on when you go swimming or snorkeling.",
         ),
-        todo("WAAR IS DE KLUIS EN HOE OPEN JE HEM (CODE / OVERHANDIGING)", "WHERE IS THE KEY SAFE AND HOW TO OPEN IT (CODE / HANDOVER)"),
+        todo("HOE KRIJG JE DE TAGS EN SLEUTELS BIJ AANKOMST (OVERHANDIGING?) EN WAAR STAAT DE KLUIS", "HOW YOU RECEIVE THE TAGS AND KEYS ON ARRIVAL (HANDOVER?) AND WHERE THE SAFE IS"),
       ],
       tips: [
         l(
-          "Deel toegangscodes niet met anderen en sluit de villa af als je weggaat.",
-          "Please don't share access codes and lock the villa whenever you leave.",
+          "Houd tags en sleutels bij je en sluit de villa af als je weggaat.",
+          "Keep the tags and keys with you and lock the villa whenever you leave.",
         ),
       ],
       keywords: ["sleutel", "sleutels", "key", "keys", "code", "toegang", "access", "deur", "door", "slot", "lock", "kluis", "safe", "tag", "polsbandje", "wristband", "bandje"],
@@ -639,7 +639,11 @@ export const island: HouseSection = {
           "Kas Daas is niet geschikt voor jonge kinderen zonder toezicht: steile trappen, geen hek rond het zwembad en een open zeekant.",
           "Kas Daas is not suitable for young children without supervision: steep stairs, no fence around the pool and an open sea edge.",
         ),
-        todo("KLUIS, ALARM, AFSLUITEN VILLA", "SAFE, ALARM, LOCKING UP THE VILLA"),
+        l(
+          "Bewaar waardevolle spullen in de kluis — die opent met de sleutel die je bij aankomst krijgt.",
+          "Keep valuables in the safe — it opens with the key you receive on arrival.",
+        ),
+        todo("ALARM / AFSLUITEN VILLA (INDIEN VAN TOEPASSING)", "ALARM / LOCKING UP THE VILLA (IF APPLICABLE)"),
       ],
       keywords: ["veiligheid", "safety", "kluis", "safe", "alarm", "diefstal", "theft", "auto", "car"],
     },

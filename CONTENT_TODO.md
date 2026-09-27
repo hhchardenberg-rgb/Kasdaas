@@ -88,8 +88,8 @@ Bestand: `content/house/sections.ts` → `arrival`, `content/house/stay.ts`, `co
 - [x] Check-intijd: vanaf 16:00
 - [ ] Werkwijze check-in (zelf inchecken / ontvangst)
 - [ ] Mogelijkheden bij vroeger aankomen
-- [x] Sleutels & tags: 2 sleutels uit de kluis met 2 tags (buiten- en binnendeuren) + 2 waterdichte polsbandjes
-- [ ] Waar is de kluis en hoe open je hem (code / overhandiging)
+- [x] Toegang: 2 tags (buiten- en binnendeuren), 2 sleutels voor de kluis (geen code), 2 waterdichte polsbandjes met tag
+- [ ] Hoe krijgen gasten de tags en sleutels bij aankomst (overhandiging?) en waar staat de kluis
 - [ ] Overige aandachtspunten bij aankomst (bijv. welkomstpakket)
 - [ ] **WiFi-netwerk** en **wachtwoord** (`content/house/stay.ts`) — de QR-code wordt dan automatisch gemaakt
 - [ ] WiFi-bereik en locatie router / wat te doen bij storing
