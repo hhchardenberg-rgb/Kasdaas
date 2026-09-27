@@ -209,7 +209,8 @@ export const boatManual = {
   ] as BoatProblem[],
 
   contacts: [
-    { id: "owner", label: l("Eigenaar / beheerder boot", "Boat owner / manager"), phone: todo("TELEFOONNUMMER BOOTBEHEERDER", "BOAT MANAGER PHONE NUMBER"), whatsapp: todo("WHATSAPP BOOTBEHEERDER", "BOAT MANAGER WHATSAPP") },
+    // WhatsApp assumed on the same number.
+    { id: "owner", label: l("Bootbeheerder", "Boat manager"), phone: "+599 701 3200", whatsapp: "+599 701 3200" },
     { id: "emergency", label: l("Alarmnummer", "Emergency number"), phone: "911", primary: true },
     { id: "coastguard", label: l("Kustwacht", "Coast guard"), phone: todo("TELEFOONNUMMER KUSTWACHT", "COAST GUARD PHONE NUMBER"), note: todo("VHF-KANAAL", "VHF CHANNEL") },
   ] satisfies Contact[],

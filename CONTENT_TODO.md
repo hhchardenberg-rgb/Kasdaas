@@ -48,7 +48,7 @@ Bestand: `content/house/sections.ts` → `houseRules`
 - [x] Kinderen 0–17 jaar welkom
 - [x] Huisdieren: honden < 10 kg, max. één huisdier
 - [x] Geen evenementen
-- [x] Niet roken — en nooit in de slaapkamers
+- [x] Roken alleen buiten — nooit binnen / in de slaapkamers
 - [ ] Eventuele extra regels (bijv. stilte na een bepaald tijdstip, maximaal aantal bezoekers)
 
 ## 2. Contact
@@ -88,7 +88,8 @@ Bestand: `content/house/sections.ts` → `arrival`, `content/house/stay.ts`, `co
 - [x] Check-intijd: vanaf 16:00
 - [ ] Werkwijze check-in (zelf inchecken / ontvangst)
 - [ ] Mogelijkheden bij vroeger aankomen
-- [ ] Sleutel & toegang (sleutelkluis, code, overhandiging) + stappen
+- [x] Sleutels & tags: 2 sleutels uit de kluis met 2 tags (buiten- en binnendeuren) + 2 waterdichte polsbandjes
+- [ ] Waar is de kluis en hoe open je hem (code / overhandiging)
 - [ ] Overige aandachtspunten bij aankomst (bijv. welkomstpakket)
 - [ ] **WiFi-netwerk** en **wachtwoord** (`content/house/stay.ts`) — de QR-code wordt dan automatisch gemaakt
 - [ ] WiFi-bereik en locatie router / wat te doen bij storing
@@ -210,7 +211,8 @@ Bestanden: `content/site.ts` → `emergencyContacts`, `content/boat/private/manu
 - [ ] Telefoonnummer ziekenhuis (Fundashon Mariadal)
 - [ ] Telefoonnummer huisarts / doktersdienst
 - [ ] Politie (geen spoed)
-- [ ] Telefoonnummer + WhatsApp bootbeheerder
+- [x] Bootbeheerder: +599 701 3200 (WhatsApp aangenomen op hetzelfde nummer — controleren)
+- [ ] Naam bootbeheerder (optioneel)
 - [ ] Kustwacht: telefoonnummer + VHF-kanaal
 - [ ] Locatie EHBO-doos in de villa
 - [ ] Stroomstoring: locatie stoppenkast, zaklampen

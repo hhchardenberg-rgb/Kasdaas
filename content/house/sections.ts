@@ -78,10 +78,17 @@ export const arrival: HouseSection = {
       id: "access",
       icon: "key",
       title: l("Sleutel & toegang", "Keys & access"),
-      body: [todo("HOE KOM JE BINNEN (SLEUTELKLUIS, CODE, OVERHANDIGING)", "HOW TO GET IN (KEY BOX, CODE, HANDOVER)")],
-      steps: [
-        todo("STAP 1 TOEGANG", "ACCESS STEP 1"),
-        todo("STAP 2 TOEGANG", "ACCESS STEP 2"),
+      summary: l("Twee sleutels, twee tags en twee waterdichte polsbandjes", "Two keys, two tags and two waterproof wristbands"),
+      body: [
+        l(
+          "Je krijgt twee sleutels uit de kluis, met twee tags voor de buiten- en binnendeuren van het huis.",
+          "You'll receive two keys from the key safe, with two tags for the outer and inner doors of the house.",
+        ),
+        l(
+          "Daarnaast krijg je twee waterdichte polsbandjes met een tag erin — die kun je gewoon omhouden als je gaat zwemmen of snorkelen.",
+          "You'll also get two waterproof wristbands with a tag inside — you can simply keep them on when you go swimming or snorkeling.",
+        ),
+        todo("WAAR IS DE KLUIS EN HOE OPEN JE HEM (CODE / OVERHANDIGING)", "WHERE IS THE KEY SAFE AND HOW TO OPEN IT (CODE / HANDOVER)"),
       ],
       tips: [
         l(
@@ -89,7 +96,7 @@ export const arrival: HouseSection = {
           "Please don't share access codes and lock the villa whenever you leave.",
         ),
       ],
-      keywords: ["sleutel", "key", "code", "toegang", "access", "deur", "door", "slot", "lock"],
+      keywords: ["sleutel", "sleutels", "key", "keys", "code", "toegang", "access", "deur", "door", "slot", "lock", "kluis", "safe", "tag", "polsbandje", "wristband", "bandje"],
     },
     {
       id: "first-arrival",
@@ -194,8 +201,8 @@ export const houseRules: HouseSection = {
       id: "smoking",
       icon: "no-smoking",
       title: l("Roken", "Smoking"),
-      summary: l("Roken is niet toegestaan", "Smoking is not allowed"),
-      body: [l("Roken is niet toegestaan.", "Smoking is not allowed.")],
+      summary: l("Alleen buiten roken", "Smoking outside only"),
+      body: [l("Binnen roken is niet toegestaan. Buiten roken mag wel.", "Smoking is not allowed indoors. Smoking outside is fine.")],
       tips: [l("Rook nooit in de slaapkamers!", "Never smoke in the bedrooms!")],
       keywords: ["roken", "smoking", "smoke", "sigaret", "cigarette", "vapen", "vape"],
     },

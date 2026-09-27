@@ -36,6 +36,8 @@ export const boatRental = {
     l("De kust zien vanaf het water", "Seeing the coastline from the water"),
     l("Terug zijn voor een drankje bij zonsondergang", "Back in time for a sunset drink"),
   ],
+  /** Contact for boat enquiries: the boat manager (WhatsApp assumed on the same number). */
+  contact: { phone: "+599 701 3200", whatsapp: "+599 701 3200" },
   ctaText: l("Informeer naar beschikbaarheid", "Check availability"),
   whatsappMessage: l(
     "Hoi! We verblijven in Kas Daas en willen graag informeren naar de boot. Onze voorkeursdatum is: ",

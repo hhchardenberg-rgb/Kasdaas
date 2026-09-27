@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Check, MessageCircle, Phone } from "lucide-react";
 import { isLocale, tx } from "@/lib/i18n";
-import { boatRental, site } from "@/lib/content";
+import { boatRental } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
 import { telUrl, whatsappUrl } from "@/lib/links";
 import { Photo } from "@/components/ui/photo";
@@ -22,8 +22,8 @@ export default async function BoatPage({ params }: PageProps<"/[locale]/boat">) 
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];
   const r = boatRental;
-  const wa = whatsappUrl(site.host.whatsapp, tx(r.whatsappMessage, locale));
-  const call = telUrl(site.host.phone);
+  const wa = whatsappUrl(r.contact.whatsapp, tx(r.whatsappMessage, locale));
+  const call = telUrl(r.contact.phone);
   const [first, ...more] = r.gallery;
 
   return (
