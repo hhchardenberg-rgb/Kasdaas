@@ -50,7 +50,7 @@ Bestand: `content/house/sections.ts` → `houseRules`
 - [x] Kinderen 0–17 jaar welkom
 - [x] Huisdieren: honden < 10 kg, max. één huisdier
 - [x] Geen evenementen
-- [x] Roken alleen buiten — nooit binnen / in de slaapkamers
+- [x] Roken alleen buiten
 - [ ] Eventuele extra regels (bijv. stilte na een bepaald tijdstip, maximaal aantal bezoekers)
 
 ## 2. Contact

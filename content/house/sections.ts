@@ -209,7 +209,6 @@ export const houseRules: HouseSection = {
       title: l("Roken", "Smoking"),
       summary: l("Alleen buiten roken", "Smoking outside only"),
       body: [l("Binnen roken is niet toegestaan. Buiten roken mag wel.", "Smoking is not allowed indoors. Smoking outside is fine.")],
-      tips: [l("Rook nooit in de slaapkamers!", "Never smoke in the bedrooms!")],
       keywords: ["roken", "smoking", "smoke", "sigaret", "cigarette", "vapen", "vape"],
     },
   ],
