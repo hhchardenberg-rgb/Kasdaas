@@ -219,6 +219,33 @@ const unlock = (page, path = "/") => page.goto(`${BASE}${path}${path.includes("?
   await ctx.close();
 }
 
+// ── Scenario 11 — the back button never leaves the app
+{
+  const back = async (page) => {
+    await page.getByRole("button", { name: /^(Terug|Back)$/ }).first().click();
+    await page.waitForTimeout(1000);
+    return new URL(page.url()).pathname;
+  };
+  const ctx = await browser.newContext({ ...iphone, locale: "nl-NL" });
+  const page = await newPage(ctx);
+  await unlock(page, "/nl/places/brass-boer"); // arrives directly, e.g. from WhatsApp
+  ok("S11 Direct link: back goes to the parent page, not out of the app", (await back(page)) === "/nl/discover");
+  await page.goto(BASE + "/nl/villa");
+  await page.locator('a[href="/nl/villa/wifi"]').first().click();
+  await page.waitForURL(/wifi$/);
+  ok("S11 In-app: back returns to the previous page", (await back(page)) === "/nl/villa");
+  await ctx.close();
+  const ctx2 = await browser.newContext({ ...iphone, locale: "nl-NL" });
+  const p2 = await newPage(ctx2);
+  await p2.goto(BASE + "/nl/villa/wifi");
+  await p2.getByPlaceholder("Wachtwoord").fill(GUEST_PASSWORD);
+  await p2.getByRole("button", { name: "Open de gids" }).click();
+  await p2.waitForURL(/\/nl\/villa\/wifi$/, { waitUntil: "commit" });
+  await p2.waitForTimeout(800);
+  ok("S11 After the password: back doesn't return to the password screen", (await back(p2)) === "/nl/villa");
+  await ctx2.close();
+}
+
 ok("No runtime errors", errors.length === 0, errors.slice(0, 5).join(" | "));
 await browser.close();
 console.log(failed ? `\n${failed} check(s) failed.` : "\nAll scenarios pass.");

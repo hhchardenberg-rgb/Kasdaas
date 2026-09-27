@@ -1,6 +1,6 @@
 "use server";
 import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import { GUEST_COOKIE, guestCookieOptions, guestToken, isGuestPassword } from "@/lib/guest-access";
 
 export interface UnlockState {
@@ -28,5 +28,7 @@ export async function unlockGuide(_prev: UnlockState, form: FormData): Promise<U
   jar.set(GUEST_COOKIE, guestToken(), guestCookieOptions);
   const next = String(form.get("next") ?? "");
   // Only allow internal guide paths as destination.
-  redirect(/^\/(nl|en)(\/[\w\-/]*)?(\?[\w\-=&%.]*)?$/.test(next) ? next : `/${locale}`);
+  // Replace (not push): the password screen should not stay in the history,
+  // otherwise "back" would return to it.
+  redirect(/^\/(nl|en)(\/[\w\-/]*)?(\?[\w\-=&%.]*)?$/.test(next) ? next : `/${locale}`, RedirectType.replace);
 }

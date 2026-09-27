@@ -13,6 +13,7 @@ import { ServiceWorkerRegister } from "@/components/pwa/sw-register";
 import { OfflineIndicator } from "@/components/pwa/offline-indicator";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { Splash } from "@/components/pwa/splash";
+import { NavigationTracker } from "@/components/layout/navigation-tracker";
 
 export const dynamicParams = false;
 
@@ -67,6 +68,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           >
             {locale === "nl" ? "Naar de inhoud" : "Skip to content"}
           </a>
+          <NavigationTracker />
           <Splash />
           <TopBar />
           <OfflineIndicator />

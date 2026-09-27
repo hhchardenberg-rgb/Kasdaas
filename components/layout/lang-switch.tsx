@@ -3,6 +3,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useDict } from "@/components/providers";
 import { LOCALE_COOKIE, type Locale } from "@/lib/i18n";
 import { haptic } from "@/lib/client-store";
+import { replaceCurrent } from "@/lib/nav-history";
 
 export function rememberLocale(locale: Locale) {
   document.cookie = `${LOCALE_COOKIE}=${locale}; path=/; max-age=31536000; samesite=lax`;
@@ -21,7 +22,8 @@ export function LangSwitch() {
     haptic();
     rememberLocale(next);
     const rest = pathname.replace(/^\/(nl|en)(?=\/|$)/, "");
-    router.push(`/${next}${rest}${window.location.search}${window.location.hash}`);
+    replaceCurrent(`/${next}${rest}`);
+    router.replace(`/${next}${rest}${window.location.search}${window.location.hash}`);
   };
   return (
     <div role="group" aria-label={t.common.language} className="flex rounded-full bg-sand-200/70 p-0.5 text-[0.72rem] font-bold">
