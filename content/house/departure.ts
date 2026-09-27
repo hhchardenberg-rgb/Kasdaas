@@ -9,19 +9,19 @@ import type { ChecklistItem, Problem } from "@/lib/types";
  */
 export const departure = {
   intro: l(
-    "Wat fijn dat je bij ons was. Met deze korte checklist laat je Kas Daas zorgeloos achter.",
-    "We're so glad you stayed with us. This short checklist helps you leave Kas Daas without a worry.",
+    "Wat fijn dat je bij ons was. De check-out is altijd persoonlijk. Met deze korte checklist ben je er klaar voor.",
+    "We're so glad you stayed with us. Check-out is always in person. This short checklist gets you ready.",
   ),
   checklist: [
     { id: "time", label: l("Uitchecken vóór 10:00", "Check out by 10:00 am") },
-    { id: "waste", label: l("Afval weggebracht", "Waste taken out"), detail: todo("WAAR HET AFVAL HEEN MOET BIJ VERTREK", "WHERE WASTE GOES WHEN LEAVING") },
-    { id: "dishes", label: l("Vaat gedaan of in de vaatwasser", "Dishes done or in the dishwasher"), detail: todo("INSTRUCTIE VAAT BIJ VERTREK", "DISHES INSTRUCTION AT DEPARTURE") },
+    { id: "waste", label: l("Afval weggebracht", "Waste taken out"), detail: l("In de afvalbak rechtsvoor de woning.", "In the bin at the front right of the house.") },
+    { id: "dishes", label: l("Vaat afgewassen in de vaatwasser", "Dishes washed in the dishwasher") },
     { id: "fridge", label: l("Koelkast leeg", "Fridge emptied"), detail: todo("WAT TE DOEN MET OVERGEBLEVEN ETEN", "WHAT TO DO WITH LEFTOVER FOOD") },
     { id: "towels", label: l("Handdoeken verzameld", "Towels gathered"), detail: todo("WAAR GEBRUIKTE HANDDOEKEN HEEN MOETEN", "WHERE USED TOWELS GO") },
     { id: "linen", label: l("Beddengoed", "Bed linen"), detail: todo("BEDDENGOED AFHALEN OF LATEN LIGGEN?", "STRIP THE BEDS OR LEAVE AS IS?") },
     { id: "airco", label: l("Airco en lampen uit", "Air conditioning and lights off") },
     { id: "windows", label: l("Ramen en deuren dicht", "Windows and doors closed") },
-    { id: "key", label: l("Sleutel teruggelegd", "Keys returned"), detail: todo("SLEUTELPROCEDURE BIJ VERTREK", "KEY PROCEDURE AT DEPARTURE") },
+    { id: "key", label: l("Tags, sleutels & polsbandjes klaar", "Tags, keys & wristbands ready"), detail: l("Tags, sleutels en polsbandjes lever je in bij de persoonlijke check-out.", "Hand in the tags, keys and wristbands at the in-person check-out.") },
     { id: "other", label: l("Overige instructies", "Other instructions"), detail: todo("OVERIGE VERTREKINSTRUCTIES", "OTHER DEPARTURE INSTRUCTIONS") },
   ] satisfies ChecklistItem[],
   goodbye: l(

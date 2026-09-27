@@ -76,7 +76,7 @@ export const practical: PracticalTopic[] = [
     title: l("Drinkwater", "Drinking water"),
     body: [
       l("Op Bonaire wordt drinkwater gemaakt van zeewater.", "On Bonaire, drinking water is produced from seawater."),
-      todo("ADVIES DRINKWATER IN KAS DAAS", "DRINKING WATER ADVICE FOR KAS DAAS"),
+      l("Het kraanwater in Kas Daas kun je gewoon drinken.", "The tap water at Kas Daas is fine to drink."),
     ],
     keywords: ["drinkwater", "drinking water", "kraanwater", "tap water", "water"],
   },
@@ -127,7 +127,7 @@ export const practical: PracticalTopic[] = [
     title: l("Afval", "Waste"),
     body: [
       l("Afval is een uitdaging op een klein eiland. Neem op stranden alles weer mee en gebruik zo min mogelijk plastic.", "Waste is a challenge on a small island. Take everything back from the beach and use as little plastic as possible."),
-      todo("AFVALREGELS KAS DAAS (ZIE OOK VILLA-GIDS)", "KAS DAAS WASTE RULES (SEE ALSO VILLA GUIDE)"),
+      l("In Kas Daas gaat je afval in de afvalbak rechtsvoor de woning.", "At Kas Daas, rubbish goes in the bin at the front right of the house."),
     ],
     keywords: ["afval", "waste", "trash", "recycling", "plastic"],
   },

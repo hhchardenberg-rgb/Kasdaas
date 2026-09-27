@@ -9,7 +9,7 @@ export const stay = {
   checkInTime: l("Vanaf 16:00", "From 4:00 pm"),
   checkOutTime: l("Uiterlijk 10:00", "By 10:00 am"),
   /** Late check-out possible? */
-  lateCheckOut: todo("LATE CHECK-OUT MOGELIJK? VOORWAARDEN", "LATE CHECK-OUT POSSIBLE? CONDITIONS"),
+  lateCheckOut: l("Late check-out is in principe niet mogelijk, maar vragen kan altijd.", "Late check-out isn't normally possible, but feel free to ask."),
 };
 
 export const wifi = {

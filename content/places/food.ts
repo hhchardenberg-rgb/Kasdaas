@@ -1,4 +1,4 @@
-import { l } from "../_helpers";
+import { l, todo } from "../_helpers";
 import type { Place } from "@/lib/types";
 
 /**
@@ -12,9 +12,68 @@ import type { Place } from "@/lib/types";
  * ─────────────────────────────────────────────────────────────────────────────
  */
 export const food: Place[] = [
+  // ── Kas Daas favourites (named by the owner). Descriptions are short and
+  //    general; the owner may want to personalise them. No coordinates are set
+  //    where the exact location isn't known — route buttons search by name.
+  {
+    id: "brass-boer",
+    category: "food",
+    name: "Brass Boer",
+    art: "food",
+    mapsQuery: "Brass Boer Bonaire",
+    favorite: true,
+    tags: ["favorite", "dinner", "romantic"],
+    summary: l("Fine dining van de Nederlandse sterrenchef Jonnie Boer.", "Fine dining by Dutch star chef Jonnie Boer."),
+    whyWeRecommend: l("Voor die ene bijzondere avond van je vakantie.", "For that one special evening of your holiday."),
+    tip: l("Reserveer ruim van tevoren.", "Book well in advance."),
+    restaurant: { cuisine: l("Fine dining", "Fine dining"), styles: ["fine-dining"], reservationRecommended: true },
+    keywords: ["brass boer", "jonnie boer", "fine dining", "diner", "dinner", "restaurant", "sterrenrestaurant", "romantisch"],
+  },
+  {
+    id: "ingridients",
+    category: "food",
+    alsoIn: ["sunset"],
+    name: "Ingridients",
+    art: "sunset",
+    area: "Kralendijk (Buddy Dive)",
+    mapsQuery: "Ingridients Restaurant Bonaire",
+    favorite: true,
+    tags: ["favorite", "dinner", "waterfront"],
+    summary: l("Restaurant aan het water bij Buddy Dive Resort.", "Waterfront restaurant at Buddy Dive Resort."),
+    whyWeRecommend: l("Een van onze favorieten: heerlijk eten met de zee naast je tafel.", "One of our favourites: lovely food with the sea right next to your table."),
+    restaurant: { cuisine: l("Internationaal", "International"), styles: ["waterfront", "international"], reservationRecommended: true },
+    keywords: ["ingridients", "ingredients", "buddy dive", "diner", "dinner", "restaurant", "waterfront"],
+  },
+  {
+    id: "ocean-oasis",
+    category: "food",
+    alsoIn: ["drinks", "beaches"],
+    name: "Ocean Oasis",
+    art: "beach",
+    mapsQuery: "Ocean Oasis Bonaire",
+    favorite: true,
+    tags: ["favorite", "lunch", "waterfront", "drinks"],
+    summary: l("Beachclub aan zee om te eten, te drinken en te relaxen.", "Beach club by the sea to eat, drink and relax."),
+    whyWeRecommend: l("Een van onze favoriete plekken voor een ontspannen middag.", "One of our favourite spots for a relaxed afternoon."),
+    restaurant: { cuisine: l("Beachclub", "Beach club"), styles: ["waterfront", "lunch", "casual"], reservationRecommended: null },
+    keywords: ["ocean oasis", "beachclub", "beach club", "lunch", "strand", "beach", "drinks", "borrel"],
+  },
+  {
+    id: "club-tropicana",
+    category: "food",
+    alsoIn: ["drinks"],
+    name: "Club Tropicana",
+    art: "night",
+    mapsQuery: "Club Tropicana Bonaire",
+    favorite: true,
+    tags: ["favorite", "drinks"],
+    summary: l("Een van onze favoriete adressen op Bonaire.", "One of our favourite places on Bonaire."),
+    description: todo("KORTE OMSCHRIJVING CLUB TROPICANA (WAT, WAAR, WANNEER GAAN)", "SHORT DESCRIPTION OF CLUB TROPICANA (WHAT, WHERE, WHEN TO GO)"),
+    restaurant: { cuisine: l("Eten & drinks", "Food & drinks"), styles: ["casual"], reservationRecommended: null },
+    keywords: ["club tropicana", "tropicana", "drinks", "borrel", "diner", "dinner"],
+  },
   {
     id: "it-rains-fishes",
-    demo: true,
     category: "food",
     alsoIn: ["sunset"],
     name: "It Rains Fishes",
@@ -43,8 +102,7 @@ export const food: Place[] = [
     area: "Kralendijk",
     mapsQuery: "Karel's Beach Bar Bonaire",
     coordinates: { lat: 12.1519, lng: -68.2787, approximate: true },
-    favorite: true,
-    tags: ["favorite", "sunset", "drinks", "waterfront"],
+    tags: ["sunset", "drinks", "waterfront"],
     summary: l("Een drankje op een pier boven het water, precies op tijd voor de zonsondergang.", "A drink on a pier over the water, just in time for sunset."),
     whyWeRecommend: l(
       "Hier kijk je de zon letterlijk de zee in. Ideaal om de dag af te sluiten voor het diner.",
@@ -165,7 +223,6 @@ export const food: Place[] = [
   },
   {
     id: "rum-runners",
-    demo: true,
     category: "food",
     alsoIn: ["sunset"],
     name: "Rum Runners",
@@ -173,7 +230,8 @@ export const food: Place[] = [
     area: "Kralendijk (Captain Don's Habitat)",
     mapsQuery: "Rum Runners Captain Don's Habitat Bonaire",
     coordinates: { lat: 12.1690, lng: -68.2860, approximate: true },
-    tags: ["dinner", "sunset", "waterfront"],
+    favorite: true,
+    tags: ["favorite", "dinner", "sunset", "waterfront"],
     summary: l("Restaurant aan het water bij een bekend duikresort, ideaal bij zonsondergang.", "Waterfront restaurant at a well-known dive resort, lovely at sunset."),
     whyWeRecommend: l("Ontspannen diner met de zee als decor.", "A relaxed dinner with the sea as your backdrop."),
     restaurant: { cuisine: l("Internationaal", "International"), styles: ["waterfront", "sunset", "international"], reservationRecommended: true },

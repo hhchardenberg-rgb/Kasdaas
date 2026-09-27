@@ -39,9 +39,9 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
 
   const todaySlots: Record<Period, React.ReactNode> = {
     morning: <TodayBlock locale={locale} text={t.home.todayMorning} places={places(["1000-steps", "andrea", "klein-bonaire"])} />,
-    afternoon: <TodayBlock locale={locale} text={t.home.todayAfternoon} places={places(["sorobon", "jibe-city", "between-2-buns"])} />,
+    afternoon: <TodayBlock locale={locale} text={t.home.todayAfternoon} places={places(["ocean-oasis", "sorobon", "bachelors-beach"])} />,
     evening: <TodayBlock locale={locale} text={t.home.todayEvening} places={places(["karels-beach-bar", "seru-largu", "te-amo-beach"])} />,
-    night: <TodayBlock locale={locale} text={t.home.todayNight} places={places(["it-rains-fishes", "capriccio", "bobbejans"])} />,
+    night: <TodayBlock locale={locale} text={t.home.todayNight} places={places(["brass-boer", "it-rains-fishes", "ingridients", "rum-runners"])} />,
   };
 
   return (
@@ -153,7 +153,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
         <section>
           <SectionHeader eyebrow={t.home.tonight} title={t.discover.perfectSunset} text={t.home.tonightText} href={`${b}/discover/restaurants`} linkLabel={t.common.viewAll} />
           <div className="space-y-3">
-            {places(["karels-beach-bar", "it-rains-fishes", "rum-runners"]).map((p) => (
+            {places(["brass-boer", "ingridients", "it-rains-fishes", "rum-runners"]).map((p) => (
               <PlaceCard key={p.id} place={p} locale={locale} variant="row" />
             ))}
           </div>

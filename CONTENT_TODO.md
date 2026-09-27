@@ -26,8 +26,9 @@ Bestand: `content/house/sections.ts` → `villa` en `outdoor`
 - [ ] Woonkamer: omschrijving en bijzonderheden
 - [ ] Keuken: wat is aanwezig, waar staat wat
 - [x] Slaapkamers: 3 slaapkamers, max. 7 gasten
-- [ ] Bedden per slaapkamer en bijzonderheden (klamboes, kledingkast)
-- [ ] Badkamers, handdoeken en toiletartikelen
+- [x] Iedere slaapkamer: tweepersoonsbed + airco
+- [x] Twee badkamers + buitendouche
+- [ ] Handdoeken en toiletartikelen (wat is aanwezig)
 - [ ] Handdoeken, strandlakens en beddengoed: waar en hoe wisselen
 - [ ] Terras & lounge (bijv. kussens binnenzetten bij regen)
 - [ ] Buiten eten: eettafel en bijzonderheden
@@ -86,10 +87,10 @@ Bestand: `content/house/sections.ts` → `arrival`, `content/house/stay.ts`, `co
 - [ ] Routebeschrijving vanaf het vliegveld + herkenningspunten
 - [ ] Parkeren: waar en hoeveel plekken
 - [x] Check-intijd: vanaf 16:00
-- [ ] Werkwijze check-in (zelf inchecken / ontvangst)
+- [x] Check-in: persoonlijke ontvangst, overhandiging van tags, sleutels en polsbandjes
 - [ ] Mogelijkheden bij vroeger aankomen
 - [x] Toegang: 2 tags (buiten- en binnendeuren), 2 sleutels voor de kluis (geen code), 2 waterdichte polsbandjes met tag
-- [ ] Hoe krijgen gasten de tags en sleutels bij aankomst (overhandiging?) en waar staat de kluis
+- [x] Overhandiging bij check-in; kluis staat in de laundry room
 - [ ] Overige aandachtspunten bij aankomst (bijv. welkomstpakket)
 - [x] WiFi-netwerk (KASDAAS) en wachtwoord — QR-code, iPhone-profiel en printbare wifi-kaart worden automatisch gemaakt
 - [ ] Wifi-kaart printen en in de villa ophangen (`/nl/villa/wifi/card`)
@@ -99,7 +100,8 @@ Bestand: `content/house/sections.ts` → `arrival`, `content/house/stay.ts`, `co
 Bestand: `content/house/sections.ts` → `comfort`
 
 - [ ] Airconditioning: afstandsbediening, standen, ideale temperatuur + stappen
-- [ ] Ventilatoren
+- [x] Ventilator woonkamer: grote zwarte afstandsbediening (1 = uit, 2 = aan)
+- [ ] Overige ventilatoren (slaapkamers)
 - [ ] Warm water (boiler / zonneboiler / doorstroom)
 - [ ] Verlichting: schakelaars, dimmers
 - [ ] Stopcontacten: stekkertype, spanning, adapters
@@ -110,30 +112,31 @@ Bestand: `content/house/sections.ts` → `comfort`
 - [ ] Koelkast / vriezer / ijsblokjes
 - [ ] Vaatwasser (tablets, programma)
 - [ ] Koffiezetapparaat (cups / bonen)
-- [ ] Wasmachine / droger
+- [x] Wasmachine / droger in de laundry room, tussendoor wassen mag
+- [ ] Wasmiddel en programma
 
 **Wonen op Bonaire** (`island` in hetzelfde bestand):
 - [ ] Watergebruik specifiek voor Kas Daas (tank, waterdruk)
-- [ ] Kun je het kraanwater drinken? Waterfilter?
+- [x] Kraanwater is drinkbaar
 - [ ] Stroom: zonnepanelen, locatie stoppenkast
 - [ ] Waar liggen anti-muggenmiddelen / horren
 - [ ] Deuren & ramen: sluiten bij vertrek, schuifpuien, horren
 - [ ] Wind: parasols, deuren vastzetten
 - [ ] Dieren & insecten specifiek voor de villa
 - [ ] Veiligheid: kluis, alarm, afsluiten
-- [ ] **Afval:** waar naartoe, ophaaldagen, scheiden
+- [x] Afval: afvalbak rechtsvoor de woning
 
 ## 6. Vertrek
 Bestand: `content/house/departure.ts`, `content/house/stay.ts`
 
 - [x] Check-outtijd: tot 10:00
-- [ ] Late check-out mogelijk? Voorwaarden
-- [ ] Afval bij vertrek
-- [ ] Vaat bij vertrek
+- [x] Late check-out: in principe niet, vragen kan altijd
+- [x] Afval bij vertrek: afvalbak rechtsvoor de woning
+- [x] Vaat: afwassen in de vaatwasser
 - [ ] Wat te doen met overgebleven eten
 - [ ] Gebruikte handdoeken
 - [ ] Beddengoed afhalen of laten liggen
-- [ ] Sleutelprocedure bij vertrek
+- [x] Check-out is altijd persoonlijk; tags, sleutels en polsbandjes inleveren
 - [ ] Overige vertrekinstructies
 
 ## 7. Bonaire-tips (algemeen)
@@ -153,7 +156,9 @@ Bestanden: `content/places/explore.ts`, `content/practical/index.ts`, `content/i
 ## 8. Restaurants
 Bestand: `content/places/food.ts`
 
-- [ ] Alle voorbeeldrestaurants controleren: nog open? Past de beschrijving? Eigen favorieten?
+- [x] Eigen favorieten: Ingridients, Rum Runners, Ocean Oasis, Brass Boer, Club Tropicana, It Rains Fishes
+- [ ] Korte beschrijvingen van deze favorieten nalopen/personaliseren (Club Tropicana heeft nog geen omschrijving)
+- [ ] Overige voorbeeldrestaurants (met `demo: true`) houden, controleren of verwijderen?
 - [ ] Per restaurant (alleen indien gecontroleerd): telefoon, website, reserveringslink, prijsklasse (`priceLevel` 1–4), openingstijden, “reserveren aanbevolen”
 - [ ] **Ontbijtzaak / koffie** (nu `[ONTBIJTZAAK INVULLEN]`)
 - [ ] **Foodtruck** (nu `[FOODTRUCK INVULLEN]`)

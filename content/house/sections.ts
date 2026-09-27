@@ -69,7 +69,10 @@ export const arrival: HouseSection = {
       summary: l("Inchecken vanaf 16:00 — daarna is de villa helemaal van jou.", "Check in from 4:00 pm — from then on, the villa is all yours."),
       body: [
         l("Je kunt inchecken vanaf 16:00 uur.", "You can check in from 4:00 pm."),
-        todo("WERKWIJZE CHECK-IN (ZELF INCHECKEN / ONTVANGST)", "CHECK-IN PROCEDURE (SELF CHECK-IN / WELCOME)"),
+        l(
+          "Bij check-in word je persoonlijk ontvangen. Je krijgt dan de tags, de sleutels en de polsbandjes.",
+          "You'll be welcomed in person at check-in, when you receive the tags, keys and wristbands.",
+        ),
         todo("VROEGER AANKOMEN: MOGELIJKHEDEN", "ARRIVING EARLY: OPTIONS"),
       ],
       keywords: ["check-in", "checkin", "inchecken", "aankomst", "arrival", "tijd"],
@@ -88,7 +91,10 @@ export const arrival: HouseSection = {
           "Daarnaast krijg je twee waterdichte polsbandjes met een tag erin — die kun je gewoon omhouden als je gaat zwemmen of snorkelen.",
           "You'll also get two waterproof wristbands with a tag inside — you can simply keep them on when you go swimming or snorkeling.",
         ),
-        todo("HOE KRIJG JE DE TAGS EN SLEUTELS BIJ AANKOMST (OVERHANDIGING?) EN WAAR STAAT DE KLUIS", "HOW YOU RECEIVE THE TAGS AND KEYS ON ARRIVAL (HANDOVER?) AND WHERE THE SAFE IS"),
+        l(
+          "Tags, sleutels en polsbandjes worden bij check-in persoonlijk overhandigd. De kluis staat in de laundry room.",
+          "Tags, keys and wristbands are handed over in person at check-in. The safe is in the laundry room.",
+        ),
       ],
       tips: [
         l(
@@ -275,7 +281,7 @@ export const villa: HouseSection = {
       title: l("Slaapkamers", "Bedrooms"),
       body: [
         l("Kas Daas heeft 3 slaapkamers en biedt plaats aan maximaal 7 gasten.", "Kas Daas has 3 bedrooms and sleeps up to 7 guests."),
-        todo("BEDDEN PER SLAAPKAMER EN BIJZONDERHEDEN (KLAMBOES, KLEDINGKAST)", "BEDS PER BEDROOM AND DETAILS (MOSQUITO NETS, WARDROBE)"),
+        l("Iedere slaapkamer heeft een tweepersoonsbed en airconditioning.", "Every bedroom has a double bed and air conditioning."),
       ],
       keywords: ["slaapkamer", "bedroom", "bed", "slapen", "sleep", "kussen", "pillow"],
     },
@@ -284,7 +290,11 @@ export const villa: HouseSection = {
       icon: "bath",
       image: photos.bathroom,
       title: l("Badkamers", "Bathrooms"),
-      body: [todo("BADKAMERS, HANDDOEKEN EN TOILETARTIKELEN", "BATHROOMS, TOWELS AND TOILETRIES")],
+      summary: l("Twee badkamers en een buitendouche", "Two bathrooms and an outdoor shower"),
+      body: [
+        l("Kas Daas heeft twee badkamers en een buitendouche.", "Kas Daas has two bathrooms and an outdoor shower."),
+        todo("HANDDOEKEN EN TOILETARTIKELEN (WAT IS AANWEZIG)", "TOWELS AND TOILETRIES (WHAT'S PROVIDED)"),
+      ],
       keywords: ["badkamer", "bathroom", "douche", "shower", "toilet", "handdoek", "towel"],
     },
     {
@@ -314,7 +324,11 @@ export const comfort: HouseSection = {
       id: "airco",
       icon: "thermometer",
       title: l("Airconditioning", "Air conditioning"),
-      body: [todo("UITLEG AIRCO: AFSTANDSBEDIENING, STANDEN, IDEALE TEMPERATUUR", "AIR CONDITIONING: REMOTE, MODES, IDEAL TEMPERATURE")],
+      summary: l("In iedere slaapkamer", "In every bedroom"),
+      body: [
+        l("Iedere slaapkamer heeft airconditioning.", "Every bedroom has air conditioning."),
+        todo("UITLEG AIRCO: AFSTANDSBEDIENING, STANDEN, IDEALE TEMPERATUUR", "AIR CONDITIONING: REMOTE, MODES, IDEAL TEMPERATURE"),
+      ],
       steps: [todo("STAP 1 AIRCO AANZETTEN", "STEP 1 TURN ON AIR CONDITIONING"), todo("STAP 2 TEMPERATUUR INSTELLEN", "STEP 2 SET TEMPERATURE")],
       tips: [
         l(
@@ -328,7 +342,13 @@ export const comfort: HouseSection = {
       id: "fans",
       icon: "fan",
       title: l("Ventilatoren", "Fans"),
-      body: [todo("WAAR ZITTEN VENTILATOREN EN HOE BEDIEN JE ZE", "WHERE ARE THE FANS AND HOW TO USE THEM")],
+      summary: l("Woonkamer: grote zwarte afstandsbediening — 1 = uit, 2 = aan", "Living room: big black remote — 1 = off, 2 = on"),
+      body: [l("In de woonkamer hangt een ventilator. Die bedien je met de grote zwarte afstandsbediening.", "There's a fan in the living room. You control it with the big black remote.")],
+      steps: [
+        l("Pak de grote zwarte afstandsbediening.", "Take the big black remote."),
+        l("Druk op 2 om de ventilator aan te zetten.", "Press 2 to switch the fan on."),
+        l("Druk op 1 om hem weer uit te zetten.", "Press 1 to switch it off again."),
+      ],
       keywords: ["ventilator", "fan", "plafond", "ceiling"],
     },
     {
@@ -415,7 +435,10 @@ export const comfort: HouseSection = {
       icon: "washing-machine",
       image: photos.laundry,
       title: l("Wasmachine", "Washing machine"),
-      body: [todo("WASMACHINE/DROGER: LOCATIE, WASMIDDEL, PROGRAMMA", "WASHER/DRYER: LOCATION, DETERGENT, PROGRAM")],
+      body: [
+        l("Wasmachine en droger staan in de laundry room. Wil je tussendoor je was doen? Dat kan gewoon.", "The washer and dryer are in the laundry room. Want to do some laundry during your stay? Go right ahead."),
+        todo("WASMIDDEL EN PROGRAMMA", "DETERGENT AND PROGRAM"),
+      ],
       keywords: ["wasmachine", "washing machine", "was", "laundry", "droger", "dryer", "wasmiddel"],
     },
   ],
@@ -564,7 +587,8 @@ export const island: HouseSection = {
       id: "drinking-water",
       icon: "glass-water",
       title: l("Drinkwater", "Drinking water"),
-      body: [todo("KUN JE HET KRAANWATER IN KAS DAAS DRINKEN? / WATERFILTER", "CAN YOU DRINK THE TAP WATER AT KAS DAAS? / WATER FILTER")],
+      summary: l("Het kraanwater kun je gewoon drinken", "You can drink the tap water"),
+      body: [l("Het kraanwater in Kas Daas kun je gewoon drinken.", "The tap water at Kas Daas is fine to drink.")],
       keywords: ["drinkwater", "drinking water", "kraanwater", "tap water", "flessen", "bottled"],
     },
     {
@@ -640,8 +664,8 @@ export const island: HouseSection = {
           "Kas Daas is not suitable for young children without supervision: steep stairs, no fence around the pool and an open sea edge.",
         ),
         l(
-          "Bewaar waardevolle spullen in de kluis — die opent met de sleutel die je bij aankomst krijgt.",
-          "Keep valuables in the safe — it opens with the key you receive on arrival.",
+          "Bewaar waardevolle spullen in de kluis in de laundry room — die opent met de sleutel die je bij aankomst krijgt.",
+          "Keep valuables in the safe in the laundry room — it opens with the key you receive on arrival.",
         ),
         todo("ALARM / AFSLUITEN VILLA (INDIEN VAN TOEPASSING)", "ALARM / LOCKING UP THE VILLA (IF APPLICABLE)"),
       ],
@@ -651,7 +675,8 @@ export const island: HouseSection = {
       id: "waste",
       icon: "trash",
       title: l("Afval", "Waste"),
-      body: [todo("WAAR MOET HET AFVAL HEEN, OPHAALDAGEN, SCHEIDEN", "WHERE DOES THE WASTE GO, COLLECTION DAYS, SEPARATION")],
+      summary: l("In de afvalbak rechtsvoor de woning", "In the bin at the front right of the house"),
+      body: [l("Je afval kan in de afvalbak rechtsvoor de woning.", "Your rubbish goes in the bin at the front right of the house.")],
       keywords: ["afval", "waste", "trash", "garbage", "vuilnis", "container", "kliko", "bin", "recycling"],
     },
   ],
