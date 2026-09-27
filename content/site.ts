@@ -49,9 +49,10 @@ export const site = {
 
   /** The host / property manager guests can contact. */
   host: {
-    name: todo("NAAM BEHEERDER", "HOST NAME"),
-    phone: todo("TELEFOONNUMMER BEHEERDER", "HOST PHONE NUMBER"),
-    whatsapp: todo("WHATSAPP-NUMMER BEHEERDER", "HOST WHATSAPP NUMBER"),
+    name: "Dennis",
+    phone: "+599 782 9691",
+    /** Assumed to be the same number as the phone — change if WhatsApp uses another number. */
+    whatsapp: "+599 782 9691",
     email: todo("E-MAILADRES BEHEERDER", "HOST EMAIL ADDRESS"),
     availability: todo("BEREIKBAARHEID BEHEERDER (BIJV. DAGELIJKS 08:00–20:00)", "HOST AVAILABILITY (E.G. DAILY 8 AM–8 PM)"),
   },

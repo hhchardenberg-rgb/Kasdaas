@@ -140,7 +140,7 @@ const nl = {
   help: {
     title: "Hulp & contact",
     subtitle: "We zijn er als je ons nodig hebt.",
-    host: "Jouw host",
+    host: "Jouw house manager",
     availability: "Bereikbaarheid",
     emergency: "Noodnummers",
     emergencyText: "Bij direct gevaar: bel het alarmnummer.",
@@ -442,7 +442,7 @@ const en: DeepString<Dict> = {
   help: {
     title: "Help & contact",
     subtitle: "We're here when you need us.",
-    host: "Your host",
+    host: "Your house manager",
     availability: "Availability",
     emergency: "Emergency numbers",
     emergencyText: "In immediate danger: call the emergency number.",

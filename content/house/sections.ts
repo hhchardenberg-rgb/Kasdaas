@@ -114,10 +114,13 @@ export const arrival: HouseSection = {
       icon: "user",
       title: l("Jouw contactpersoon", "Your contact person"),
       body: [
-        todo("NAAM EN KORTE INTRODUCTIE CONTACTPERSOON", "NAME AND SHORT INTRO OF CONTACT PERSON"),
+        l(
+          "Dennis is de house manager van Kas Daas. Heb je een vraag, gaat er iets mis of kun je hulp gebruiken? Bel of app hem gerust.",
+          "Dennis is the house manager of Kas Daas. Got a question, something not working, or need a hand? Feel free to call or message him.",
+        ),
         todo("BEREIKBAARHEID CONTACTPERSOON", "AVAILABILITY OF CONTACT PERSON"),
       ],
-      keywords: ["contact", "beheerder", "host", "manager", "telefoon", "phone", "whatsapp"],
+      keywords: ["contact", "beheerder", "host", "manager", "house manager", "dennis", "telefoon", "phone", "whatsapp"],
     },
   ],
 };

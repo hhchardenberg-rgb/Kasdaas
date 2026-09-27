@@ -54,12 +54,13 @@ Bestand: `content/house/sections.ts` → `houseRules`
 ## 2. Contact
 Bestand: `content/site.ts` → `host`
 
-- [ ] Naam beheerder / host
-- [ ] Telefoonnummer (internationaal formaat, bijv. `+599 7…`)
-- [ ] WhatsApp-nummer
+- [x] House manager: Dennis
+- [x] Telefoonnummer: +599 782 9691
+- [x] WhatsApp-nummer (aangenomen: zelfde nummer — controleren)
 - [ ] E-mailadres
 - [ ] Bereikbaarheid (bijv. dagelijks 08:00–20:00)
-- [ ] Contactpersoon ter plaatse + korte introductie (`content/house/sections.ts` → aankomst)
+- [x] Contactpersoon ter plaatse: Dennis
+- [ ] Bereikbaarheid van Dennis (`content/house/sections.ts` → aankomst)
 
 ## 3. Foto's
 Zet bestanden in `public/images/…` en verwijs ernaar via `image: { src, alt }`.
