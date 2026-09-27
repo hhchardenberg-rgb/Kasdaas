@@ -29,6 +29,7 @@ export const food: Place[] = [
     website: "https://www.brassboer.com/bonaire/en/",
     travelTime: l("Op loopafstand — ± 600 m hemelsbreed", "Walking distance — ± 600 m as the crow flies"),
     phone: "+599 715 5050",
+    reservationUrl: "https://www.brassboer.com/bonaire/en/reservations/",
     summary: l(
       "Fine dining van Thérèse en wijlen Jonnie Boer, bekend van De Librije in Zwolle.",
       "Fine dining from Thérèse and the late Jonnie Boer, known for De Librije in Zwolle.",
@@ -72,6 +73,7 @@ export const food: Place[] = [
     website: "https://www.oceanoasisbonaire.com/",
     travelTime: l("± 1 km hemelsbreed", "± 1 km as the crow flies"),
     phone: "+599 701 4440",
+    reservationUrl: "https://bookings.zenchef.com/results?rid=386002",
     summary: l("Beachclub aan zee om te eten, te drinken en te relaxen.", "Beach club by the sea to eat, drink and relax."),
     whyWeRecommend: l("Een van onze favoriete plekken voor een ontspannen middag.", "One of our favourite spots for a relaxed afternoon."),
     restaurant: { cuisine: l("Beachclub", "Beach club"), styles: ["waterfront", "lunch", "casual"], reservationRecommended: null },
@@ -89,6 +91,7 @@ export const food: Place[] = [
     address: "J.A. Abraham Boulevard 60, Kralendijk",
     coordinates: { lat: 12.1406197, lng: -68.2758352 },
     phone: "+599 717 1697",
+    website: "https://sebastiansrestaurantbonaire.com/residence/",
     summary: l("Restaurant aan het water in Kralendijk.", "Waterfront restaurant in Kralendijk."),
     whyWeRecommend: l("Een van onze favoriete adressen voor een fijne avond.", "One of our favourite spots for a lovely evening."),
     restaurant: { cuisine: l("Internationaal", "International"), styles: ["waterfront", "international"], reservationRecommended: true },
@@ -107,6 +110,8 @@ export const food: Place[] = [
     area: "Kralendijk",
     coordinates: { lat: 12.1351131, lng: -68.2721149 },
     phone: "+599 701 2998",
+    website: "https://www.thedockbonaire.com/",
+    reservationUrl: "https://wa.me/5997012998", // The Dock takes reservations via WhatsApp
     summary: l("Restaurant met zwembad aan de jachthaven van Ocean Breeze.", "Restaurant with pool at the Ocean Breeze marina."),
     restaurant: { cuisine: l("Eten & drinks", "Food & drinks"), styles: ["waterfront", "casual"], reservationRecommended: null },
     keywords: ["the dock", "dock", "diner", "dinner", "drinks", "borrel", "restaurant"],
@@ -126,8 +131,9 @@ export const food: Place[] = [
     website: "https://tropicana-bonaire.com/club/en/",
     travelTime: l("Op loopafstand — ± 600 m hemelsbreed", "Walking distance — ± 600 m as the crow flies"),
     phone: "+599 715 5050",
+    tip: l("Reserveren is niet nodig — loop gewoon binnen.", "No reservation needed — just walk in."),
     summary: l("Beach brasserie bij Delfins Beach Resort, vlak bij Kas Daas.", "Beach brasserie at Delfins Beach Resort, close to Kas Daas."),
-    restaurant: { cuisine: l("Eten & drinks", "Food & drinks"), styles: ["casual"], reservationRecommended: null },
+    restaurant: { cuisine: l("Eten & drinks", "Food & drinks"), styles: ["casual"], reservationRecommended: false },
     keywords: ["club tropicana", "tropicana", "drinks", "borrel", "diner", "dinner"],
   },
   {
