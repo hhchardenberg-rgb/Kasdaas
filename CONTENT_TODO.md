@@ -161,7 +161,8 @@ Bestand: `content/places/food.ts`
 - [ ] Korte beschrijvingen van deze favorieten nalopen/personaliseren (adressen, kaartlocaties en websites zijn online opgezocht)
 - [ ] Overige voorbeeldrestaurants (met `demo: true`) houden, controleren of verwijderen?
 - [x] Adressen, kaartlocaties en websites van de favorieten + Karel's (online opgezocht, sept. 2026)
-- [ ] Optioneel per restaurant: telefoon, reserveringslink, prijsklasse (`priceLevel` 1–4), openingstijden
+- [x] Telefoonnummers en reserveringslinks (online opgezocht, sept. 2026)
+- [ ] Optioneel per restaurant: prijsklasse (`priceLevel` 1–4), openingstijden
 - [ ] **Ontbijtzaak / koffie** (nu `[ONTBIJTZAAK INVULLEN]`)
 - [ ] **Foodtruck** (nu `[FOODTRUCK INVULLEN]`)
 - [ ] Ontbrekende categorieën aanvullen naar wens (fine dining, afhalen, lokaal)
