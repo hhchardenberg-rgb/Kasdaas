@@ -10,6 +10,9 @@ export function UnlockForm({ whatsapp }: { whatsapp?: string }) {
   const params = useSearchParams();
   const [state, action, pending] = useActionState<UnlockState, FormData>(unlockGuide, {});
   const [show, setShow] = useState(false);
+  // Controlled on purpose: React resets uncontrolled form fields after an action,
+  // which could wipe what the guest is typing right after an error.
+  const [password, setPassword] = useState("");
   return (
     <form action={action} className="space-y-3">
       <input type="hidden" name="locale" value={locale} />
@@ -19,6 +22,8 @@ export function UnlockForm({ whatsapp }: { whatsapp?: string }) {
         <Lock className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted" aria-hidden />
         <input
           name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           type={show ? "text" : "password"}
           required
           autoComplete="current-password"

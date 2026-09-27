@@ -52,7 +52,8 @@ const unlock = (page, path = "/") => page.goto(`${BASE}${path}${path.includes("?
   ok("S0 Welcome screen does not show the WiFi password", !(await page.content()).includes(GUEST_PASSWORD));
   await page.getByPlaceholder("Wachtwoord").fill("verkeerd");
   await page.getByRole("button", { name: "Open de gids" }).click();
-  ok("S0 Wrong password rejected", await page.getByRole("alert").isVisible());
+  await page.locator("form p[role=alert]").waitFor();
+  ok("S0 Wrong password rejected", await page.locator("form p[role=alert]").isVisible());
   await page.getByPlaceholder("Wachtwoord").fill(" BeachHouseBonaire ");
   await page.getByRole("button", { name: "Open de gids" }).click();
   await page.waitForURL(/\/nl\/villa\/wifi$/, { waitUntil: "commit" });
