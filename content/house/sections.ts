@@ -1,5 +1,6 @@
 import { l, todo } from "../_helpers";
 import type { HouseSection } from "@/lib/types";
+import { photos } from "../images";
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -18,6 +19,7 @@ export const arrival: HouseSection = {
   id: "arrival",
   icon: "key",
   art: "villa",
+  image: photos.exterior,
   eyebrow: l("Aankomst", "Arrival"),
   title: l("Welkom thuis", "Welcome home"),
   intro: l(
@@ -51,6 +53,7 @@ export const arrival: HouseSection = {
     {
       id: "parking",
       icon: "car",
+      image: photos.parking,
       title: l("Parkeren", "Parking"),
       body: [todo("WAAR PARKEREN BIJ DE VILLA / AANTAL PLEKKEN", "WHERE TO PARK AT THE VILLA / NUMBER OF SPOTS")],
       keywords: ["parkeren", "parking", "auto", "car"],
@@ -118,6 +121,7 @@ export const villa: HouseSection = {
   id: "your-villa",
   icon: "home",
   art: "interior",
+  image: photos.livingOcean,
   eyebrow: l("Jouw villa", "Your villa"),
   title: l("Over Kas Daas", "About Kas Daas"),
   intro: l(
@@ -131,12 +135,32 @@ export const villa: HouseSection = {
       title: l("Welkom in Kas Daas", "Welcome to Kas Daas"),
       feature: true,
       art: "villa",
-      body: [todo("PERSOONLIJKE WELKOMSTTEKST OVER DE VILLA", "PERSONAL WELCOME TEXT ABOUT THE VILLA")],
+      image: photos.villaFromSea,
+      // Based on the owner's Vrbo listing — adjust freely.
+      summary: l("Direct aan zee, in Belnem · 3 slaapkamers · tot 7 gasten", "Right on the sea, in Belnem · 3 bedrooms · up to 7 guests"),
+      body: [
+        l(
+          "Kas Daas ligt direct aan de oceaan in Belnem, in het zuiden van Kralendijk. De villa is ontworpen door de Nederlandse ontwerper Piet Boon: natuurlijke materialen, ruime terrassen, een eigen zwembad en een prachtige Viking-keuken.",
+          "Kas Daas sits right on the ocean in Belnem, in the south of Kralendijk. The villa was designed by Dutch designer Piet Boon: natural materials, generous terraces, a private pool and a beautiful Viking kitchen.",
+        ),
+        l(
+          "De passaatwind waait uit het oosten dwars door het huis, de zee ligt aan je voeten en het rif begint vlak voor de deur — ideaal voor duikers en snorkelaars.",
+          "The trade wind blows from the east right through the house, the sea is at your feet and the reef starts just off the property — ideal for divers and snorkelers.",
+        ),
+        todo("PERSOONLIJKE WELKOMSTWOORDEN VAN DE EIGENAAR (OPTIONEEL)", "PERSONAL WELCOME FROM THE OWNER (OPTIONAL)"),
+      ],
+      tips: [
+        l(
+          "Let op met jonge kinderen: de villa heeft steile trappen en er is geen hek rond het zwembad en langs de zeekant.",
+          "Please take care with young children: the villa has steep stairs and there is no fence around the pool or along the sea edge.",
+        ),
+      ],
       keywords: ["villa", "kas daas", "over", "about"],
     },
     {
       id: "living",
       icon: "sofa",
+      image: photos.livingDining,
       title: l("Woonkamer", "Living room"),
       body: [todo("OMSCHRIJVING WOONKAMER EN BIJZONDERHEDEN", "DESCRIPTION OF THE LIVING ROOM AND DETAILS")],
       keywords: ["woonkamer", "living", "lounge", "bank", "sofa"],
@@ -144,6 +168,7 @@ export const villa: HouseSection = {
     {
       id: "kitchen",
       icon: "chef-hat",
+      image: photos.kitchenBar,
       title: l("Keuken", "Kitchen"),
       body: [
         todo("OMSCHRIJVING KEUKEN: WAT IS AANWEZIG, WAAR STAAT WAT", "KITCHEN DESCRIPTION: WHAT'S THERE, WHERE THINGS ARE"),
@@ -154,13 +179,18 @@ export const villa: HouseSection = {
     {
       id: "bedrooms",
       icon: "bed",
+      image: photos.bedroomOcean,
       title: l("Slaapkamers", "Bedrooms"),
-      body: [todo("AANTAL SLAAPKAMERS, BEDDEN EN BIJZONDERHEDEN", "NUMBER OF BEDROOMS, BEDS AND DETAILS")],
+      body: [
+        l("Kas Daas heeft 3 slaapkamers en biedt plaats aan maximaal 7 gasten.", "Kas Daas has 3 bedrooms and sleeps up to 7 guests."),
+        todo("BEDDEN PER SLAAPKAMER EN BIJZONDERHEDEN (KLAMBOES, KLEDINGKAST)", "BEDS PER BEDROOM AND DETAILS (MOSQUITO NETS, WARDROBE)"),
+      ],
       keywords: ["slaapkamer", "bedroom", "bed", "slapen", "sleep", "kussen", "pillow"],
     },
     {
       id: "bathrooms",
       icon: "bath",
+      image: photos.bathroom,
       title: l("Badkamers", "Bathrooms"),
       body: [todo("BADKAMERS, HANDDOEKEN EN TOILETARTIKELEN", "BATHROOMS, TOWELS AND TOILETRIES")],
       keywords: ["badkamer", "bathroom", "douche", "shower", "toilet", "handdoek", "towel"],
@@ -168,6 +198,7 @@ export const villa: HouseSection = {
     {
       id: "linen",
       icon: "shirt",
+      image: photos.linen,
       title: l("Handdoeken & beddengoed", "Towels & linen"),
       body: [todo("HANDDOEKEN, STRANDLAKENS EN BEDDENGOED: WAAR EN HOE WISSELEN", "TOWELS, BEACH TOWELS AND LINEN: WHERE AND HOW TO SWAP")],
       keywords: ["handdoek", "towel", "strandlaken", "beach towel", "beddengoed", "linen", "lakens"],
@@ -179,6 +210,7 @@ export const comfort: HouseSection = {
   id: "comfort",
   icon: "wind",
   art: "interior",
+  image: photos.kitchen,
   eyebrow: l("Comfort", "Comfort"),
   title: l("Comfort & apparatuur", "Comfort & appliances"),
   intro: l(
@@ -245,8 +277,10 @@ export const comfort: HouseSection = {
     {
       id: "hob",
       icon: "flame",
+      image: photos.hob,
       title: l("Kookplaat", "Hob"),
-      body: [todo("TYPE KOOKPLAAT EN BEDIENING (INCL. KINDERSLOT)", "TYPE OF HOB AND HOW TO USE IT (INCL. CHILD LOCK)")],
+      summary: l("Professioneel Viking-gasfornuis", "Professional Viking gas hob"),
+      body: [todo("BEDIENING GASFORNUIS (AANSTEKEN, GASFLES, VEILIGHEID)", "HOW TO USE THE GAS HOB (LIGHTING, GAS BOTTLE, SAFETY)")],
       keywords: ["kookplaat", "hob", "stove", "inductie", "induction", "gas", "koken"],
     },
     {
@@ -287,6 +321,7 @@ export const comfort: HouseSection = {
     {
       id: "washing-machine",
       icon: "washing-machine",
+      image: photos.laundry,
       title: l("Wasmachine", "Washing machine"),
       body: [todo("WASMACHINE/DROGER: LOCATIE, WASMIDDEL, PROGRAMMA", "WASHER/DRYER: LOCATION, DETERGENT, PROGRAM")],
       keywords: ["wasmachine", "washing machine", "was", "laundry", "droger", "dryer", "wasmiddel"],
@@ -298,6 +333,7 @@ export const outdoor: HouseSection = {
   id: "outdoor-living",
   icon: "sun",
   art: "terrace",
+  image: photos.poolDeck,
   eyebrow: l("Outdoor living", "Outdoor living"),
   title: l("Buiten leven", "Life outdoors"),
   intro: l(
@@ -311,6 +347,7 @@ export const outdoor: HouseSection = {
       title: l("Buitendouche", "Outdoor shower"),
       feature: true,
       art: "shower",
+      image: photos.outdoorShower,
       // Example copy — adjust freely.
       summary: l(
         "Even afspoelen na een ochtend in zee? Gebruik de buitendouche voordat je het terras of de villa weer in gaat.",
@@ -334,12 +371,15 @@ export const outdoor: HouseSection = {
       icon: "armchair",
       title: l("Terras & lounge", "Terrace & lounge"),
       art: "terrace",
+      image: photos.palapaLounge,
+      summary: l("Loungen onder de palapa, met de zee onder je", "Lounging under the palapa, with the sea below you"),
       body: [todo("OMSCHRIJVING TERRAS, LOUNGE EN KUSSENS (BIJV. BIJ REGEN BINNENZETTEN)", "DESCRIPTION OF TERRACE, LOUNGE AND CUSHIONS (E.G. BRING IN WHEN IT RAINS)")],
       keywords: ["terras", "terrace", "lounge", "buiten", "outside", "kussens", "cushions"],
     },
     {
       id: "outdoor-dining",
       icon: "utensils",
+      image: photos.balcony,
       title: l("Buiten eten", "Dining outdoors"),
       body: [todo("BUITENEETTAFEL EN BIJZONDERHEDEN", "OUTDOOR DINING TABLE AND DETAILS")],
       keywords: ["eettafel", "dining", "buiten eten", "diner"],
@@ -349,24 +389,29 @@ export const outdoor: HouseSection = {
       icon: "waves",
       title: l("Zwembad", "Pool"),
       art: "pool",
-      confirmPresence: true,
-      body: [todo("ZWEMBAD: AANWEZIG? REGELS, VERLICHTING, VEILIGHEID", "POOL: PRESENT? RULES, LIGHTING, SAFETY")],
+      image: photos.pool,
+      summary: l("Je eigen privézwembad", "Your own private pool"),
+      body: [todo("ZWEMBAD: REGELS, VERLICHTING, ONDERHOUD", "POOL: RULES, LIGHTING, MAINTENANCE")],
+      tips: [
+        l("Er is geen hek rond het zwembad — houd kinderen altijd in het oog.", "There is no fence around the pool — always keep an eye on children."),
+      ],
       keywords: ["zwembad", "pool", "zwemmen", "swim"],
     },
     {
       id: "sunbeds",
       icon: "sun",
       title: l("Ligbedden", "Sun loungers"),
-      confirmPresence: true,
+      image: photos.sunLoungers,
       body: [todo("LIGBEDDEN, PARASOLS EN KUSSENS", "SUN LOUNGERS, PARASOLS AND CUSHIONS")],
       keywords: ["ligbed", "sunbed", "lounger", "parasol", "umbrella"],
     },
     {
       id: "bbq",
       icon: "flame",
-      title: l("BBQ / buitenkeuken", "BBQ / outdoor kitchen"),
-      confirmPresence: true,
-      body: [todo("BBQ/BUITENKEUKEN: AANWEZIG? BEDIENING, GAS, SCHOONMAKEN", "BBQ/OUTDOOR KITCHEN: PRESENT? HOW TO USE, GAS, CLEANING")],
+      title: l("Barbecue", "Barbecue"),
+      image: photos.bbqJetty,
+      summary: l("Grillen op het terras boven het water", "Grilling on the deck above the water"),
+      body: [todo("BBQ: BEDIENING, GAS/HOUTSKOOL, SCHOONMAKEN", "BBQ: HOW TO USE, GAS/CHARCOAL, CLEANING")],
       keywords: ["bbq", "barbecue", "grill", "buitenkeuken", "outdoor kitchen"],
     },
     {
@@ -380,13 +425,14 @@ export const outdoor: HouseSection = {
       id: "garden",
       icon: "trees",
       title: l("Tuin", "Garden"),
-      confirmPresence: true,
+      image: photos.gardenPool,
       body: [todo("TUIN: BIJZONDERHEDEN, PLANTEN, TUINMAN", "GARDEN: DETAILS, PLANTS, GARDENER")],
       keywords: ["tuin", "garden", "planten", "plants", "tuinman", "gardener"],
     },
     {
       id: "gear-drying",
       icon: "fish",
+      image: photos.diveGear,
       title: l("Snorkel- & duikspullen", "Snorkel & dive gear"),
       body: [
         todo("WAAR KUN JE SPULLEN AFSPOELEN EN DROGEN (RINSE-AREA / DROOGREK)", "WHERE TO RINSE AND DRY GEAR (RINSE AREA / DRYING RACK)"),
@@ -401,6 +447,7 @@ export const island: HouseSection = {
   id: "island-living",
   icon: "leaf",
   art: "nature",
+  image: photos.sunsetGarden,
   eyebrow: l("Belangrijk op Bonaire", "Good to know here"),
   title: l("Wonen op Bonaire", "Island living"),
   intro: l(
@@ -495,6 +542,10 @@ export const island: HouseSection = {
         l(
           "Bonaire is ontspannen, maar laat geen waardevolle spullen zichtbaar in de auto liggen — ook niet bij stranden en duikstekken.",
           "Bonaire is relaxed, but don't leave valuables visible in the car — including at beaches and dive sites.",
+        ),
+        l(
+          "Kas Daas is niet geschikt voor jonge kinderen zonder toezicht: steile trappen, geen hek rond het zwembad en een open zeekant.",
+          "Kas Daas is not suitable for young children without supervision: steep stairs, no fence around the pool and an open sea edge.",
         ),
         todo("KLUIS, ALARM, AFSLUITEN VILLA", "SAFE, ALARM, LOCKING UP THE VILLA"),
       ],

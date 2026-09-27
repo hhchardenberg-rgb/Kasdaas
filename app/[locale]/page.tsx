@@ -3,6 +3,7 @@ import { ArrowRight, MessageCircle, Phone, Search } from "lucide-react";
 import { isLocale, tx, type Locale } from "@/lib/i18n";
 import { favoritePlaces, getPlace, houseSections, itineraries, site, stay } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
+import { photos } from "@/content/images";
 import { telUrl, whatsappUrl } from "@/lib/links";
 import type { ArtVariant, IconName, ImageRef, Place } from "@/lib/types";
 import { Photo } from "@/components/ui/photo";
@@ -48,7 +49,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       {/* ───────────── Hero */}
       <section className="relative">
         <Photo image={site.heroImage} art="villa" uid="hero" locale={locale} priority hint hintClassName="right-4 top-[calc(var(--safe-top)+4.5rem)]" className="h-[88svh] max-h-[44rem] min-h-[34rem] w-full">
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/25 to-ink/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/40 to-ink/10" />
         </Photo>
         <div className="absolute inset-x-0 bottom-0 px-5 pb-8 text-white">
           <p className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.3em] text-white/75">Kas Daas · Bonaire</p>
@@ -117,9 +118,9 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
 
         {/* ───────────── Big visual entries */}
         <section className="grid gap-4 sm:grid-cols-2">
-          <BigCard href={`${b}/villa`} art="interior" uid="bc-villa" locale={locale} eyebrow={t.nav.villa} title={t.home.villaGuide} text={t.home.villaGuideText} />
-          <BigCard href={`${b}/discover`} art="reef" uid="bc-discover" locale={locale} eyebrow="Bonaire" title={t.home.discover} text={t.home.discoverText} />
-          <BigCard href={`${b}/boat`} art="boat" uid="bc-boat" locale={locale} eyebrow={t.nav.boat} title={t.home.ourBoat} text={t.home.ourBoatText} wide />
+          <BigCard href={`${b}/villa`} art="interior" image={photos.livingOcean} uid="bc-villa" locale={locale} eyebrow={t.nav.villa} title={t.home.villaGuide} text={t.home.villaGuideText} />
+          <BigCard href={`${b}/discover`} art="reef" image={photos.saltPans} uid="bc-discover" locale={locale} eyebrow="Bonaire" title={t.home.discover} text={t.home.discoverText} />
+          <BigCard href={`${b}/boat`} art="boat" image={photos.aerialBoats} uid="bc-boat" locale={locale} eyebrow={t.nav.boat} title={t.home.ourBoat} text={t.home.ourBoatText} wide />
         </section>
 
         {/* ───────────── Today */}

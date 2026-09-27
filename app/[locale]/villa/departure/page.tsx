@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isLocale, tx } from "@/lib/i18n";
 import { departure, stay } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
+import { photos } from "@/content/images";
 import { toRows } from "@/lib/checklist";
 import { PageHeader } from "@/components/ui/page-header";
 import { Checklist } from "@/components/ui/checklist";
@@ -19,7 +20,7 @@ export default async function DeparturePage({ params }: PageProps<"/[locale]/vil
   const t = dictionaries[locale];
   return (
     <>
-      <PageHeader title={t.departure.title} eyebrow="Check-out" text={tx(departure.intro, locale)} art="sunset" uid="dep-hdr" locale={locale} compact />
+      <PageHeader title={t.departure.title} eyebrow="Check-out" text={tx(departure.intro, locale)} art="sunset" image={photos.deckSunset} uid="dep-hdr" locale={locale} compact />
       <div className="px-5 pt-6">
         <div className="card mb-6 flex items-center justify-between gap-4 p-5">
           <div>

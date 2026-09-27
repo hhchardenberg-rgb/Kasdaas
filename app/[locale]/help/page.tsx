@@ -4,6 +4,7 @@ import { AlertTriangle, ChevronDown } from "lucide-react";
 import { isLocale, tx } from "@/lib/i18n";
 import { problems, site } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
+import { photos } from "@/content/images";
 import { PageHeader } from "@/components/ui/page-header";
 import { Icon } from "@/components/ui/icon";
 import { Tx } from "@/components/ui/tx";
@@ -22,7 +23,7 @@ export default async function HelpPage({ params }: PageProps<"/[locale]/help">) 
   return (
     <>
       <HashOpener />
-      <PageHeader title={t.help.title} eyebrow="Kas Daas" text={t.help.subtitle} art="terrace" uid="help-hdr" locale={locale} compact />
+      <PageHeader title={t.help.title} eyebrow="Kas Daas" text={t.help.subtitle} art="terrace" image={photos.palapaLounge} uid="help-hdr" locale={locale} compact />
       <div className="space-y-10 px-5 pt-6">
         <HostCard locale={locale} />
 

@@ -31,6 +31,7 @@ Requires Node 20.9+ (the CLI scripts use Node's built-in TypeScript support, Nod
 ```
 content/                ← ALL texts & data (edit these, not the components)
   site.ts               general settings, host contact, emergency numbers, villa location
+  images.ts             all photos (files in public/images) with NL/EN alt texts
   ui.ts                 interface texts NL/EN (EN is type-checked against NL → no missing translations)
   categories.ts         Discover categories, tags, dining styles, map filters
   house/                villa guide: sections, WiFi & check-in/out, departure checklist, problems

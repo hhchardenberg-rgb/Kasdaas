@@ -5,6 +5,7 @@ import { isLocale, isPlaceholder, tx, type Locale } from "@/lib/i18n";
 import { currentBoatAccess } from "@/lib/boat/access";
 import { boatManual } from "@/content/boat/private/manual";
 import { dictionaries } from "@/content/ui";
+import { photos } from "@/content/images";
 import { toRows } from "@/lib/checklist";
 import type { BoatControl } from "@/lib/types";
 import { Icon } from "@/components/ui/icon";
@@ -109,7 +110,7 @@ export default async function BoatGuidePage({ params }: PageProps<"/[locale]/boa
       <meta name="kd-offline-until" content={String(access.exp * 1000)} />
 
       <header className="relative">
-        <Photo art="boat" uid="bg-hdr" locale={locale} priority className="h-[19rem] w-full">
+        <Photo image={photos.aerialBoats} art="boat" uid="bg-hdr" locale={locale} priority className="h-[19rem] w-full">
           <div className="absolute inset-0 bg-gradient-to-t from-ocean-950/85 via-ocean-950/20 to-transparent" />
         </Photo>
         <div className="absolute inset-x-0 bottom-0 px-5 pb-6 text-white">

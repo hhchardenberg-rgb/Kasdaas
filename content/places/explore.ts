@@ -1,5 +1,6 @@
 import { l } from "../_helpers";
 import type { ActivityInfo, Localized, Place } from "@/lib/types";
+import { photos } from "../images";
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -15,6 +16,23 @@ const act = (a: Record<keyof ActivityInfo, [string, string]>): ActivityInfo =>
   Object.fromEntries(Object.entries(a).map(([k, [nl, en]]) => [k, { nl, en } as Localized])) as unknown as ActivityInfo;
 
 export const beaches: Place[] = [
+  {
+    id: "bachelors-beach",
+    demo: true,
+    category: "beaches",
+    alsoIn: ["snorkeling"],
+    name: "Bachelor's Beach",
+    art: "beach",
+    area: "Belnem",
+    mapsQuery: "Bachelor's Beach Bonaire",
+    coordinates: { lat: 12.1235, lng: -68.2855, approximate: true },
+    // Walking time taken from the owner's listing — verify.
+    travelTime: l("± 12 minuten lopen", "± 12 minutes on foot"),
+    tags: ["snorkeling", "after-the-beach"],
+    summary: l("Klein strandje met een trapje naar zee, op loopafstand van Kas Daas.", "Small beach with steps down to the sea, within walking distance of Kas Daas."),
+    whyWeRecommend: l("Het dichtstbijzijnde strand: even snorkelen zonder de auto te pakken.", "The closest beach: a quick snorkel without taking the car."),
+    keywords: ["bachelors", "bachelor's beach", "strand", "beach", "dichtbij", "nearby", "belnem", "snorkelen", "lopen", "walk"],
+  },
   {
     id: "klein-bonaire",
     demo: true,
@@ -220,6 +238,7 @@ export const activities: Place[] = [
     alsoIn: ["activities", "sunset"],
     name: l("Zoutpannen & slavenhuisjes", "Salt pans & slave huts"),
     art: "salt",
+    image: photos.saltPans,
     area: l("Zuiden", "South"),
     mapsQuery: "Slave Huts Bonaire",
     coordinates: { lat: 12.0480, lng: -68.2750, approximate: true },
@@ -245,6 +264,7 @@ export const activities: Place[] = [
     alsoIn: ["activities", "kids"],
     name: l("Flamingo's bij Gotomeer", "Flamingos at Gotomeer"),
     art: "flamingo",
+    image: photos.flamingos,
     area: l("Noorden", "North"),
     mapsQuery: "Gotomeer Bonaire",
     coordinates: { lat: 12.2300, lng: -68.3700, approximate: true },
@@ -284,6 +304,7 @@ export const activities: Place[] = [
     category: "activities",
     name: l("Windsurfen & kitesurfen", "Windsurfing & kitesurfing"),
     art: "wind",
+    image: photos.kitesurf,
     area: l("Lac Bay & Atlantis", "Lac Bay & Atlantis"),
     mapsQuery: "Lac Bay windsurfing Bonaire",
     coordinates: { lat: 12.1060, lng: -68.2290, approximate: true },
@@ -390,6 +411,7 @@ export const activities: Place[] = [
     alsoIn: ["activities"],
     name: l("Kralendijk & de boulevard", "Kralendijk & the waterfront"),
     art: "town",
+    image: photos.kralendijk,
     area: "Kralendijk",
     mapsQuery: "Kralendijk Bonaire",
     coordinates: { lat: 12.1500, lng: -68.2770, approximate: true },
@@ -405,6 +427,7 @@ export const activities: Place[] = [
     alsoIn: ["snorkeling"],
     name: l("Boottocht & snorkeltrip", "Boat trip & snorkel tour"),
     art: "boat",
+    image: photos.dolphins,
     area: l("Vanuit Kralendijk", "From Kralendijk"),
     tags: ["snorkeling", "book-ahead"],
     summary: l("Een dag op het water langs de mooiste riffen — met een tour of met onze eigen boot.", "A day on the water along the best reefs — on a tour or with our own boat."),

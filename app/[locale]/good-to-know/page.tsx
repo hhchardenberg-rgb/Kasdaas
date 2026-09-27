@@ -5,6 +5,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { isLocale, tx } from "@/lib/i18n";
 import { getPlace, practical } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
+import { photos } from "@/content/images";
 import { PageHeader } from "@/components/ui/page-header";
 import { Icon } from "@/components/ui/icon";
 import { Tx } from "@/components/ui/tx";
@@ -22,7 +23,7 @@ export default async function GoodToKnowPage({ params }: PageProps<"/[locale]/go
   return (
     <>
       <HashOpener />
-      <PageHeader title={t.practical.title} eyebrow="Bonaire" text={t.practical.subtitle} art="nature" uid="gtk-hdr" locale={locale} compact />
+      <PageHeader title={t.practical.title} eyebrow="Bonaire" text={t.practical.subtitle} art="nature" image={photos.flamingos} uid="gtk-hdr" locale={locale} compact />
       <div className="space-y-3 px-5 pt-6">
         {practical.map((p) => (
           <details key={p.id} id={p.id} className="card scroll-mt-24 overflow-hidden [&[open]_.chev]:rotate-180">

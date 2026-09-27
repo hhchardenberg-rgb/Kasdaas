@@ -5,6 +5,7 @@ import { ArrowRight, LifeBuoy, LogOut, Wifi } from "lucide-react";
 import { isLocale, tx } from "@/lib/i18n";
 import { houseSections } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
+import { photos } from "@/content/images";
 import { PageHeader } from "@/components/ui/page-header";
 import { Photo } from "@/components/ui/photo";
 
@@ -25,7 +26,7 @@ export default async function VillaPage({ params }: PageProps<"/[locale]/villa">
   ];
   return (
     <>
-      <PageHeader title={t.villa.title} eyebrow="Kas Daas" text={t.villa.subtitle} art="interior" uid="villa-hdr" locale={locale} back={false} />
+      <PageHeader title={t.villa.title} eyebrow="Kas Daas" text={t.villa.subtitle} art="interior" image={photos.livingOcean} uid="villa-hdr" locale={locale} back={false} />
       <div className="space-y-10 px-5 pt-6">
         <ul className="grid grid-cols-3 gap-2.5">
           {shortcuts.map(({ href, icon: I, title, sub }) => (

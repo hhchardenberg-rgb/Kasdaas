@@ -1,5 +1,6 @@
 import { l } from "../_helpers";
 import type { Itinerary, PlanStep } from "@/lib/types";
+import { photos } from "../images";
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -21,6 +22,7 @@ export const itineraries: Itinerary[] = [
     id: "first-day",
     demo: true,
     art: "villa",
+    image: photos.villaFromSea,
     title: l("De perfecte eerste dag", "The perfect first day"),
     subtitle: l("Rustig landen, boodschappen en je eerste zonsondergang.", "Land gently, stock up and catch your first sunset."),
     length: l("1 dag", "1 day"),
@@ -42,6 +44,7 @@ export const itineraries: Itinerary[] = [
     id: "south",
     demo: true,
     art: "salt",
+    image: photos.saltPans,
     title: l("Dagje zuiden", "A day in the south"),
     subtitle: l("Roze zoutpannen, lege stranden en de vuurtoren.", "Pink salt pans, empty beaches and the lighthouse."),
     length: l("1 dag", "1 day"),
@@ -62,6 +65,7 @@ export const itineraries: Itinerary[] = [
     id: "washington-slagbaai",
     demo: true,
     art: "nature",
+    image: photos.flamingos,
     title: l("Dagje Washington Slagbaai", "A day in Washington Slagbaai"),
     subtitle: l("Het wilde noorden: cactussen, kliffen en verlaten baaien.", "The wild north: cacti, cliffs and deserted bays."),
     length: l("1 dag", "1 day"),
@@ -101,6 +105,7 @@ export const itineraries: Itinerary[] = [
     id: "relax-day",
     demo: true,
     art: "pool",
+    image: photos.pool,
     title: l("Relaxdag", "Slow day"),
     subtitle: l("De villa als je eigen resort.", "The villa as your private resort."),
     length: l("1 dag", "1 day"),
@@ -141,6 +146,7 @@ export const itineraries: Itinerary[] = [
     id: "active-day",
     demo: true,
     art: "wind",
+    image: photos.kitesurf,
     title: l("Actieve dag", "Active day"),
     subtitle: l("Wind, water en trails.", "Wind, water and trails."),
     length: l("1 dag", "1 day"),
@@ -161,6 +167,7 @@ export const itineraries: Itinerary[] = [
     id: "romantic-day",
     demo: true,
     art: "sunset",
+    image: photos.deckSunset,
     title: l("Romantische dag", "Romantic day"),
     subtitle: l("Met z'n tweeën, zonder haast.", "Just the two of you, no rush."),
     length: l("1 dag", "1 day"),
@@ -180,6 +187,7 @@ export const itineraries: Itinerary[] = [
     id: "three-days",
     demo: true,
     art: "sea",
+    image: photos.aerialCoast,
     title: l("Bonaire in 3 dagen", "Bonaire in 3 days"),
     subtitle: l("Het beste van het eiland in een lang weekend.", "The best of the island in a long weekend."),
     length: l("3 dagen", "3 days"),
@@ -236,6 +244,7 @@ export const itineraries: Itinerary[] = [
     id: "seven-days",
     demo: true,
     art: "sunset",
+    image: photos.sunsetGarden,
     title: l("Bonaire in 7 dagen", "Bonaire in 7 days"),
     subtitle: l("Een volle week: alles zien, en toch uitrusten.", "A full week: see it all, and still rest."),
     length: l("7 dagen", "7 days"),

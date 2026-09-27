@@ -11,7 +11,7 @@ export function PageHeader({ title, eyebrow, text, art, image, uid, locale, back
   return (
     <header className="relative">
       <Photo image={image} art={art} uid={uid} locale={locale} priority className={compact ? "h-[15rem]" : "h-[19rem]"} hint={!!children}>
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/15 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/25 to-transparent" />
       </Photo>
       {back && (
         <div className="absolute left-4 top-[calc(var(--safe-top)+4.25rem)]">

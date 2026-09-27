@@ -5,6 +5,7 @@ import { ArrowRight, CalendarDays, Map as MapIcon, Search } from "lucide-react";
 import { isLocale, tx } from "@/lib/i18n";
 import { categories, favoritePlaces, getPlaces } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
+import { photos } from "@/content/images";
 import { PageHeader } from "@/components/ui/page-header";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Icon } from "@/components/ui/icon";
@@ -27,7 +28,7 @@ export default async function DiscoverPage({ params }: PageProps<"/[locale]/disc
 
   return (
     <>
-      <PageHeader title={t.discover.title} eyebrow={t.brand.ourBonaire} text={t.discover.subtitle} art="reef" uid="disc-hdr" locale={locale} back={false} />
+      <PageHeader title={t.discover.title} eyebrow={t.brand.ourBonaire} text={t.discover.subtitle} art="reef" image={photos.kitesurf} uid="disc-hdr" locale={locale} back={false} />
       <div className="space-y-12 px-5 pt-6">
         <div className="space-y-3">
           <Link href={`${b}/search`} className="flex h-12 items-center gap-3 rounded-full bg-white px-5 text-[0.92rem] text-muted shadow-[var(--shadow-soft)]">

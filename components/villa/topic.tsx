@@ -6,10 +6,13 @@ import { Icon } from "@/components/ui/icon";
 import { Tx } from "@/components/ui/tx";
 import { Photo } from "@/components/ui/photo";
 
-function TopicBody({ topic, locale, extra }: { topic: HouseTopic; locale: Locale; extra?: React.ReactNode }) {
+function TopicBody({ topic, locale, extra, showImage }: { topic: HouseTopic; locale: Locale; extra?: React.ReactNode; showImage?: boolean }) {
   const t = dictionaries[locale];
   return (
     <div className="space-y-4 text-[0.95rem] leading-relaxed text-ink-soft">
+      {showImage && topic.image && (
+        <Photo image={topic.image} art={topic.art ?? "interior"} uid={`tb-${topic.id}`} locale={locale} sizes="(max-width: 768px) 90vw, 600px" className="aspect-[16/10] w-full rounded-2xl" />
+      )}
       {topic.body && topic.body.length > 0 && (
         <div className="prose-kd">
           {topic.body.map((p, i) => (
@@ -69,8 +72,8 @@ export function TopicCard({ topic, locale, extra }: { topic: HouseTopic; locale:
         </span>
         <ChevronDown className="chev h-5 w-5 shrink-0 text-muted transition-transform" aria-hidden />
       </summary>
-      <div className="px-4 pb-5 pl-[4.75rem]">
-        <TopicBody topic={topic} locale={locale} extra={extra} />
+      <div className="px-4 pb-5 sm:pl-[4.75rem]">
+        <TopicBody topic={topic} locale={locale} extra={extra} showImage />
       </div>
     </details>
   );

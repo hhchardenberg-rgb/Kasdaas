@@ -1,5 +1,6 @@
 import { l, todo } from "./_helpers";
 import type { Contact, Coordinates, ImageRef } from "@/lib/types";
+import { photos } from "./images";
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -33,14 +34,15 @@ export const site = {
   showPhotoHints: true,
 
   /** Hero photo of the villa (put the file in /public/images/villa/). */
-  heroImage: undefined as ImageRef | undefined,
-  // heroImage: { src: "/images/villa/hero.jpg", alt: l("Kas Daas bij zonsondergang", "Kas Daas at sunset") },
+  heroImage: photos.hero as ImageRef | undefined,
 
   /** Location of Kas Daas — the home base on the map. */
   home: {
     address: todo("ADRES KAS DAAS", "KAS DAAS ADDRESS"),
-    /** Replace with the real coordinates and remove `placeholder`. */
-    coordinates: { lat: 12.1443, lng: -68.2655, placeholder: true } as Coordinates,
+    /** Neighbourhood (from the owner's listing). */
+    area: "Belnem, Kralendijk",
+    /** Replace with the real coordinates and remove `placeholder` (now: roughly Belnem). */
+    coordinates: { lat: 12.118, lng: -68.284, placeholder: true } as Coordinates,
     /** Google Maps search / share link to the villa, used for the route button. */
     mapsUrl: todo("GOOGLE MAPS-LINK KAS DAAS", "GOOGLE MAPS LINK KAS DAAS"),
   },

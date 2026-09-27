@@ -11,26 +11,33 @@ In de app zijn ontbrekende gegevens zichtbaar als gestreepte labels, bijvoorbeel
 
 Alle teksten graag in **Nederlands én Engels** aanleveren.
 
+> ✅ **Al verwerkt uit de eigen Vrbo-advertentie (p336665):** 35 foto's (villa + Bonaire),
+> ligging (Belnem, Kralendijk, direct aan zee), ontwerp Piet Boon, Viking-keuken,
+> 3 slaapkamers / max. 7 gasten, privézwembad, barbecue, buitendouche, rinse-area voor
+> duikspullen, wasmachine/droger en de waarschuwing voor jonge kinderen. Graag nalopen.
+
 ---
 
 ## 1. Woning (villa)
 Bestand: `content/house/sections.ts` → `villa` en `outdoor`
 
-- [ ] Persoonlijke welkomsttekst over de villa
+- [x] Welkomsttekst over de villa (gebaseerd op de advertentie — nalopen)
+- [ ] Persoonlijke welkomstwoorden van de eigenaar (optioneel)
 - [ ] Woonkamer: omschrijving en bijzonderheden
 - [ ] Keuken: wat is aanwezig, waar staat wat
-- [ ] Slaapkamers: aantal, bedden, bijzonderheden
+- [x] Slaapkamers: 3 slaapkamers, max. 7 gasten
+- [ ] Bedden per slaapkamer en bijzonderheden (klamboes, kledingkast)
 - [ ] Badkamers, handdoeken en toiletartikelen
 - [ ] Handdoeken, strandlakens en beddengoed: waar en hoe wisselen
 - [ ] Terras & lounge (bijv. kussens binnenzetten bij regen)
 - [ ] Buiten eten: eettafel en bijzonderheden
 - [ ] **Buitendouche:** locatie, bediening, warm/koud water, handdoeken, aandachtspunten
       (de sfeertekst “Even afspoelen na een ochtend in zee…” is voorbeeldtekst, aanpassen mag)
-- [ ] Zwembad — **aanwezig?** Zo ja: regels, verlichting, veiligheid. Zo nee: onderwerp verwijderen
-- [ ] Ligbedden / parasols — aanwezig?
-- [ ] BBQ / buitenkeuken — aanwezig? Bediening, gas, schoonmaken
+- [ ] Zwembad (aanwezig ✓): regels, verlichting, onderhoud
+- [ ] Ligbedden / parasols (aanwezig ✓): kussens, parasols
+- [ ] Barbecue (aanwezig ✓): bediening, gas/houtskool, schoonmaken
 - [ ] Buitenverlichting: schakelaars / timers
-- [ ] Tuin — aanwezig? Tuinman?
+- [ ] Tuin: bijzonderheden, tuinman
 - [ ] Rinse-area en droogrek voor snorkel-/duikspullen; aanwezige snorkelsets/zwemvesten
 
 ## 2. Contact
@@ -47,11 +54,13 @@ Bestand: `content/site.ts` → `host`
 Zet bestanden in `public/images/…` en verwijs ernaar via `image: { src, alt }`.
 Zolang er geen foto is, toont de app een passende illustratie met “Foto volgt”.
 
-- [ ] **Hero-foto van de villa** (liggend én staand goed, min. 2000 px breed) → `content/site.ts` → `heroImage`
-- [ ] Foto per villa-sectie (aankomst, jouw villa, outdoor living, comfort, eiland) → `image` in `content/house/sections.ts`
-- [ ] **Buitendouche** (sfeerfoto)
-- [ ] Terras, lounge, zwembad, slaapkamers, uitzicht, architectuur
-- [ ] Boot: meerdere foto's → `content/boat/rental.ts` → `gallery`
+Alle foto's staan centraal in `content/images.ts` (bestanden in `public/images/`).
+
+- [x] Hero-foto van de villa
+- [x] Foto per villa-sectie en per onderwerp (o.a. buitendouche, zwembad, terras, slaapkamer, keuken, BBQ)
+- [x] Sfeerfoto's Bonaire (zoutpannen, flamingo's, kitesurfen, Kralendijk, dolfijnen)
+- [ ] **Foto's van de boot zelf** → `content/boat/rental.ts` → `gallery` (nu: luchtfoto's van de kust)
+- [ ] Controleer of de gekozen foto's goed passen; vervang gerust in `content/images.ts`
 - [ ] Foto's voor aanbevolen plekken (eigen foto's of met toestemming) → `image` per plek
 - [ ] Foto's per dagplan (optioneel)
 - [ ] Controleer het app-icoon (`npm run icons` na aanpassen van `scripts/generate-icons.mjs`)
@@ -60,7 +69,7 @@ Zolang er geen foto is, toont de app een passende illustratie met “Foto volgt�
 Bestand: `content/house/sections.ts` → `arrival`, `content/house/stay.ts`, `content/site.ts` → `home`
 
 - [ ] Adres van Kas Daas
-- [ ] **Coördinaten** van de villa (kaart & route) — nu een tijdelijke plek met `placeholder: true`
+- [ ] **Coördinaten** van de villa (kaart & route) — nu ongeveer Belnem, met `placeholder: true`
 - [ ] Google Maps-link naar de villa
 - [ ] Routebeschrijving vanaf het vliegveld + herkenningspunten
 - [ ] Parkeren: waar en hoeveel plekken
@@ -81,7 +90,8 @@ Bestand: `content/house/sections.ts` → `comfort`
 - [ ] Stopcontacten: stekkertype, spanning, adapters
 - [ ] Televisie / streaming / inloggen
 - [ ] Muziek / audio / bluetooth
-- [ ] Kookplaat (incl. kinderslot), oven, magnetron
+- [ ] Viking-gasfornuis: bediening (aansteken, gasfles, veiligheid)
+- [ ] Oven, magnetron
 - [ ] Koelkast / vriezer / ijsblokjes
 - [ ] Vaatwasser (tablets, programma)
 - [ ] Koffiezetapparaat (cups / bonen)
@@ -114,6 +124,7 @@ Bestand: `content/house/departure.ts`, `content/house/stay.ts`
 ## 7. Bonaire-tips (algemeen)
 Bestanden: `content/places/explore.ts`, `content/practical/index.ts`, `content/itineraries/index.ts`
 
+- [ ] Bachelor's Beach: loopafstand (± 12 min, uit de advertentie) controleren
 - [ ] **Alle plekken met `demo: true` controleren** (bestaat het nog, klopt de tekst?) en daarna `demo: true` verwijderen
 - [ ] Coördinaten zijn **bij benadering** (`approximate: true`) — controleren of verwijderen
 - [ ] Reistijd vanaf Kas Daas per plek (`travelTime`) — optioneel

@@ -15,7 +15,7 @@
  *    access is gone (404), the offline copy is deleted immediately.
  *  - "Remove boat info from this device" wipes it.
  */
-const VERSION = "kd-v1";
+const VERSION = "kd-v2";
 const PAGES = `${VERSION}-pages`;
 const ASSETS = `${VERSION}-assets`;
 const BOAT = "kd-boat";
@@ -55,7 +55,12 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== self.location.origin) return;
   if (NEVER.test(url.pathname) || url.pathname === "/sw.js") return;
 
-  if (url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/icons/") || url.pathname.startsWith("/images/")) {
+  if (
+    url.pathname.startsWith("/_next/static/") ||
+    url.pathname.startsWith("/_next/image") || // optimised photos: cached once seen, so they work offline
+    url.pathname.startsWith("/icons/") ||
+    url.pathname.startsWith("/images/")
+  ) {
     event.respondWith(cacheFirst(req));
     return;
   }

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { isLocale, tx } from "@/lib/i18n";
 import { itineraries } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
+import { photos } from "@/content/images";
 import { PageHeader } from "@/components/ui/page-header";
 import { Photo } from "@/components/ui/photo";
 
@@ -18,7 +19,7 @@ export default async function PlansPage({ params }: PageProps<"/[locale]/plans">
   const t = dictionaries[locale];
   return (
     <>
-      <PageHeader title={t.plans.title} eyebrow={t.brand.perfectDay} text={t.plans.subtitle} art="sunset" uid="plans-hdr" locale={locale} compact />
+      <PageHeader title={t.plans.title} eyebrow={t.brand.perfectDay} text={t.plans.subtitle} art="sunset" image={photos.sunsetGarden} uid="plans-hdr" locale={locale} compact />
       <div className="grid gap-4 px-5 pt-6 sm:grid-cols-2">
         {itineraries.map((it) => (
           <Link key={it.id} href={`/${locale}/plans/${it.id}`} className="card group flex overflow-hidden transition active:scale-[0.99]">

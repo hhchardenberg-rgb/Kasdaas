@@ -1,5 +1,6 @@
 import { l, todo } from "../_helpers";
 import type { BoatFact, ImageRef } from "@/lib/types";
+import { photos } from "../images";
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -18,8 +19,8 @@ export const boatRental = {
   ),
   boatName: todo("NAAM / TYPE BOOT", "BOAT NAME / TYPE"),
   description: [todo("OMSCHRIJVING VAN DE BOOT (TYPE, LENGTE, MOTOR, UITSTRALING)", "DESCRIPTION OF THE BOAT (TYPE, LENGTH, ENGINE, CHARACTER)")],
-  gallery: [] as ImageRef[],
-  // gallery: [{ src: "/images/boat/boat-1.jpg", alt: l("De boot bij Klein Bonaire", "The boat at Klein Bonaire") }],
+  /** First photo is the page header. Add photos of the boat itself here. */
+  gallery: [photos.aerialBoats, photos.dolphins, photos.aerialCoast] as ImageRef[],
   facts: [
     { id: "capacity", icon: "user", label: l("Capaciteit", "Capacity"), value: todo("MAX. AANTAL PERSONEN", "MAX. NUMBER OF PEOPLE") },
     { id: "price", icon: "banknote", label: l("Huurprijs", "Rental price"), value: todo("HUURPRIJS (PER DAGDEEL / DAG)", "RENTAL PRICE (PER HALF DAY / DAY)") },
