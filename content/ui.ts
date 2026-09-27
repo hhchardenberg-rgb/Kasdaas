@@ -267,7 +267,7 @@ const nl = {
     ideas: "Ideeën voor een dag op het water",
     contact: "Stel je vraag via WhatsApp",
     call: "Bel ons",
-    linkInvalid: "Deze bootlink is niet (meer) geldig. Neem contact op met de host voor een nieuwe link.",
+    linkInvalid: "Deze bootlink is niet (meer) geldig. Neem contact op met de bootbeheerder voor een nieuwe link.",
   },
   boatGuide: {
     sos: "SOS / Hulp nodig",
@@ -569,7 +569,7 @@ const en: DeepString<Dict> = {
     ideas: "Ideas for a day on the water",
     contact: "Ask us on WhatsApp",
     call: "Call us",
-    linkInvalid: "This boat link is no longer valid. Please contact the host for a new link.",
+    linkInvalid: "This boat link is no longer valid. Please contact the boat manager for a new link.",
   },
   boatGuide: {
     sos: "SOS / Need help",
