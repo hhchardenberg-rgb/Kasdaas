@@ -6,8 +6,8 @@ import { l, todo } from "../_helpers";
  * ─────────────────────────────────────────────────────────────────────────────
  */
 export const stay = {
-  checkInTime: todo("CHECK-INTIJD", "CHECK-IN TIME"),
-  checkOutTime: todo("CHECK-OUTTIJD", "CHECK-OUT TIME"),
+  checkInTime: l("Vanaf 16:00", "From 4:00 pm"),
+  checkOutTime: l("Uiterlijk 10:00", "By 10:00 am"),
   /** Late check-out possible? */
   lateCheckOut: todo("LATE CHECK-OUT MOGELIJK? VOORWAARDEN", "LATE CHECK-OUT POSSIBLE? CONDITIONS"),
 };

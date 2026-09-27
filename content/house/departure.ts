@@ -13,7 +13,7 @@ export const departure = {
     "We're so glad you stayed with us. This short checklist helps you leave Kas Daas without a worry.",
   ),
   checklist: [
-    { id: "time", label: l("Check-out vóór de check-outtijd", "Check out before check-out time"), detail: todo("CHECK-OUTTIJD", "CHECK-OUT TIME") },
+    { id: "time", label: l("Uitchecken vóór 10:00", "Check out by 10:00 am") },
     { id: "waste", label: l("Afval weggebracht", "Waste taken out"), detail: todo("WAAR HET AFVAL HEEN MOET BIJ VERTREK", "WHERE WASTE GOES WHEN LEAVING") },
     { id: "dishes", label: l("Vaat gedaan of in de vaatwasser", "Dishes done or in the dishwasher"), detail: todo("INSTRUCTIE VAAT BIJ VERTREK", "DISHES INSTRUCTION AT DEPARTURE") },
     { id: "fridge", label: l("Koelkast leeg", "Fridge emptied"), detail: todo("WAT TE DOEN MET OVERGEBLEVEN ETEN", "WHAT TO DO WITH LEFTOVER FOOD") },

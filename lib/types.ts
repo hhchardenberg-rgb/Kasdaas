@@ -20,7 +20,7 @@ export type IconName =
   | "banknote" | "globe" | "sunrise" | "sunset" | "mountain" | "bike" | "binoculars"
   | "calendar" | "shopping-bag" | "pill" | "info" | "camera" | "umbrella" | "baby"
   | "gem" | "ice-cream" | "wine" | "cloud-rain" | "route" | "footprints" | "sailboat"
-  | "shirt" | "dishwasher" | "cooking-pot";
+  | "shirt" | "dishwasher" | "cooking-pot" | "dog" | "party" | "no-smoking" | "id-card" | "scroll";
 
 /** Art-directed illustration shown when no photo is available yet. */
 export type ArtVariant =

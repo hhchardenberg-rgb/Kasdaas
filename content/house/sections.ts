@@ -32,6 +32,10 @@ export const arrival: HouseSection = {
       icon: "map-pin",
       title: l("Adres", "Address"),
       summary: todo("ADRES KAS DAAS", "KAS DAAS ADDRESS"),
+      body: [
+        l("Belnem, Kralendijk — direct aan zee.", "Belnem, Kralendijk — right on the sea."),
+        l("GPS: 12.1198683, -68.2914733", "GPS: 12.1198683, -68.2914733"),
+      ],
       keywords: ["adres", "address", "locatie", "location", "waar"],
     },
     {
@@ -62,9 +66,10 @@ export const arrival: HouseSection = {
       id: "check-in",
       icon: "clock",
       title: l("Check-in", "Check-in"),
-      summary: l("Vanaf je check-intijd is de villa helemaal van jou.", "From check-in time, the villa is all yours."),
+      summary: l("Inchecken vanaf 16:00 — daarna is de villa helemaal van jou.", "Check in from 4:00 pm — from then on, the villa is all yours."),
       body: [
-        todo("CHECK-INTIJD EN WERKWIJZE (ZELF INCHECKEN / ONTVANGST)", "CHECK-IN TIME AND PROCEDURE (SELF CHECK-IN / WELCOME)"),
+        l("Je kunt inchecken vanaf 16:00 uur.", "You can check in from 4:00 pm."),
+        todo("WERKWIJZE CHECK-IN (ZELF INCHECKEN / ONTVANGST)", "CHECK-IN PROCEDURE (SELF CHECK-IN / WELCOME)"),
         todo("VROEGER AANKOMEN: MOGELIJKHEDEN", "ARRIVING EARLY: OPTIONS"),
       ],
       keywords: ["check-in", "checkin", "inchecken", "aankomst", "arrival", "tijd"],
@@ -113,6 +118,83 @@ export const arrival: HouseSection = {
         todo("BEREIKBAARHEID CONTACTPERSOON", "AVAILABILITY OF CONTACT PERSON"),
       ],
       keywords: ["contact", "beheerder", "host", "manager", "telefoon", "phone", "whatsapp"],
+    },
+  ],
+};
+
+export const houseRules: HouseSection = {
+  id: "house-rules",
+  icon: "scroll",
+  art: "villa",
+  image: photos.livingLounge,
+  eyebrow: l("Huisregels", "House rules"),
+  title: l("Huisregels", "House rules"),
+  intro: l(
+    "Een paar afspraken, zodat iedereen — ook de buren — kan genieten van Kas Daas.",
+    "A few agreements, so everyone — the neighbours included — can enjoy Kas Daas.",
+  ),
+  topics: [
+    {
+      id: "check-in-out-times",
+      icon: "clock",
+      title: l("Check-in & check-out", "Check-in & check-out"),
+      summary: l("Inchecken vanaf 16:00 · uitchecken tot 10:00", "Check in from 4:00 pm · check out by 10:00 am"),
+      body: [
+        l("Je kunt inchecken vanaf 16:00 uur en uitchecken tot 10:00 uur.", "You can check in from 4:00 pm and check out until 10:00 am."),
+      ],
+      keywords: ["check-in", "check-out", "inchecken", "uitchecken", "tijd", "time", "16:00", "10:00", "huisregels", "house rules"],
+    },
+    {
+      id: "minimum-age",
+      icon: "id-card",
+      title: l("Minimumleeftijd", "Minimum age"),
+      summary: l("De hoofdhuurder is minimaal 21 jaar", "The main renter must be at least 21"),
+      body: [l("De minimumleeftijd om Kas Daas te huren is 21 jaar.", "The minimum age to rent Kas Daas is 21.")],
+      keywords: ["leeftijd", "age", "21", "minimumleeftijd", "minimum age", "huren", "rent"],
+    },
+    {
+      id: "children",
+      icon: "baby",
+      title: l("Kinderen", "Children"),
+      summary: l("Kinderen van 0–17 jaar zijn welkom", "Children aged 0–17 are welcome"),
+      body: [l("Kinderen van 0 tot en met 17 jaar zijn welkom.", "Children aged 0 to 17 are welcome.")],
+      tips: [
+        l(
+          "Houd jonge kinderen altijd in het oog: de villa heeft steile trappen en er is geen hek rond het zwembad en langs de zeekant.",
+          "Always keep an eye on young children: the villa has steep stairs and there is no fence around the pool or along the sea edge.",
+        ),
+      ],
+      keywords: ["kinderen", "children", "kids", "baby", "gezin", "family"],
+    },
+    {
+      id: "pets",
+      icon: "dog",
+      title: l("Huisdieren", "Pets"),
+      summary: l("Eén hond tot 10 kg is welkom", "One dog under 10 kg is welcome"),
+      body: [
+        l(
+          "Honden die minder dan 10 kg wegen zijn toegestaan, met een maximum van één huisdier. Andere huisdieren zijn niet toegestaan.",
+          "Dogs weighing less than 10 kg are allowed, with a maximum of one pet. Other pets are not allowed.",
+        ),
+      ],
+      keywords: ["huisdier", "huisdieren", "pet", "pets", "hond", "dog", "kat", "cat"],
+    },
+    {
+      id: "events",
+      icon: "party",
+      title: l("Evenementen & feesten", "Events & parties"),
+      summary: l("Geen evenementen toegestaan", "No events allowed"),
+      body: [l("Evenementen en feesten zijn in Kas Daas niet toegestaan.", "Events and parties are not allowed at Kas Daas.")],
+      keywords: ["evenement", "evenementen", "event", "events", "feest", "party", "feestje", "bruiloft", "wedding"],
+    },
+    {
+      id: "smoking",
+      icon: "no-smoking",
+      title: l("Roken", "Smoking"),
+      summary: l("Roken is niet toegestaan", "Smoking is not allowed"),
+      body: [l("Roken is niet toegestaan.", "Smoking is not allowed.")],
+      tips: [l("Rook nooit in de slaapkamers!", "Never smoke in the bedrooms!")],
+      keywords: ["roken", "smoking", "smoke", "sigaret", "cigarette", "vapen", "vape"],
     },
   ],
 };
@@ -562,4 +644,4 @@ export const island: HouseSection = {
 };
 
 /** All villa guide sections, in display order. */
-export const houseSections: HouseSection[] = [arrival, villa, outdoor, comfort, island];
+export const houseSections: HouseSection[] = [arrival, houseRules, villa, outdoor, comfort, island];

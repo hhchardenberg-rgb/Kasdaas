@@ -40,6 +40,17 @@ Bestand: `content/house/sections.ts` → `villa` en `outdoor`
 - [ ] Tuin: bijzonderheden, tuinman
 - [ ] Rinse-area en droogrek voor snorkel-/duikspullen; aanwezige snorkelsets/zwemvesten
 
+## 1b. Huisregels ✅
+Bestand: `content/house/sections.ts` → `houseRules`
+
+- [x] Check-in vanaf 16:00, check-out tot 10:00
+- [x] Minimumleeftijd huurder: 21 jaar
+- [x] Kinderen 0–17 jaar welkom
+- [x] Huisdieren: honden < 10 kg, max. één huisdier
+- [x] Geen evenementen
+- [x] Niet roken — en nooit in de slaapkamers
+- [ ] Eventuele extra regels (bijv. stilte na een bepaald tijdstip, maximaal aantal bezoekers)
+
 ## 2. Contact
 Bestand: `content/site.ts` → `host`
 
@@ -68,12 +79,13 @@ Alle foto's staan centraal in `content/images.ts` (bestanden in `public/images/`
 ## 4. Aankomst
 Bestand: `content/house/sections.ts` → `arrival`, `content/house/stay.ts`, `content/site.ts` → `home`
 
-- [ ] Adres van Kas Daas
-- [ ] **Coördinaten** van de villa (kaart & route) — nu ongeveer Belnem, met `placeholder: true`
-- [ ] Google Maps-link naar de villa
+- [ ] Straatadres van Kas Daas (de GPS-coördinaten worden tot die tijd getoond)
+- [x] Coördinaten van de villa (12.1198683, -68.2914733) — kaart en routeknop werken
+- [x] Route-link naar de villa (op basis van de coördinaten)
 - [ ] Routebeschrijving vanaf het vliegveld + herkenningspunten
 - [ ] Parkeren: waar en hoeveel plekken
-- [ ] Check-intijd en werkwijze (zelf inchecken / ontvangst)
+- [x] Check-intijd: vanaf 16:00
+- [ ] Werkwijze check-in (zelf inchecken / ontvangst)
 - [ ] Mogelijkheden bij vroeger aankomen
 - [ ] Sleutel & toegang (sleutelkluis, code, overhandiging) + stappen
 - [ ] Overige aandachtspunten bij aankomst (bijv. welkomstpakket)
@@ -111,7 +123,7 @@ Bestand: `content/house/sections.ts` → `comfort`
 ## 6. Vertrek
 Bestand: `content/house/departure.ts`, `content/house/stay.ts`
 
-- [ ] **Check-outtijd**
+- [x] Check-outtijd: tot 10:00
 - [ ] Late check-out mogelijk? Voorwaarden
 - [ ] Afval bij vertrek
 - [ ] Vaat bij vertrek

@@ -29,8 +29,10 @@ function extras(topicId: string, locale: Locale): React.ReactNode {
     const url = hasValue(site.home.mapsUrl) ? tx(site.home.mapsUrl, locale) : routeUrl({ coordinates: site.home.coordinates });
     return url ? <ActionLink href={url} icon={Navigation} variant="primary" external netLabel={t.common.needsInternet}>{t.common.route}</ActionLink> : null;
   }
-  if (topicId === "address" && hasValue(site.home.address)) {
-    return <CopyButton value={tx(site.home.address, locale)} label={t.common.copy} />;
+  if (topicId === "address") {
+    const c = site.home.coordinates;
+    const value = hasValue(site.home.address) ? tx(site.home.address, locale) : c.placeholder ? null : `${c.lat}, ${c.lng}`;
+    return value ? <CopyButton value={value} label={t.common.copy} /> : null;
   }
   if (topicId === "contact-person") return <HostCard locale={locale} />;
   return null;

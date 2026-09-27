@@ -150,6 +150,7 @@ const nl = {
     messageHost: "Stuur de host een bericht",
     email: "E-mail",
     needHelp: "Hulp nodig?",
+    yourLocation: "Jouw locatie (voor hulpdiensten)",
   },
   discover: {
     title: "Ontdek Bonaire",
@@ -451,6 +452,7 @@ const en: DeepString<Dict> = {
     messageHost: "Message the host",
     email: "Email",
     needHelp: "Need help?",
+    yourLocation: "Your location (for emergency services)",
   },
   discover: {
     title: "Discover Bonaire",

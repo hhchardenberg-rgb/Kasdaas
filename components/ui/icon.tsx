@@ -5,7 +5,8 @@ import {
   LifeBuoy, Lightbulb, LogOut, MapPin, Microwave, Mountain, Navigation, Package, Phone, Pill, Plug, Refrigerator,
   Route, Sailboat, Shield, Ship, Shirt, ShoppingBag, ShowerHead, Siren, Smartphone, Sofa, Sparkles, Speaker, Sun,
   Sunrise, Sunset, Thermometer, Trash2, Trees, TriangleAlert, Tv, Umbrella, User, Utensils, UtensilsCrossed,
-  WashingMachine, Waves, Wifi, Wind, Wine, Wrench, Zap, type LucideIcon, type LucideProps,
+  WashingMachine, Waves, Wifi, Wind, Wine, Wrench, Zap, Dog, PartyPopper, CigaretteOff, IdCard, ScrollText,
+  type LucideIcon, type LucideProps,
 } from "lucide-react";
 import type { IconName } from "@/lib/types";
 
@@ -23,7 +24,8 @@ const icons: Record<IconName, LucideIcon> = {
   binoculars: Binoculars, calendar: CalendarDays, "shopping-bag": ShoppingBag, pill: Pill, info: Info,
   camera: Camera, umbrella: Umbrella, baby: Baby, gem: Gem, "ice-cream": IceCreamCone, wine: Wine,
   "cloud-rain": CloudRain, route: Route, footprints: Footprints, sailboat: Sailboat, shirt: Shirt,
-  dishwasher: UtensilsCrossed, "cooking-pot": CookingPot,
+  dishwasher: UtensilsCrossed, "cooking-pot": CookingPot, dog: Dog, party: PartyPopper, "no-smoking": CigaretteOff,
+  "id-card": IdCard, scroll: ScrollText,
 };
 
 export function Icon({ name, ...props }: { name: IconName } & LucideProps) {

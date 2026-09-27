@@ -41,10 +41,10 @@ export const site = {
     address: todo("ADRES KAS DAAS", "KAS DAAS ADDRESS"),
     /** Neighbourhood (from the owner's listing). */
     area: "Belnem, Kralendijk",
-    /** Replace with the real coordinates and remove `placeholder` (now: roughly Belnem). */
-    coordinates: { lat: 12.118, lng: -68.284, placeholder: true } as Coordinates,
-    /** Google Maps search / share link to the villa, used for the route button. */
-    mapsUrl: todo("GOOGLE MAPS-LINK KAS DAAS", "GOOGLE MAPS LINK KAS DAAS"),
+    /** Exact location of the villa (provided by the owner). */
+    coordinates: { lat: 12.1198683, lng: -68.2914733 } as Coordinates,
+    /** Link used for the route button (directions to the coordinates above). */
+    mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=12.1198683,-68.2914733",
   },
 
   /** The host / property manager guests can contact. */
