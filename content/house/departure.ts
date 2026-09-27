@@ -17,7 +17,7 @@ export const departure = {
     { id: "waste", label: l("Afval weggebracht", "Waste taken out"), detail: l("In de afvalbak rechtsvoor de woning.", "In the bin at the front right of the house.") },
     { id: "dishes", label: l("Vaat afgewassen in de vaatwasser", "Dishes washed in the dishwasher") },
     { id: "fridge", label: l("Koelkast leeg", "Fridge emptied"), detail: l("Lang houdbare producten mag je achterlaten.", "You're welcome to leave long-life products behind.") },
-    { id: "towels", label: l("Handdoeken verzameld", "Towels gathered"), detail: todo("WAAR GEBRUIKTE HANDDOEKEN HEEN MOETEN", "WHERE USED TOWELS GO") },
+    { id: "towels", label: l("Handdoeken verzameld", "Towels gathered"), detail: l("Gebruikte handdoeken gaan in de wasmand.", "Used towels go in the laundry basket.") },
     { id: "linen", label: l("Beddengoed", "Bed linen"), detail: todo("BEDDENGOED AFHALEN OF LATEN LIGGEN?", "STRIP THE BEDS OR LEAVE AS IS?") },
     { id: "airco", label: l("Airco en lampen uit", "Air conditioning and lights off") },
     { id: "windows", label: l("Ramen en deuren dicht", "Windows and doors closed") },

@@ -135,7 +135,7 @@ Bestand: `content/house/departure.ts`, `content/house/stay.ts`
 - [x] Afval bij vertrek: afvalbak rechtsvoor de woning
 - [x] Vaat: afwassen in de vaatwasser
 - [x] Koelkast: lang houdbare producten mogen blijven
-- [ ] Gebruikte handdoeken
+- [x] Gebruikte handdoeken in de wasmand
 - [ ] Beddengoed afhalen of laten liggen
 - [x] Check-out is altijd persoonlijk; tags, sleutels en polsbandjes inleveren
 - [ ] Overige vertrekinstructies
@@ -158,9 +158,10 @@ Bestanden: `content/places/explore.ts`, `content/practical/index.ts`, `content/i
 Bestand: `content/places/food.ts`
 
 - [x] Eigen favorieten: Ingridients, Rum Runners, Ocean Oasis, Brass Boer, Club Tropicana, It Rains Fishes, Sebastian's, The Dock
-- [ ] Korte beschrijvingen van deze favorieten nalopen/personaliseren (Club Tropicana en The Dock hebben nog geen omschrijving)
+- [ ] Korte beschrijvingen van deze favorieten nalopen/personaliseren (adressen, kaartlocaties en websites zijn online opgezocht)
 - [ ] Overige voorbeeldrestaurants (met `demo: true`) houden, controleren of verwijderen?
-- [ ] Per restaurant (alleen indien gecontroleerd): telefoon, website, reserveringslink, prijsklasse (`priceLevel` 1–4), openingstijden, “reserveren aanbevolen”
+- [x] Adressen, kaartlocaties en websites van de favorieten + Karel's (online opgezocht, sept. 2026)
+- [ ] Optioneel per restaurant: telefoon, reserveringslink, prijsklasse (`priceLevel` 1–4), openingstijden
 - [ ] **Ontbijtzaak / koffie** (nu `[ONTBIJTZAAK INVULLEN]`)
 - [ ] **Foodtruck** (nu `[FOODTRUCK INVULLEN]`)
 - [ ] Ontbrekende categorieën aanvullen naar wens (fine dining, afhalen, lokaal)
