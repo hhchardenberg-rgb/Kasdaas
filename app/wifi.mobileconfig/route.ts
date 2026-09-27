@@ -1,6 +1,8 @@
 import { createHash } from "node:crypto";
 import { hasValue, tx } from "@/lib/i18n";
+import type { NextRequest } from "next/server";
 import { wifi } from "@/content/house/stay";
+import { GUEST_COOKIE, isValidGuestCookie } from "@/lib/guest-access";
 
 /**
  * iPhone/iPad "tap to connect": an Apple configuration profile containing only
@@ -15,7 +17,9 @@ function uuid(seed: string) {
   return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-a${h.slice(17, 20)}-${h.slice(20, 32)}`.toUpperCase();
 }
 
-export function GET() {
+export function GET(req: NextRequest) {
+  // Contains the WiFi password: only for guests who unlocked the guide.
+  if (!isValidGuestCookie(req.cookies.get(GUEST_COOKIE)?.value)) return new Response("Unauthorized", { status: 401 });
   if (!hasValue(wifi.network)) return new Response("Not found", { status: 404 });
   const ssid = tx(wifi.network, "en");
   const password = hasValue(wifi.password) ? tx(wifi.password, "en") : "";

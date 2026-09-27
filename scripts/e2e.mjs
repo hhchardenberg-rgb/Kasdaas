@@ -22,6 +22,7 @@ try {
 const { chromium, devices } = pw;
 
 const BASE = process.env.BASE || "http://localhost:3100";
+const GUEST_PASSWORD = process.env.GUEST_PASSWORD || "beachhousebonaire";
 const SECRET = process.env.BOAT_TOKEN_SECRET;
 if (!SECRET) throw new Error("Set BOAT_TOKEN_SECRET (same as the server).");
 
@@ -39,12 +40,38 @@ const newPage = async (ctx) => {
   p.on("pageerror", (e) => errors.push(e.message));
   return p;
 };
+/** Unlocks the guide for this browser context via the ?access= link. */
+const unlock = (page, path = "/") => page.goto(`${BASE}${path}${path.includes("?") ? "&" : "?"}access=${encodeURIComponent(GUEST_PASSWORD)}`);
+
+// ── Scenario 0 — the guide is behind the guest password
+{
+  const ctx = await browser.newContext({ ...iphone, locale: "nl-NL" });
+  const page = await newPage(ctx);
+  await page.goto(BASE + "/nl/villa/wifi");
+  ok("S0 Without password → welcome screen", /\/nl\/welcome\?next=/.test(page.url()), page.url());
+  ok("S0 Welcome screen does not show the WiFi password", !(await page.content()).includes(GUEST_PASSWORD));
+  await page.getByPlaceholder("Wachtwoord").fill("verkeerd");
+  await page.getByRole("button", { name: "Open de gids" }).click();
+  ok("S0 Wrong password rejected", await page.getByRole("alert").isVisible());
+  await page.getByPlaceholder("Wachtwoord").fill(" BeachHouseBonaire ");
+  await page.getByRole("button", { name: "Open de gids" }).click();
+  await page.waitForURL(/\/nl\/villa\/wifi$/, { waitUntil: "commit" });
+  ok("S0 Correct password → back to the requested page", true);
+  const profile = await fetch(BASE + "/wifi.mobileconfig");
+  ok("S0 WiFi profile locked without password", profile.status === 401, String(profile.status));
+  await ctx.close();
+  const ctx2 = await browser.newContext({ ...iphone, locale: "en-US" });
+  const p2 = await newPage(ctx2);
+  await unlock(p2, "/en/discover");
+  ok("S0 ?access= link unlocks and cleans the URL", /\/en\/discover$/.test(p2.url()), p2.url());
+  await ctx2.close();
+}
 
 // ── Scenario 1 — WiFi within two taps
 {
   const ctx = await browser.newContext({ ...iphone, locale: "nl-NL" });
   const page = await newPage(ctx);
-  await page.goto(BASE + "/");
+  await unlock(page);
   ok("S0 Dutch browser → /nl", page.url().endsWith("/nl"), page.url());
   await page.getByRole("link", { name: "WiFi", exact: true }).first().click();
   await page.waitForURL(/\/nl\/villa\/wifi/);
@@ -56,7 +83,7 @@ const newPage = async (ctx) => {
 {
   const ctx = await browser.newContext({ ...iphone, locale: "en-US" });
   const page = await newPage(ctx);
-  await page.goto(BASE + "/");
+  await unlock(page);
   ok("S0 Other browser language → /en", page.url().endsWith("/en"), page.url());
   await page.getByRole("link", { name: "Eat & drink" }).first().click();
   await page.waitForURL(/restaurants/);
@@ -91,11 +118,13 @@ const newPage = async (ctx) => {
 {
   const ctx = await browser.newContext({ ...iphone, locale: "en-US" });
   const page = await newPage(ctx);
+  await unlock(page);
   const res = await page.goto(BASE + "/en/boat/guide");
   ok("S6 /boat/guide without token → 404", res.status() === 404, String(res.status()));
+  const cookie = (await ctx.cookies()).map((c) => `${c.name}=${c.value}`).join("; ");
   const leaked = [];
   for (const path of ["/en", "/nl", "/en/boat", "/nl/boat", "/en/more", "/en/villa", "/en/discover", "/sitemap.xml", "/robots.txt"]) {
-    const html = await (await fetch(BASE + path)).text();
+    const html = await (await fetch(BASE + path, { headers: { cookie } })).text();
     if (/boat\/guide/.test(html)) leaked.push(path);
   }
   ok("S6 No public page links to the manual", leaked.length === 0, leaked.join(","));
@@ -108,9 +137,9 @@ const newPage = async (ctx) => {
   const chunks = [];
   const walk = (d) => readdirSync(d).forEach((f) => (statSync(join(d, f)).isDirectory() ? walk(join(d, f)) : f.endsWith(".js") && chunks.push(join(d, f))));
   walk(".next/static");
-  const secretMarkers = ["UITLEG GASHENDEL", "Noodstopkoord", "BOAT MANAGER PHONE"];
+  const secretMarkers = ["UITLEG GASHENDEL", "Noodstopkoord", "BOAT MANAGER PHONE", GUEST_PASSWORD];
   const hits = chunks.filter((c) => secretMarkers.some((m) => readFileSync(c, "utf8").includes(m)));
-  ok("S6 Manual content not in public JS bundles", hits.length === 0, hits.join(","));
+  ok("S6 Manual content & guest password not in public JS bundles", hits.length === 0, hits.join(","));
   await ctx.close();
 }
 
@@ -129,6 +158,15 @@ const newPage = async (ctx) => {
   ok("S7 Manual has noindex meta", /noindex/.test(meta ?? ""), meta ?? "");
   await page.getByRole("button", { name: "Engine won't start" }).click();
   ok("S7 Decision tree opens", await page.getByText("Is the throttle in neutral?").isVisible());
+  ok("S7 Boat renters don't need the guest password", true);
+  await page.evaluate(() => window.scrollTo(0, 2000));
+  await page.waitForTimeout(300);
+  const sosOnScreen = await page.getByRole("button", { name: /SOS/ }).evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    return r.top >= 0 && r.bottom <= window.innerHeight;
+  });
+  ok("S7 SOS button stays on screen while scrolling", sosOnScreen);
+  await unlock(page, "/en/boat/guide");
 
   // Wait for the service worker to control the page, then go offline.
   const sw = await page.evaluate(async () => {
@@ -162,6 +200,7 @@ const newPage = async (ctx) => {
 {
   const ctx = await browser.newContext({ ...iphone, locale: "en-US" });
   const page = await newPage(ctx);
+  await unlock(page);
   const dutch = /\b(het|een|jouw|bekijk|invullen|onze|naar|wij|zoeken|terug|vertrek|boodschappen)\b/i;
   const offenders = [];
   const paths = ["/en", "/en/villa", "/en/villa/arrival", "/en/villa/comfort", "/en/villa/outdoor-living", "/en/villa/island-living", "/en/villa/your-villa",

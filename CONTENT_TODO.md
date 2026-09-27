@@ -34,7 +34,8 @@ Bestand: `content/house/sections.ts` → `villa` en `outdoor`
 - [ ] Buiten eten: eettafel en bijzonderheden
 - [ ] **Buitendouche:** locatie, bediening, warm/koud water, handdoeken, aandachtspunten
       (de sfeertekst “Even afspoelen na een ochtend in zee…” is voorbeeldtekst, aanpassen mag)
-- [ ] Zwembad (aanwezig ✓): regels, verlichting, onderhoud
+- [x] Zwembadverlichting gaat 's avonds automatisch aan
+- [ ] Zwembad: regels en onderhoud
 - [ ] Ligbedden / parasols (aanwezig ✓): kussens, parasols
 - [ ] Barbecue (aanwezig ✓): bediening, gas/houtskool, schoonmaken
 - [ ] Buitenverlichting: schakelaars / timers
@@ -81,7 +82,7 @@ Alle foto's staan centraal in `content/images.ts` (bestanden in `public/images/`
 ## 4. Aankomst
 Bestand: `content/house/sections.ts` → `arrival`, `content/house/stay.ts`, `content/site.ts` → `home`
 
-- [ ] Straatadres van Kas Daas (de GPS-coördinaten worden tot die tijd getoond)
+- [x] Adres: Punt Vierkant 6A, Kralendijk
 - [x] Coördinaten van de villa (12.1198683, -68.2914733) — kaart en routeknop werken
 - [x] Route-link naar de villa (op basis van de coördinaten)
 - [ ] Routebeschrijving vanaf het vliegveld + herkenningspunten
@@ -133,7 +134,7 @@ Bestand: `content/house/departure.ts`, `content/house/stay.ts`
 - [x] Late check-out: in principe niet, vragen kan altijd
 - [x] Afval bij vertrek: afvalbak rechtsvoor de woning
 - [x] Vaat: afwassen in de vaatwasser
-- [ ] Wat te doen met overgebleven eten
+- [x] Koelkast: lang houdbare producten mogen blijven
 - [ ] Gebruikte handdoeken
 - [ ] Beddengoed afhalen of laten liggen
 - [x] Check-out is altijd persoonlijk; tags, sleutels en polsbandjes inleveren
@@ -156,8 +157,8 @@ Bestanden: `content/places/explore.ts`, `content/practical/index.ts`, `content/i
 ## 8. Restaurants
 Bestand: `content/places/food.ts`
 
-- [x] Eigen favorieten: Ingridients, Rum Runners, Ocean Oasis, Brass Boer, Club Tropicana, It Rains Fishes
-- [ ] Korte beschrijvingen van deze favorieten nalopen/personaliseren (Club Tropicana heeft nog geen omschrijving)
+- [x] Eigen favorieten: Ingridients, Rum Runners, Ocean Oasis, Brass Boer, Club Tropicana, It Rains Fishes, Sebastian's, The Dock
+- [ ] Korte beschrijvingen van deze favorieten nalopen/personaliseren (Club Tropicana en The Dock hebben nog geen omschrijving)
 - [ ] Overige voorbeeldrestaurants (met `demo: true`) houden, controleren of verwijderen?
 - [ ] Per restaurant (alleen indien gecontroleerd): telefoon, website, reserveringslink, prijsklasse (`priceLevel` 1–4), openingstijden, “reserveren aanbevolen”
 - [ ] **Ontbijtzaak / koffie** (nu `[ONTBIJTZAAK INVULLEN]`)
@@ -228,6 +229,10 @@ Bestanden: `content/site.ts` → `emergencyContacts`, `content/boat/private/manu
 - [ ] Sleutel kwijt: reservesleutel / code
 
 ---
+
+## Toegang tot de gids
+- [x] Wachtwoord voor de gids: `beachhousebonaire` (aanpassen via `GUEST_PASSWORD` of `content/private/guest-access.ts`)
+- [ ] Deelbare link voor gasten: `https://<domein>/?access=beachhousebonaire` (opent de gids zonder te typen)
 
 ## Technische instellingen (eenmalig)
 Zie `.env.example` en de README.

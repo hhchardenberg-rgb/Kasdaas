@@ -140,8 +140,10 @@ body {
   .pt-safe { padding-top: var(--safe-top); }
 }
 
-/* Page transition */
-.page-enter { animation: var(--animate-rise); }
+/* Page transition. "backwards" (not "both"): once finished, no transform stays
+   on the wrapper — a lingering transform would break position:fixed children
+   such as the SOS button and the welcome screen. */
+.page-enter { animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

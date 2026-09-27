@@ -38,7 +38,7 @@ export const site = {
 
   /** Location of Kas Daas — the home base on the map. */
   home: {
-    address: todo("ADRES KAS DAAS", "KAS DAAS ADDRESS"),
+    address: "Punt Vierkant 6A, Kralendijk, Bonaire",
     /** Neighbourhood (from the owner's listing). */
     area: "Belnem, Kralendijk",
     /** Exact location of the villa (provided by the owner). */

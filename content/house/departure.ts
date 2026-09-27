@@ -16,7 +16,7 @@ export const departure = {
     { id: "time", label: l("Uitchecken vóór 10:00", "Check out by 10:00 am") },
     { id: "waste", label: l("Afval weggebracht", "Waste taken out"), detail: l("In de afvalbak rechtsvoor de woning.", "In the bin at the front right of the house.") },
     { id: "dishes", label: l("Vaat afgewassen in de vaatwasser", "Dishes washed in the dishwasher") },
-    { id: "fridge", label: l("Koelkast leeg", "Fridge emptied"), detail: todo("WAT TE DOEN MET OVERGEBLEVEN ETEN", "WHAT TO DO WITH LEFTOVER FOOD") },
+    { id: "fridge", label: l("Koelkast leeg", "Fridge emptied"), detail: l("Lang houdbare producten mag je achterlaten.", "You're welcome to leave long-life products behind.") },
     { id: "towels", label: l("Handdoeken verzameld", "Towels gathered"), detail: todo("WAAR GEBRUIKTE HANDDOEKEN HEEN MOETEN", "WHERE USED TOWELS GO") },
     { id: "linen", label: l("Beddengoed", "Bed linen"), detail: todo("BEDDENGOED AFHALEN OF LATEN LIGGEN?", "STRIP THE BEDS OR LEAVE AS IS?") },
     { id: "airco", label: l("Airco en lampen uit", "Air conditioning and lights off") },

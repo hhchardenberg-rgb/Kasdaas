@@ -70,6 +70,16 @@ re-implement those functions (and keep the types in `lib/types.ts`). The UI stay
 everyone else. The choice from the NL/EN switch is remembered in a cookie and localStorage.
 UI texts live in `content/ui.ts`, where a missing English key is a type error.
 
+## Guest password 🔑
+
+The whole guide sits behind one guest password (`content/private/guest-access.ts`, or the
+`GUEST_PASSWORD` environment variable). `proxy.ts` checks an httpOnly cookie on every guide page.
+Without it, visitors see a welcome screen with a password field. A device only has to unlock once
+(180 days). A link like `https://<domain>/?access=<password>` unlocks directly, which is handy to
+send by WhatsApp. The password never ships in the public JavaScript. Changing it locks every
+device out again. The boat manual doesn't need the guest password, because it has its own token.
+The iPhone WiFi profile also requires the guest password, since it contains the WiFi password.
+
 ## The private boat manual 🔒
 
 - Renters get a personal link `https://<domain>/boat/<token>` (via WhatsApp, or as a QR code).

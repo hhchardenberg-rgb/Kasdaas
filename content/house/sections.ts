@@ -31,9 +31,9 @@ export const arrival: HouseSection = {
       id: "address",
       icon: "map-pin",
       title: l("Adres", "Address"),
-      summary: todo("ADRES KAS DAAS", "KAS DAAS ADDRESS"),
+      summary: l("Punt Vierkant 6A, Kralendijk", "Punt Vierkant 6A, Kralendijk"),
       body: [
-        l("Belnem, Kralendijk — direct aan zee.", "Belnem, Kralendijk — right on the sea."),
+        l("Punt Vierkant 6A, Belnem, Kralendijk — direct aan zee.", "Punt Vierkant 6A, Belnem, Kralendijk — right on the sea."),
         l("GPS: 12.1198683, -68.2914733", "GPS: 12.1198683, -68.2914733"),
       ],
       keywords: ["adres", "address", "locatie", "location", "waar"],
@@ -506,11 +506,14 @@ export const outdoor: HouseSection = {
       art: "pool",
       image: photos.pool,
       summary: l("Je eigen privézwembad", "Your own private pool"),
-      body: [todo("ZWEMBAD: REGELS, VERLICHTING, ONDERHOUD", "POOL: RULES, LIGHTING, MAINTENANCE")],
+      body: [
+        l("De zwembadverlichting gaat 's avonds automatisch aan.", "The pool lights switch on automatically in the evening."),
+        todo("ZWEMBAD: REGELS EN ONDERHOUD", "POOL: RULES AND MAINTENANCE"),
+      ],
       tips: [
         l("Er is geen hek rond het zwembad — houd kinderen altijd in het oog.", "There is no fence around the pool — always keep an eye on children."),
       ],
-      keywords: ["zwembad", "pool", "zwemmen", "swim"],
+      keywords: ["zwembad", "pool", "zwemmen", "swim", "zwembadlicht", "pool light", "verlichting", "lights"],
     },
     {
       id: "sunbeds",

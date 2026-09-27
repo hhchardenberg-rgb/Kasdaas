@@ -1,11 +1,14 @@
 "use client";
 import Link from "next/link";
 import { Search } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useDict } from "@/components/providers";
 import { LangSwitch } from "./lang-switch";
 
 export function TopBar() {
   const { locale, t } = useDict();
+  const pathname = usePathname();
+  if (pathname.endsWith("/welcome")) return null;
   return (
     <div className="glass fixed inset-x-0 top-0 z-40 pt-safe print:hidden shadow-[0_1px_0_rgb(28_38_41/0.06)]">
       <div className="mx-auto flex h-14 max-w-3xl items-center justify-between gap-3 px-4">

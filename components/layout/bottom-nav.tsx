@@ -8,6 +8,7 @@ export function BottomNav() {
   const { locale, t } = useDict();
   const pathname = usePathname();
   const base = `/${locale}`;
+  if (pathname.endsWith("/welcome")) return null;
   const items = [
     { href: base, label: t.nav.home, Icon: House, match: (p: string) => p === base },
     { href: `${base}/villa`, label: t.nav.villa, Icon: Sofa, match: (p: string) => p.startsWith(`${base}/villa`) || p.startsWith(`${base}/help`) },
