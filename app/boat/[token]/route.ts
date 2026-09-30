@@ -10,7 +10,7 @@ import { requestLocale } from "@/lib/request-locale";
 export async function GET(req: NextRequest, ctx: RouteContext<"/boat/[token]">) {
   const { token } = await ctx.params;
   const locale = requestLocale(req);
-  const access = verifyBoatAccess(token);
+  const access = await verifyBoatAccess(token);
   const headers = { "X-Robots-Tag": "noindex, nofollow", "Cache-Control": "private, no-store", "Referrer-Policy": "no-referrer" };
 
   if (!access.ok) {

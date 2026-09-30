@@ -3,9 +3,9 @@ import "server-only";
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  *  🔒 BOAT ACCESS — REVOCATION LIST
- *  Boat links are signed and expire automatically. To block a link before it
- *  expires, add its ID (printed when the link was created) below, or set the
- *  environment variable BOAT_REVOKED_IDS="id1,id2" and redeploy.
+ *  Boat links are signed and expire automatically. The easiest way to block a
+ *  link before it expires is the Revoke button on /admin (works immediately).
+ *  Alternatively add its ID below, or set BOAT_REVOKED_IDS="id1,id2", and redeploy.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 export const revokedBoatTokenIds: string[] = [

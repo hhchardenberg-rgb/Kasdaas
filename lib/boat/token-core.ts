@@ -8,7 +8,7 @@
  *   [11..26] HMAC-SHA256(secret, bytes 0..10), truncated to 16 bytes
  *
  * Stateless by design: works on serverless hosting without a database.
- * Revocation happens through a list of ids (see content/boat/private/access.ts).
+ * Revocation happens through a list of ids (admin page, content/boat/private/access.ts, env).
  * Kept free of framework imports so the CLI script can use it directly.
  */
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";

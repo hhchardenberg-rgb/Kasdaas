@@ -44,7 +44,7 @@ lib/                    content access layer, i18n, token security, search index
 components/             UI (design system in app/globals.css)
 app/[locale]/…          pages (nl / en)
 app/boat/[token]        deep-link handler for the private boat manual
-app/admin               create boat links + QR codes (needs ADMIN_PASSWORD)
+app/admin               create, list and revoke boat links + QR codes (needs ADMIN_PASSWORD)
 public/sw.js            service worker (offline)
 CONTENT_TODO.md         checklist of everything the owner still has to supply
 ```
@@ -93,8 +93,13 @@ The iPhone WiFi profile also requires the guest password, since it contains the 
   up in the public JavaScript. The page isn't linked anywhere, isn't in the sitemap, and is sent
   with `noindex, nofollow` (meta + `X-Robots-Tag`), `Cache-Control: private, no-store` and
   `Referrer-Policy: no-referrer`.
-- **Revoke** a link early by adding its ID (shown when created) to
-  `content/boat/private/access.ts` or `BOAT_REVOKED_IDS`. Rotating `BOAT_TOKEN_SECRET` revokes all links.
+- **Revoke** a link early with the **Revoke** button in `/admin`. It works immediately, without a redeploy:
+  the link and every device that already opened it lose access (a revocation can be undone with
+  **Restore**). Links made with the CLI can be revoked there by pasting the link or its ID.
+  Issued links and revocations are stored as a private JSON file in Vercel Blob
+  (`BLOB_READ_WRITE_TOKEN`, set automatically when a Blob store is connected to the project;
+  locally a file in `.data/` is used). Alternatives without storage: add the ID to
+  `content/boat/private/access.ts` or `BOAT_REVOKED_IDS` and redeploy. Rotating `BOAT_TOKEN_SECRET` revokes all links.
 - **Offline:** after a renter has opened the manual, the service worker keeps a copy in a separate
   cache **only until the token expires**. It serves that copy only when there's no network, and
   deletes it as soon as the server reports that access is gone. “Remove boat info from this device”

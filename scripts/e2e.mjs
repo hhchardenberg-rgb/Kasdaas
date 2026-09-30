@@ -1,8 +1,8 @@
 /**
  * End-to-end check of the 10 UX scenarios from the brief.
  *
- *   BOAT_TOKEN_SECRET=… npm run build && BOAT_TOKEN_SECRET=… npm start -- -p 3100
- *   BOAT_TOKEN_SECRET=… BASE=http://localhost:3100 npm run test:e2e
+ *   BOAT_TOKEN_SECRET=… npm run build && BOAT_TOKEN_SECRET=… ADMIN_PASSWORD=… npm start -- -p 3100
+ *   BOAT_TOKEN_SECRET=… ADMIN_PASSWORD=… BASE=http://localhost:3100 npm run test:e2e
  *
  * Needs Playwright (npm i -D playwright, or a global install).
  */
@@ -110,7 +110,7 @@ const unlock = (page, path = "/") => page.goto(`${BASE}${path}${path.includes("?
 
   // ── Scenario 9 — search "check out"
   await page.goto(BASE + "/en/search?q=check%20out");
-  const first = await page.locator('main a[href*="/villa/departure"]').first().isVisible();
+  const first = await page.locator('main a[href*="/villa/departure"]').first().waitFor({ timeout: 5000 }).then(() => true, () => false);
   ok("S9 'check out' finds departure instructions", first);
   await ctx.close();
 }
@@ -298,6 +298,63 @@ const unlock = (page, path = "/") => page.goto(`${BASE}${path}${path.includes("?
   await page.goto(BASE + `/boat/${token}`);
   ok("S13 Boat link opens the German manual", /\/de\/boat\/guide$/.test(page.url()) && (await page.getByText("Bevor du ablegst").first().isVisible()), page.url());
   await ctx.close();
+}
+
+// ── Scenario 14 — admin: create, revoke and restore boat links
+if (process.env.ADMIN_PASSWORD) {
+  const ctx = await browser.newContext({ ...iphone, locale: "nl-NL" });
+  const page = await newPage(ctx);
+  page.on("dialog", (d) => d.accept());
+  await page.goto(BASE + "/admin");
+  await page.getByLabel("Admin password").fill("wrong-password-123");
+  await page.getByRole("button", { name: "Sign in" }).click();
+  ok("S14 Admin rejects a wrong password", await page.getByText("Wrong password.").waitFor({ timeout: 5000 }).then(() => true, () => false));
+  await page.getByLabel("Admin password").fill(process.env.ADMIN_PASSWORD);
+  await page.getByRole("button", { name: "Sign in" }).click();
+  await page.getByRole("button", { name: "Create link" }).waitFor();
+  ok("S14 Admin sign-in", true);
+  const label = `E2E test ${Date.now()}`;
+  await page.getByLabel(/Guest \/ booking/).fill(label);
+  await page.getByRole("button", { name: "Create link" }).click();
+  const url = (await page.locator("p.font-mono").textContent({ timeout: 10000 })).trim();
+  const id = (await page.locator("code").first().textContent()).trim();
+  await page.reload();
+  const row = page.locator(`[data-link-id="${id}"]`);
+  ok("S14 New link appears in the active list", (await row.textContent()).includes(label));
+
+  const guest = await browser.newContext({ ...iphone, locale: "nl-NL" });
+  const gp = await newPage(guest);
+  await gp.goto(url.replace(/^https?:\/\/[^/]+/, BASE));
+  ok("S14 Guest opens the manual", /\/boat\/guide$/.test(gp.url()));
+
+  await row.getByRole("button", { name: "Revoke" }).click();
+  await page.waitForTimeout(1500);
+  await page.reload();
+  ok("S14 Link shows as revoked", (await page.locator(`[data-link-id="${id}"]`).textContent()).includes("Revoked"));
+  const res = await gp.goto(BASE + "/nl/boat/guide");
+  ok("S14 Revoked: guest who already opened it loses access", res.status() === 404, String(res.status()));
+  await gp.goto(url.replace(/^https?:\/\/[^/]+/, BASE));
+  ok("S14 Revoked: the link itself no longer works", /link=invalid/.test(decodeURIComponent(gp.url())), gp.url());
+
+  await page.locator(`[data-link-id="${id}"]`).getByRole("button", { name: "Restore" }).click();
+  await page.waitForTimeout(1500);
+  await gp.goto(url.replace(/^https?:\/\/[^/]+/, BASE));
+  ok("S14 Restore makes the link work again", /\/boat\/guide$/.test(gp.url()), gp.url());
+
+  const cli = createBoatToken(SECRET, new Date(Date.now() + 86400_000));
+  await page.getByLabel("Link ID or boat link").fill(`${BASE}/boat/${cli.token}`);
+  await page.getByRole("button", { name: "Revoke", exact: true }).last().click();
+  ok("S14 Revoke by pasted link", await page.getByText(`Link ${cli.id} is revoked.`).waitFor({ timeout: 5000 }).then(() => true, () => false));
+  await gp.goto(`${BASE}/boat/${cli.token}`);
+  ok("S14 Link revoked by ID no longer works", /link=invalid/.test(decodeURIComponent(gp.url())), gp.url());
+
+  await page.getByRole("button", { name: "Sign out" }).click();
+  await page.getByRole("button", { name: "Sign in" }).waitFor();
+  ok("S14 Sign out", true);
+  await guest.close();
+  await ctx.close();
+} else {
+  console.log("– S14 admin scenario skipped (set ADMIN_PASSWORD)");
 }
 
 ok("No runtime errors", errors.length === 0, errors.slice(0, 5).join(" | "));
