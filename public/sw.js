@@ -15,14 +15,14 @@
  *    access is gone (404), the offline copy is deleted immediately.
  *  - "Remove boat info from this device" wipes it.
  */
-const VERSION = "kd-v2";
+const VERSION = "kd-v3";
 const PAGES = `${VERSION}-pages`;
 const ASSETS = `${VERSION}-assets`;
 const BOAT = "kd-boat";
 const META = "kd-meta";
 const NAV_TIMEOUT = 3500;
 
-const BOAT_GUIDE = /^\/(nl|en)\/boat\/guide\/?$/;
+const BOAT_GUIDE = /^\/(nl|en|es)\/boat\/guide\/?$/;
 const BOAT_LINK = /^\/boat\/[A-Za-z0-9_-]{20,}$/;
 const NEVER = /^\/(admin|boat\/forget|api)(\/|$)/;
 
@@ -41,7 +41,7 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("message", (event) => {
   const data = event.data || {};
-  if (data.type === "locale" && (data.locale === "nl" || data.locale === "en")) {
+  if (data.type === "locale" && ["nl", "en", "es"].includes(data.locale)) {
     event.waitUntil(caches.open(META).then((c) => c.put("/__kd/locale", new Response(data.locale))));
   }
   if (data.type === "warm" && Array.isArray(data.urls)) event.waitUntil(warm(data.urls));
@@ -117,7 +117,7 @@ function withTimeout(promise, ms) {
 async function preferredLocale() {
   const hit = await caches.open(META).then((c) => c.match("/__kd/locale"));
   const v = hit ? await hit.text() : "";
-  return v === "nl" || v === "en" ? v : "en";
+  return ["nl", "en", "es"].includes(v) ? v : "en";
 }
 
 async function page(event, req, url) {
@@ -139,7 +139,7 @@ async function page(event, req, url) {
   const late = await net;
   if (late) return late;
   // Nothing for this URL: fall back to the cached home page.
-  const locale = /^\/(nl|en)(\/|$)/.test(key) ? key.slice(1, 3) : await preferredLocale();
+  const locale = /^\/(nl|en|es)(\/|$)/.test(key) ? key.slice(1, 3) : await preferredLocale();
   return (await cache.match(`/${locale}`)) || offlinePage(locale);
 }
 
@@ -172,7 +172,7 @@ async function boatLink(req) {
   } catch {
     const cache = await caches.open(BOAT);
     const locale = await preferredLocale();
-    const hit = (await validBoat(cache, `/${locale}/boat/guide`)) || (await validBoat(cache, `/${locale === "nl" ? "en" : "nl"}/boat/guide`));
+    const hit = (await validBoat(cache, `/${locale}/boat/guide`)) || (await firstValidBoat(cache, ["nl", "en", "es"].filter((l) => l !== locale)));
     return hit || offlinePage(locale);
   }
 }
@@ -186,6 +186,14 @@ async function validBoat(cache, key) {
     return null;
   }
   return hit;
+}
+
+async function firstValidBoat(cache, locales) {
+  for (const l of locales) {
+    const hit = await validBoat(cache, `/${l}/boat/guide`);
+    if (hit) return hit;
+  }
+  return null;
 }
 
 async function purgeExpiredBoat() {
@@ -229,10 +237,17 @@ async function warm(urls) {
   }
 }
 
+const OFFLINE_TEXT = {
+  nl: ["Je bent offline en deze pagina is nog niet opgeslagen. Open de gids één keer met internet, dan werkt hij daarna ook offline.", "Naar home"],
+  en: ["You're offline and this page hasn't been saved yet. Open the guide once with internet and it will work offline afterwards.", "Go home"],
+  es: ["Estás sin conexión y esta página aún no se ha guardado. Abre la guía una vez con internet y después funcionará también sin conexión.", "Ir al inicio"],
+};
+
 function offlinePage(locale) {
-  const nl = locale === "nl";
-  const html = `<!doctype html><html lang="${nl ? "nl" : "en"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Kas Daas — offline</title>
+  const lang = OFFLINE_TEXT[locale] ? locale : "en";
+  const [text, home] = OFFLINE_TEXT[lang];
+  const html = `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Kas Daas — offline</title>
 <style>body{margin:0;min-height:100dvh;display:grid;place-items:center;background:#0d3642;color:#fbf8f3;font-family:Georgia,serif;text-align:center;padding:24px}p{font-family:system-ui,sans-serif;opacity:.8;max-width:22rem;line-height:1.5}a{color:#e9c38f}</style></head>
-<body><div><h1>Kas Daas</h1><p>${nl ? "Je bent offline en deze pagina is nog niet opgeslagen. Open de gids één keer met internet, dan werkt hij daarna ook offline." : "You're offline and this page hasn't been saved yet. Open the guide once with internet and it will work offline afterwards."}</p><p><a href="/${nl ? "nl" : "en"}">${nl ? "Naar home" : "Go home"}</a></p></div></body></html>`;
+<body><div><h1>Kas Daas</h1><p>${text}</p><p><a href="/${lang}">${home}</a></p></div></body></html>`;
   return new Response(html, { status: 200, headers: { "Content-Type": "text/html; charset=utf-8" } });
 }

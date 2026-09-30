@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ChevronDown, Lock, MapPin } from "lucide-react";
-import { isLocale, isPlaceholder, tx, type Locale } from "@/lib/i18n";
+import { intlLocale, isLocale, isPlaceholder, tx, type Locale } from "@/lib/i18n";
 import { currentBoatAccess } from "@/lib/boat/access";
 import { boatManual } from "@/content/boat/private/manual";
 import { dictionaries } from "@/content/ui";
@@ -30,7 +30,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: PageProps<"/[locale]/boat/guide">): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: locale === "nl" ? "Boothandleiding" : "Boat manual",
+    title: { nl: "Boothandleiding", en: "Boat manual", es: "Manual del barco" }[locale],
     robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
     referrer: "no-referrer",
   };
@@ -75,7 +75,7 @@ export default async function BoatGuidePage({ params }: PageProps<"/[locale]/boa
   const g = t.boatGuide;
   const m = boatManual;
   const rentalKey = `boat-${access.id}`;
-  const validUntil = new Intl.DateTimeFormat(locale === "nl" ? "nl-NL" : "en-GB", {
+  const validUntil = new Intl.DateTimeFormat(intlLocale[locale], {
     dateStyle: "long",
     timeStyle: "short",
     timeZone: "America/Kralendijk",

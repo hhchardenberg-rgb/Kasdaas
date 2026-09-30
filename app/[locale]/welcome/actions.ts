@@ -1,6 +1,7 @@
 "use server";
 import { cookies, headers } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
+import { isLocale } from "@/lib/i18n";
 import { GUEST_COOKIE, guestCookieOptions, guestToken, isGuestPassword } from "@/lib/guest-access";
 
 export interface UnlockState {
@@ -11,7 +12,8 @@ export interface UnlockState {
 const attempts = new Map<string, { n: number; until: number }>();
 
 export async function unlockGuide(_prev: UnlockState, form: FormData): Promise<UnlockState> {
-  const locale = form.get("locale") === "nl" ? "nl" : "en";
+  const raw = String(form.get("locale") ?? "");
+  const locale = isLocale(raw) ? raw : "en";
   const h = await headers();
   const key = (h.get("x-forwarded-for")?.split(",")[0] || h.get("x-real-ip") || "local").trim().slice(0, 64);
   const now = Date.now();
@@ -30,5 +32,5 @@ export async function unlockGuide(_prev: UnlockState, form: FormData): Promise<U
   // Only allow internal guide paths as destination.
   // Replace (not push): the password screen should not stay in the history,
   // otherwise "back" would return to it.
-  redirect(/^\/(nl|en)(\/[\w\-/]*)?(\?[\w\-=&%.]*)?$/.test(next) ? next : `/${locale}`, RedirectType.replace);
+  redirect(/^\/(nl|en|es)(\/[\w\-/]*)?(\?[\w\-=&%.]*)?$/.test(next) ? next : `/${locale}`, RedirectType.replace);
 }

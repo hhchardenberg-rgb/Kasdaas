@@ -24,6 +24,7 @@ export function BoatLinkForm() {
             <select name="lang" defaultValue="nl" className="mt-1 h-12 w-full rounded-xl border border-sand-300 bg-white px-3">
               <option value="nl">Nederlands</option>
               <option value="en">English</option>
+              <option value="es">Español</option>
             </select>
           </label>
         </div>

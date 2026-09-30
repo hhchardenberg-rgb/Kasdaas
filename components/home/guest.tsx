@@ -4,6 +4,7 @@ import { CalendarDays } from "lucide-react";
 import { useDict } from "@/components/providers";
 import { fmt } from "@/content/ui";
 import { useStore } from "@/lib/client-store";
+import { intlLocale } from "@/lib/i18n";
 
 export interface GuestInfo {
   name?: string;
@@ -55,7 +56,7 @@ export function StayDates() {
   const guest = useGuest();
   if (!guest.arrive && !guest.depart) return null;
   const f = (d: string) =>
-    new Intl.DateTimeFormat(locale === "nl" ? "nl-NL" : "en-GB", { weekday: "short", day: "numeric", month: "long", timeZone: "UTC" }).format(new Date(d));
+    new Intl.DateTimeFormat(intlLocale[locale], { weekday: "short", day: "numeric", month: "long", timeZone: "UTC" }).format(new Date(d));
   return (
     <div className="grid grid-cols-2 gap-3 border-b border-sand-200 pb-4">
       {guest.arrive && (

@@ -2,7 +2,7 @@
 
 The digital guest experience of **Kas Daas**, a private villa on Bonaire:
 villa manual, curated Bonaire guide, boat rental and a private boat manual for renters.
-Installable as an app (PWA), bilingual (NL/EN) and usable offline.
+Installable as an app (PWA), trilingual (NL/EN/ES) and usable offline.
 
 > Jouw gids voor Kas Daas & Bonaire · Your guide to Kas Daas & Bonaire
 
@@ -31,8 +31,8 @@ Requires Node 20.9+ (the CLI scripts use Node's built-in TypeScript support, Nod
 ```
 content/                ← ALL texts & data (edit these, not the components)
   site.ts               general settings, host contact, emergency numbers, villa location
-  images.ts             all photos (files in public/images) with NL/EN alt texts
-  ui.ts                 interface texts NL/EN (EN is type-checked against NL → no missing translations)
+  images.ts             all photos (files in public/images) with NL/EN/ES alt texts
+  ui.ts                 interface texts NL/EN/ES (EN and ES are type-checked against NL → no missing translations)
   categories.ts         Discover categories, tags, dining styles, map filters
   house/                villa guide: sections, WiFi & check-in/out, departure checklist, problems
   places/               restaurants, beaches, snorkel/dive sites, activities, groceries, practical
@@ -53,8 +53,8 @@ CONTENT_TODO.md         checklist of everything the owner still has to supply
 
 Everything is typed TypeScript data. Adding a restaurant, beach, activity or day plan means
 adding one object to an array in `content/` — no component changes. Every text is
-`l("Nederlands", "English")`. Missing information is written as
-`todo("WIFI-NETWERK", "WIFI NETWORK")`, which renders as a clearly marked placeholder and
+`l("Nederlands", "English", "Español")`. Missing information is written as
+`todo("WIFI-NETWERK", "WIFI NETWORK", "RED WIFI")`, which renders as a clearly marked placeholder and
 never becomes a clickable phone number, route or QR code.
 
 Example recommendations are flagged `demo: true` and show a small “Sample — to be verified”
@@ -66,9 +66,10 @@ re-implement those functions (and keep the types in `lib/types.ts`). The UI stay
 
 ## Languages
 
-`/nl/…` and `/en/…`. On the first visit, `proxy.ts` picks Dutch for Dutch browsers and English for
-everyone else. The choice from the NL/EN switch is remembered in a cookie and localStorage.
-UI texts live in `content/ui.ts`, where a missing English key is a type error.
+`/nl/…`, `/en/…` and `/es/…`. On the first visit, `proxy.ts` picks Dutch for Dutch browsers, Spanish
+for Spanish browsers and English for everyone else. The choice from the NL/EN/ES switch is remembered
+in a cookie and localStorage. UI texts live in `content/ui.ts`, where a missing English or Spanish key
+is a type error; `l()` and `todo()` require all three languages, so content can't be half-translated either.
 
 ## Guest password 🔑
 

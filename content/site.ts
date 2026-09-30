@@ -11,10 +11,10 @@ import { photos } from "./images";
  */
 export const site = {
   name: "Kas Daas",
-  tagline: l("Jouw gids voor Kas Daas & Bonaire", "Your guide to Kas Daas & Bonaire"),
+  tagline: l("Jouw gids voor Kas Daas & Bonaire", "Your guide to Kas Daas & Bonaire", "Tu guía de Kas Daas y Bonaire"),
   description: l(
     "De digitale gastengids van Kas Daas: alles over de villa, onze favoriete plekken op Bonaire en de boot.",
-    "The digital guest guide of Kas Daas: everything about the villa, our favourite places on Bonaire and the boat.",
+    "The digital guest guide of Kas Daas: everything about the villa, our favourite places on Bonaire and the boat.", "La guía digital para huéspedes de Kas Daas: todo sobre la villa, nuestros lugares favoritos de Bonaire y el barco.",
   ),
 
   /** Public URL, used for QR codes, share links and metadata. Override with NEXT_PUBLIC_SITE_URL. */
@@ -53,8 +53,8 @@ export const site = {
     phone: "+599 782 9691",
     /** Assumed to be the same number as the phone — change if WhatsApp uses another number. */
     whatsapp: "+599 782 9691",
-    email: todo("E-MAILADRES BEHEERDER", "HOST EMAIL ADDRESS"),
-    availability: todo("BEREIKBAARHEID BEHEERDER (BIJV. DAGELIJKS 08:00–20:00)", "HOST AVAILABILITY (E.G. DAILY 8 AM–8 PM)"),
+    email: todo("E-MAILADRES BEHEERDER", "HOST EMAIL ADDRESS", "CORREO ELECTRÓNICO DEL ANFITRIÓN"),
+    availability: todo("BEREIKBAARHEID BEHEERDER (BIJV. DAGELIJKS 08:00–20:00)", "HOST AVAILABILITY (E.G. DAILY 8 AM–8 PM)", "DISPONIBILIDAD DEL ANFITRIÓN (P. EJ. A DIARIO DE 8:00 A 20:00)"),
   },
 
   /**
@@ -65,27 +65,27 @@ export const site = {
   emergencyContacts: [
     {
       id: "emergency",
-      label: l("Alarmnummer (politie, brandweer, ambulance)", "Emergency (police, fire, ambulance)"),
+      label: l("Alarmnummer (politie, brandweer, ambulance)", "Emergency (police, fire, ambulance)", "Emergencias (policía, bomberos, ambulancia)"),
       phone: "911",
       primary: true,
     },
     {
       id: "hospital",
-      label: l("Ziekenhuis Fundashon Mariadal", "Hospital Fundashon Mariadal"),
-      phone: todo("TELEFOONNUMMER ZIEKENHUIS", "HOSPITAL PHONE NUMBER"),
+      label: l("Ziekenhuis Fundashon Mariadal", "Hospital Fundashon Mariadal", "Hospital Fundashon Mariadal"),
+      phone: todo("TELEFOONNUMMER ZIEKENHUIS", "HOSPITAL PHONE NUMBER", "TELÉFONO DEL HOSPITAL"),
     },
     {
       id: "doctor",
-      label: l("Huisarts / doktersdienst", "Doctor / GP on call"),
-      phone: todo("TELEFOONNUMMER HUISARTS", "DOCTOR PHONE NUMBER"),
+      label: l("Huisarts / doktersdienst", "Doctor / GP on call", "Médico / médico de guardia"),
+      phone: todo("TELEFOONNUMMER HUISARTS", "DOCTOR PHONE NUMBER", "TELÉFONO DEL MÉDICO"),
     },
     {
       id: "police",
-      label: l("Politie (geen spoed)", "Police (non-emergency)"),
-      phone: todo("TELEFOONNUMMER POLITIE GEEN SPOED", "POLICE NON-EMERGENCY NUMBER"),
+      label: l("Politie (geen spoed)", "Police (non-emergency)", "Policía (no urgente)"),
+      phone: todo("TELEFOONNUMMER POLITIE GEEN SPOED", "POLICE NON-EMERGENCY NUMBER", "TELÉFONO DE LA POLICÍA (NO URGENTE)"),
     },
   ] satisfies Contact[],
 
   /** Default WhatsApp message when a guest taps "WhatsApp the host". */
-  whatsappGreeting: l("Hoi! We verblijven in Kas Daas en hebben een vraag: ", "Hi! We're staying at Kas Daas and have a question: "),
+  whatsappGreeting: l("Hoi! We verblijven in Kas Daas en hebben een vraag: ", "Hi! We're staying at Kas Daas and have a question: ", "¡Hola! Nos alojamos en Kas Daas y tenemos una pregunta: "),
 };

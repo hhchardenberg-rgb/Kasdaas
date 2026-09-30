@@ -36,8 +36,11 @@ function score(e: Prepared, q: string): number {
   return s;
 }
 
-const SUGGEST = ["wifi", "airco", "check-out", "pizza", "snorkel", "boot", "supermarkt"];
-const SUGGEST_EN = ["wifi", "air con", "check-out", "pizza", "snorkel", "boat", "supermarket"];
+const SUGGEST = {
+  nl: ["wifi", "airco", "check-out", "pizza", "snorkel", "boot", "supermarkt"],
+  en: ["wifi", "air con", "check-out", "pizza", "snorkel", "boat", "supermarket"],
+  es: ["wifi", "aire acondicionado", "check-out", "pizza", "snorkel", "barco", "supermercado"],
+};
 
 export function SearchClient({ index }: { index: SearchEntry[] }) {
   const { t, locale } = useDict();
@@ -96,7 +99,7 @@ export function SearchClient({ index }: { index: SearchEntry[] }) {
         <div className="mt-6">
           <p className="mb-3 text-sm text-muted">{t.search.hint}</p>
           <div className="flex flex-wrap gap-2">
-            {(locale === "nl" ? SUGGEST : SUGGEST_EN).map((s) => (
+            {SUGGEST[locale].map((s) => (
               <button key={s} type="button" onClick={() => setQ(s)} className="chip bg-white text-ink-soft shadow-[var(--shadow-soft)]">{s}</button>
             ))}
           </div>

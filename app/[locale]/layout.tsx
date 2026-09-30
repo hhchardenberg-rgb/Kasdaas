@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import "@fontsource-variable/fraunces";
 import "@fontsource-variable/manrope";
 import "../globals.css";
-import { isLocale, locales, tx } from "@/lib/i18n";
+import { isLocale, locales, ogLocale, tx } from "@/lib/i18n";
 import { site } from "@/lib/content";
 import { publicPaths } from "@/lib/routes";
 import { LocaleProvider } from "@/components/providers";
@@ -37,12 +37,12 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
       apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
     },
     robots: site.indexable ? { index: true, follow: true } : { index: false, follow: false },
-    alternates: { languages: { nl: "/nl", en: "/en" } },
+    alternates: { languages: { nl: "/nl", en: "/en", es: "/es" } },
     openGraph: {
       siteName: "Kas Daas",
       title: "Kas Daas",
       description: tx(site.description, locale),
-      locale: locale === "nl" ? "nl_NL" : "en_US",
+      locale: ogLocale[locale],
       type: "website",
     },
   };
@@ -66,7 +66,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
             href="#main"
             className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-white focus:px-4 focus:py-2"
           >
-            {locale === "nl" ? "Naar de inhoud" : "Skip to content"}
+            {{ nl: "Naar de inhoud", en: "Skip to content", es: "Ir al contenido" }[locale]}
           </a>
           <NavigationTracker />
           <Splash />

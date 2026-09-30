@@ -124,7 +124,7 @@ const unlock = (page, path = "/") => page.goto(`${BASE}${path}${path.includes("?
   ok("S6 /boat/guide without token → 404", res.status() === 404, String(res.status()));
   const cookie = (await ctx.cookies()).map((c) => `${c.name}=${c.value}`).join("; ");
   const leaked = [];
-  for (const path of ["/en", "/nl", "/en/boat", "/nl/boat", "/en/more", "/en/villa", "/en/discover", "/sitemap.xml", "/robots.txt"]) {
+  for (const path of ["/en", "/nl", "/es", "/en/boat", "/nl/boat", "/es/boat", "/en/more", "/en/villa", "/en/discover", "/sitemap.xml", "/robots.txt"]) {
     const html = await (await fetch(BASE + path, { headers: { cookie } })).text();
     if (/boat\/guide/.test(html)) leaked.push(path);
   }
@@ -244,6 +244,32 @@ const unlock = (page, path = "/") => page.goto(`${BASE}${path}${path.includes("?
   await p2.waitForTimeout(800);
   ok("S11 After the password: back doesn't return to the password screen", (await back(p2)) === "/nl/villa");
   await ctx2.close();
+}
+
+// ── Scenario 12 — Spanish
+{
+  const ctx = await browser.newContext({ ...iphone, locale: "es-ES" });
+  const page = await newPage(ctx);
+  await unlock(page);
+  ok("S12 Spanish browser → /es", page.url().endsWith("/es"), page.url());
+  ok("S12 Spanish home", await page.getByText("Bon bini a Kas Daas").first().isVisible());
+  const mixed = [];
+  for (const path of ["/es", "/es/villa", "/es/villa/arrival", "/es/villa/comfort", "/es/villa/departure", "/es/help", "/es/discover/restaurants", "/es/places/brass-boer", "/es/plans/first-day", "/es/good-to-know", "/es/boat", "/es/more"]) {
+    await page.goto(BASE + path);
+    const text = await page.locator("body").innerText();
+    if (/TO FILL IN|INVULLEN|Kas Daas recommends|Good to know|Directions/.test(text)) mixed.push(path);
+  }
+  ok("S12 Spanish pages show no Dutch/English leftovers", mixed.length === 0, mixed.join(","));
+  await page.goto(BASE + "/es/search?q=aire%20acondicionado");
+  ok("S12 Search in Spanish", (await page.locator('a[href*="/es/villa/"]').count()) > 0);
+  await page.goto(BASE + "/nl/villa");
+  await page.getByRole("button", { name: "Español" }).click();
+  await page.waitForURL(/\/es\/villa$/);
+  ok("S12 Language switch NL → ES keeps the page", new URL(page.url()).pathname === "/es/villa");
+  const { token } = createBoatToken(SECRET, new Date(Date.now() + 86400_000));
+  await page.goto(BASE + `/boat/${token}`);
+  ok("S12 Boat link opens the Spanish manual", /\/es\/boat\/guide$/.test(page.url()) && (await page.getByText("Antes de salir").first().isVisible()), page.url());
+  await ctx.close();
 }
 
 ok("No runtime errors", errors.length === 0, errors.slice(0, 5).join(" | "));

@@ -3,7 +3,7 @@ import { isLocale, localeFromAcceptLanguage, LOCALE_COOKIE } from "@/lib/i18n";
 import { GUEST_COOKIE, guestCookieOptions, guestToken, isGuestPassword, isValidGuestCookie } from "@/lib/guest-access";
 
 /** Pages reachable without the guest password (the boat manual has its own token). */
-const OPEN = /^\/(nl|en)\/(welcome|boat\/guide)\/?$/;
+const OPEN = /^\/(nl|en|es)\/(welcome|boat\/guide)\/?$/;
 
 /**
  * 1. Language: paths without /nl or /en are sent to the remembered or

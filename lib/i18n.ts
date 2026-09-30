@@ -1,15 +1,15 @@
 /**
  * Tiny, dependency-free i18n layer.
  * Every piece of content is either a plain string (language-neutral, e.g. a
- * brand name) or a `Localized` object with a Dutch and an English version.
+ * brand name) or a `Localized` object with a Dutch, English and Spanish version.
  */
-export const locales = ["nl", "en"] as const;
+export const locales = ["nl", "en", "es"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en";
 
-export type Localized = { nl: string; en: string };
+export type Localized = { nl: string; en: string; es: string };
 export type Text = string | Localized;
-export type LocalizedList = { nl: string[]; en: string[] };
+export type LocalizedList = { nl: string[]; en: string[]; es: string[] };
 
 export function isLocale(value: string | undefined | null): value is Locale {
   return !!value && (locales as readonly string[]).includes(value);
@@ -36,7 +36,7 @@ const PLACEHOLDER = /^\s*\[[^\]]*\]\s*$/;
 export function isPlaceholder(value: Text | undefined | null): boolean {
   if (value == null) return false;
   if (typeof value === "string") return PLACEHOLDER.test(value);
-  return PLACEHOLDER.test(value.nl) || PLACEHOLDER.test(value.en);
+  return PLACEHOLDER.test(value.nl) || PLACEHOLDER.test(value.en) || PLACEHOLDER.test(value.es);
 }
 
 /** True when a value exists and is not a placeholder — safe to use for actions. */
@@ -44,7 +44,7 @@ export function hasValue(value: Text | undefined | null): value is Text {
   return value != null && tx(value, "en").trim() !== "" && !isPlaceholder(value);
 }
 
-/** Pick the best locale from an Accept-Language header: Dutch → nl, everything else → en. */
+/** Pick the best locale from an Accept-Language header: Dutch → nl, Spanish → es, everything else → en. */
 export function localeFromAcceptLanguage(header: string | null | undefined): Locale {
   if (!header) return defaultLocale;
   const first = header
@@ -54,7 +54,23 @@ export function localeFromAcceptLanguage(header: string | null | undefined): Loc
       return { tag: tag.toLowerCase(), q: q ? parseFloat(q) : 1 };
     })
     .sort((a, b) => b.q - a.q)[0];
-  return first?.tag.startsWith("nl") ? "nl" : "en";
+  if (first?.tag.startsWith("nl")) return "nl";
+  if (first?.tag.startsWith("es")) return "es";
+  return "en";
 }
 
 export const LOCALE_COOKIE = "kd_locale";
+
+/** Native language names, for the language switcher. */
+export const localeNames: Record<Locale, string> = { nl: "Nederlands", en: "English", es: "Español" };
+
+/** BCP 47 tag for Intl formatting. */
+export const intlLocale: Record<Locale, string> = { nl: "nl-NL", en: "en-GB", es: "es-ES" };
+
+/** Open Graph locale. */
+export const ogLocale: Record<Locale, string> = { nl: "nl_NL", en: "en_US", es: "es_ES" };
+
+/** Pick one of three literal strings for a locale (for small inline texts). */
+export function pick<T>(locale: Locale, values: Record<Locale, T>): T {
+  return values[locale];
+}
