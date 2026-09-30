@@ -15,14 +15,14 @@
  *    access is gone (404), the offline copy is deleted immediately.
  *  - "Remove boat info from this device" wipes it.
  */
-const VERSION = "kd-v3";
+const VERSION = "kd-v4";
 const PAGES = `${VERSION}-pages`;
 const ASSETS = `${VERSION}-assets`;
 const BOAT = "kd-boat";
 const META = "kd-meta";
 const NAV_TIMEOUT = 3500;
 
-const BOAT_GUIDE = /^\/(nl|en|es)\/boat\/guide\/?$/;
+const BOAT_GUIDE = /^\/(nl|en|es|de)\/boat\/guide\/?$/;
 const BOAT_LINK = /^\/boat\/[A-Za-z0-9_-]{20,}$/;
 const NEVER = /^\/(admin|boat\/forget|api)(\/|$)/;
 
@@ -41,7 +41,7 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("message", (event) => {
   const data = event.data || {};
-  if (data.type === "locale" && ["nl", "en", "es"].includes(data.locale)) {
+  if (data.type === "locale" && ["nl", "en", "es", "de"].includes(data.locale)) {
     event.waitUntil(caches.open(META).then((c) => c.put("/__kd/locale", new Response(data.locale))));
   }
   if (data.type === "warm" && Array.isArray(data.urls)) event.waitUntil(warm(data.urls));
@@ -117,7 +117,7 @@ function withTimeout(promise, ms) {
 async function preferredLocale() {
   const hit = await caches.open(META).then((c) => c.match("/__kd/locale"));
   const v = hit ? await hit.text() : "";
-  return ["nl", "en", "es"].includes(v) ? v : "en";
+  return ["nl", "en", "es", "de"].includes(v) ? v : "en";
 }
 
 async function page(event, req, url) {
@@ -139,7 +139,7 @@ async function page(event, req, url) {
   const late = await net;
   if (late) return late;
   // Nothing for this URL: fall back to the cached home page.
-  const locale = /^\/(nl|en|es)(\/|$)/.test(key) ? key.slice(1, 3) : await preferredLocale();
+  const locale = /^\/(nl|en|es|de)(\/|$)/.test(key) ? key.slice(1, 3) : await preferredLocale();
   return (await cache.match(`/${locale}`)) || offlinePage(locale);
 }
 
@@ -172,7 +172,7 @@ async function boatLink(req) {
   } catch {
     const cache = await caches.open(BOAT);
     const locale = await preferredLocale();
-    const hit = (await validBoat(cache, `/${locale}/boat/guide`)) || (await firstValidBoat(cache, ["nl", "en", "es"].filter((l) => l !== locale)));
+    const hit = (await validBoat(cache, `/${locale}/boat/guide`)) || (await firstValidBoat(cache, ["nl", "en", "es", "de"].filter((l) => l !== locale)));
     return hit || offlinePage(locale);
   }
 }
@@ -241,6 +241,7 @@ const OFFLINE_TEXT = {
   nl: ["Je bent offline en deze pagina is nog niet opgeslagen. Open de gids één keer met internet, dan werkt hij daarna ook offline.", "Naar home"],
   en: ["You're offline and this page hasn't been saved yet. Open the guide once with internet and it will work offline afterwards.", "Go home"],
   es: ["Estás sin conexión y esta página aún no se ha guardado. Abre la guía una vez con internet y después funcionará también sin conexión.", "Ir al inicio"],
+  de: ["Du bist offline und diese Seite ist noch nicht gespeichert. Öffne den Guide einmal mit Internet, danach funktioniert er auch offline.", "Zum Start"],
 };
 
 function offlinePage(locale) {

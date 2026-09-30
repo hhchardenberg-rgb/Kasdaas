@@ -124,7 +124,7 @@ const unlock = (page, path = "/") => page.goto(`${BASE}${path}${path.includes("?
   ok("S6 /boat/guide without token → 404", res.status() === 404, String(res.status()));
   const cookie = (await ctx.cookies()).map((c) => `${c.name}=${c.value}`).join("; ");
   const leaked = [];
-  for (const path of ["/en", "/nl", "/es", "/en/boat", "/nl/boat", "/es/boat", "/en/more", "/en/villa", "/en/discover", "/sitemap.xml", "/robots.txt"]) {
+  for (const path of ["/en", "/nl", "/es", "/de", "/en/boat", "/nl/boat", "/es/boat", "/de/boat", "/en/more", "/en/villa", "/en/discover", "/sitemap.xml", "/robots.txt"]) {
     const html = await (await fetch(BASE + path, { headers: { cookie } })).text();
     if (/boat\/guide/.test(html)) leaked.push(path);
   }
@@ -261,7 +261,8 @@ const unlock = (page, path = "/") => page.goto(`${BASE}${path}${path.includes("?
   }
   ok("S12 Spanish pages show no Dutch/English leftovers", mixed.length === 0, mixed.join(","));
   await page.goto(BASE + "/es/search?q=aire%20acondicionado");
-  ok("S12 Search in Spanish", (await page.locator('a[href*="/es/villa/"]').count()) > 0);
+  const hites = await page.locator('a[href*="/es/villa/"]').first().waitFor({ timeout: 5000 }).then(() => true, () => false);
+  ok("S12 Search in Spanish", hites);
   await page.goto(BASE + "/nl/villa");
   await page.getByRole("button", { name: "Español" }).click();
   await page.waitForURL(/\/es\/villa$/);
@@ -269,6 +270,33 @@ const unlock = (page, path = "/") => page.goto(`${BASE}${path}${path.includes("?
   const { token } = createBoatToken(SECRET, new Date(Date.now() + 86400_000));
   await page.goto(BASE + `/boat/${token}`);
   ok("S12 Boat link opens the Spanish manual", /\/es\/boat\/guide$/.test(page.url()) && (await page.getByText("Antes de salir").first().isVisible()), page.url());
+  await ctx.close();
+}
+
+// ── Scenario 13 — German
+{
+  const ctx = await browser.newContext({ ...iphone, locale: "de-DE" });
+  const page = await newPage(ctx);
+  await unlock(page);
+  ok("S13 German browser → /de", page.url().endsWith("/de"), page.url());
+  ok("S13 German home", await page.getByText("Bon bini im Kas Daas").first().isVisible());
+  const mixed = [];
+  for (const path of ["/de", "/de/villa", "/de/villa/arrival", "/de/villa/comfort", "/de/villa/departure", "/de/help", "/de/discover/restaurants", "/de/places/brass-boer", "/de/plans/first-day", "/de/good-to-know", "/de/boat", "/de/more"]) {
+    await page.goto(BASE + path);
+    const text = await page.locator("body").innerText();
+    if (/TO FILL IN|INVULLEN|POR COMPLETAR|Kas Daas recommends|Good to know|Directions|Bueno saber/.test(text)) mixed.push(path);
+  }
+  ok("S13 German pages show no other-language leftovers", mixed.length === 0, mixed.join(","));
+  await page.goto(BASE + "/de/search?q=klimaanlage");
+  const hitde = await page.locator('a[href*="/de/villa/"]').first().waitFor({ timeout: 5000 }).then(() => true, () => false);
+  ok("S13 Search in German", hitde);
+  await page.goto(BASE + "/es/villa");
+  await page.getByRole("button", { name: "Deutsch" }).click();
+  await page.waitForURL(/\/de\/villa$/);
+  ok("S13 Language switch ES → DE keeps the page", new URL(page.url()).pathname === "/de/villa");
+  const { token } = createBoatToken(SECRET, new Date(Date.now() + 86400_000));
+  await page.goto(BASE + `/boat/${token}`);
+  ok("S13 Boat link opens the German manual", /\/de\/boat\/guide$/.test(page.url()) && (await page.getByText("Bevor du ablegst").first().isVisible()), page.url());
   await ctx.close();
 }
 

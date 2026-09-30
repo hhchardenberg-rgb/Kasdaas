@@ -21,7 +21,7 @@ export function LangSwitch() {
     if (next === locale) return;
     haptic();
     rememberLocale(next);
-    const rest = pathname.replace(/^\/(nl|en|es)(?=\/|$)/, "");
+    const rest = pathname.replace(/^\/(nl|en|es|de)(?=\/|$)/, "");
     replaceCurrent(`/${next}${rest}`);
     router.replace(`/${next}${rest}${window.location.search}${window.location.hash}`);
   };
@@ -35,7 +35,7 @@ export function LangSwitch() {
           aria-pressed={l === locale}
           lang={l}
           aria-label={localeNames[l]}
-          className={`h-9 min-w-10 rounded-full px-2.5 uppercase tracking-wider transition ${l === locale ? "bg-white text-ink shadow-sm" : "text-muted"}`}
+          className={`h-9 min-w-9 rounded-full px-2 uppercase max-[359px]:min-w-8 max-[359px]:px-1.5 tracking-wider transition ${l === locale ? "bg-white text-ink shadow-sm" : "text-muted"}`}
         >
           {l}
         </button>

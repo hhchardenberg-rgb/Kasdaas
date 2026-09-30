@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
       },
       // Private boat manual, deep links and admin: never cached by proxies, never indexed.
       { source: "/boat/:token*", headers: privateHeaders },
-      { source: "/:locale(nl|en|es)/boat/guide", headers: privateHeaders },
+      { source: "/:locale(nl|en|es|de)/boat/guide", headers: privateHeaders },
       { source: "/admin/:path*", headers: privateHeaders },
       { source: "/admin", headers: privateHeaders },
     ];

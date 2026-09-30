@@ -40,6 +40,7 @@ const SUGGEST = {
   nl: ["wifi", "airco", "check-out", "pizza", "snorkel", "boot", "supermarkt"],
   en: ["wifi", "air con", "check-out", "pizza", "snorkel", "boat", "supermarket"],
   es: ["wifi", "aire acondicionado", "check-out", "pizza", "snorkel", "barco", "supermercado"],
+  de: ["wlan", "klimaanlage", "check-out", "pizza", "schnorcheln", "boot", "supermarkt"],
 };
 
 export function SearchClient({ index }: { index: SearchEntry[] }) {

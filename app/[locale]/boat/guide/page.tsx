@@ -30,7 +30,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: PageProps<"/[locale]/boat/guide">): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: { nl: "Boothandleiding", en: "Boat manual", es: "Manual del barco" }[locale],
+    title: { nl: "Boothandleiding", en: "Boat manual", es: "Manual del barco", de: "Bootsanleitung" }[locale],
     robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
     referrer: "no-referrer",
   };

@@ -106,7 +106,7 @@ export function InstallSheet({ open, onClose }: { open: boolean; onClose: () => 
 export function InstallPrompt() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const onHome = /^\/(nl|en|es)\/?$/.test(pathname);
+  const onHome = /^\/(nl|en|es|de)\/?$/.test(pathname);
   useEffect(() => {
     // Count visits once per browser session.
     try {

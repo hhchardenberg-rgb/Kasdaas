@@ -32,5 +32,5 @@ export async function unlockGuide(_prev: UnlockState, form: FormData): Promise<U
   // Only allow internal guide paths as destination.
   // Replace (not push): the password screen should not stay in the history,
   // otherwise "back" would return to it.
-  redirect(/^\/(nl|en|es)(\/[\w\-/]*)?(\?[\w\-=&%.]*)?$/.test(next) ? next : `/${locale}`, RedirectType.replace);
+  redirect(/^\/(nl|en|es|de)(\/[\w\-/]*)?(\?[\w\-=&%.]*)?$/.test(next) ? next : `/${locale}`, RedirectType.replace);
 }

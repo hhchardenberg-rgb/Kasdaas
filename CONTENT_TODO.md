@@ -2,15 +2,15 @@
 
 Deze checklist bevat **alle** informatie die nog ontbreekt in de Kas Daas-gids.
 In de app zijn ontbrekende gegevens zichtbaar als gestreepte labels, bijvoorbeeld
-`[WIFI-NETWERK INVULLEN]` (NL) / `[TO FILL IN: WIFI NETWORK]` (EN) / `[POR COMPLETAR: RED WIFI]` (ES).
+`[WIFI-NETWERK INVULLEN]` (NL) / `[TO FILL IN: WIFI NETWORK]` (EN) / `[POR COMPLETAR: RED WIFI]` (ES) / `[NOCH ERGÄNZEN: WLAN-NETZWERK]` (DE).
 
 > 💡 **Tip:** `npm run content:todo` toont een actuele lijst van alle open punten
-> met bestand en regelnummer. In de broncode staan ze als `todo("…", "…", "…")`.
-> Vervang zo'n `todo(…)` door de echte tekst: `l("Nederlandse tekst", "English text", "Texto en español")`,
+> met bestand en regelnummer. In de broncode staan ze als `todo("…", "…", "…", "…")`.
+> Vervang zo'n `todo(…)` door de echte tekst: `l("Nederlandse tekst", "English text", "Texto en español", "Deutscher Text")`,
 > of — voor taalonafhankelijke waarden zoals een telefoonnummer — gewoon `"+599 …"`.
 
-Teksten mag je in het **Nederlands** aanleveren; de Engelse en Spaanse vertaling wordt erbij gemaakt
-(de gids is volledig drietalig: NL / EN / ES).
+Teksten mag je in het **Nederlands** aanleveren; de Engelse, Spaanse en Duitse vertaling wordt erbij
+gemaakt (de gids is volledig viertalig: NL / EN / ES / DE).
 
 > ✅ **Al verwerkt uit de eigen Vrbo-advertentie (p336665):** 35 foto's (villa + Bonaire),
 > ligging (Belnem, Kralendijk, direct aan zee), ontwerp Piet Boon, Viking-keuken,

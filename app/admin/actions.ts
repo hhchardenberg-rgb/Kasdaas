@@ -34,7 +34,8 @@ export async function createBoatLink(_prev: LinkResult, form: FormData): Promise
   }
   failures = 0;
   const days = Math.min(60, Math.max(1, Number(form.get("days")) || 3));
-  const lang = form.get("lang") === "en" ? "en" : form.get("lang") === "es" ? "es" : "nl";
+  const raw = String(form.get("lang") ?? "");
+  const lang = raw === "en" || raw === "es" || raw === "de" ? raw : "nl";
   try {
     const { token, id, exp } = issueBoatToken(days);
     const base = String(form.get("origin") || site.url).replace(/\/$/, "");
@@ -45,7 +46,9 @@ export async function createBoatLink(_prev: LinkResult, form: FormData): Promise
         ? `Hier vind je alle informatie over de boot 🚤\n${url}\n\nDeze link is persoonlijk en geldig tot ${expires}.`
         : lang === "es"
           ? `Aquí tienes toda la información sobre el barco 🚤\n${url}\n\nEste enlace es personal y válido hasta ${expires}.`
-          : `Here's everything you need to know about the boat 🚤\n${url}\n\nThis link is personal and valid until ${expires}.`;
+          : lang === "de"
+            ? `Hier findest du alle Infos zum Boot 🚤\n${url}\n\nDieser Link ist persönlich und gültig bis ${expires}.`
+            : `Here's everything you need to know about the boat 🚤\n${url}\n\nThis link is personal and valid until ${expires}.`;
     return { url, id, expires, qr: await qrSvg(url), message };
   } catch (e) {
     return { error: e instanceof Error ? e.message : "Could not create link." };

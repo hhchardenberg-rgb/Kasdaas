@@ -47,7 +47,7 @@ export function hasInAppPrevious(): boolean {
 
 /** Logical parent page, used when there is no in-app page to go back to. */
 export function parentPath(pathname: string): string {
-  const m = pathname.match(/^\/(nl|en|es)(\/.*)?$/);
+  const m = pathname.match(/^\/(nl|en|es|de)(\/.*)?$/);
   if (!m) return "/";
   const base = `/${m[1]}`;
   const rest = (m[2] ?? "").replace(/\/$/, "");
