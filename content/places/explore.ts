@@ -526,6 +526,7 @@ export const practicalPlaces: Place[] = [
     art: "practical",
     area: "Kralendijk",
     mapsQuery: "Fundashon Mariadal Bonaire",
+    phone: "+599 717 8900",
     coordinates: { lat: 12.1540, lng: -68.2710, approximate: true },
     summary: l("Het ziekenhuis van Bonaire.", "Bonaire's hospital.", "El hospital de Bonaire.", "Das Krankenhaus von Bonaire."),
     keywords: ["ziekenhuis", "hospital", "dokter", "doctor", "medisch", "medical", "eerste hulp", "emergency room", "médico", "urgencias", "krankenhaus", "arzt", "medizinisch", "notaufnahme"],

@@ -67,6 +67,8 @@ export default async function HelpPage({ params }: PageProps<"/[locale]/help">) 
             {t.help.emergencyText}
           </p>
           <ContactList contacts={site.emergencyContacts} locale={locale} />
+          <h3 className="mt-6 mb-3 text-[1.15rem]">{t.help.generalQuestions}</h3>
+          <ContactList contacts={site.generalContacts} locale={locale} />
           <div className="mt-3 rounded-2xl bg-sand-100 p-4 text-sm">
             <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-muted">{t.help.yourLocation}</p>
             <p className="mt-1 font-semibold">Kas Daas · {site.home.area}</p>

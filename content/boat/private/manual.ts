@@ -212,6 +212,7 @@ export const boatManual = {
     // WhatsApp assumed on the same number.
     { id: "owner", label: l("Bootbeheerder", "Boat manager", "Encargado del barco", "Bootsverwalter"), phone: "+599 701 3200", whatsapp: "+599 701 3200" },
     { id: "emergency", label: l("Alarmnummer", "Emergency number", "Número de emergencia", "Notrufnummer"), phone: "911", primary: true },
-    { id: "coastguard", label: l("Kustwacht", "Coast guard", "Guardia costera", "Küstenwache"), phone: todo("TELEFOONNUMMER KUSTWACHT", "COAST GUARD PHONE NUMBER", "TELÉFONO DE LA GUARDIA COSTERA", "TELEFONNUMMER DER KÜSTENWACHE"), note: todo("VHF-KANAAL", "VHF CHANNEL", "CANAL VHF", "UKW-KANAL") },
+    { id: "decompression", label: l("Decompressietank (spoed, duikongeval)", "Decompression chamber (urgent, diving accident)", "Cámara de descompresión (urgente, accidente de buceo)", "Dekompressionskammer (Notfall, Tauchunfall)"), phone: "133", primary: true },
+    { id: "coastguard", label: l("Kustwacht", "Coast guard", "Guardia costera", "Küstenwache"), phone: "913", note: todo("VHF-KANAAL", "VHF CHANNEL", "CANAL VHF", "UKW-KANAL") },
   ] satisfies Contact[],
 };

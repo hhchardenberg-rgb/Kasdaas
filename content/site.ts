@@ -58,31 +58,36 @@ export const site = {
   },
 
   /**
-   * Emergency & important numbers.
-   * VERIFY before going live. 911 is the general emergency number in the
-   * Caribbean Netherlands; confirm it is still current.
+   * Local emergency services — "direct help" (supplied by the owner).
    */
   emergencyContacts: [
     {
       id: "emergency",
-      label: l("Alarmnummer (politie, brandweer, ambulance)", "Emergency (police, fire, ambulance)", "Emergencias (policía, bomberos, ambulancia)", "Notruf (Polizei, Feuerwehr, Rettungsdienst)"),
+      label: l("Algemeen alarmnummer (politie)", "General emergency number (police)", "Número general de emergencia (policía)", "Allgemeiner Notruf (Polizei)"),
       phone: "911",
       primary: true,
     },
     {
-      id: "hospital",
-      label: l("Ziekenhuis Fundashon Mariadal", "Hospital Fundashon Mariadal", "Hospital Fundashon Mariadal", "Krankenhaus Fundashon Mariadal"),
-      phone: todo("TELEFOONNUMMER ZIEKENHUIS", "HOSPITAL PHONE NUMBER", "TELÉFONO DEL HOSPITAL", "TELEFONNUMMER DES KRANKENHAUSES"),
+      id: "decompression",
+      label: l("Decompressietank (spoed)", "Decompression chamber (urgent)", "Cámara de descompresión (urgente)", "Dekompressionskammer (Notfall)"),
+      phone: "133",
+      primary: true,
+      note: l("Bij een duikongeval", "In case of a diving accident", "En caso de accidente de buceo", "Bei einem Tauchunfall"),
     },
+  ] satisfies Contact[],
+
+  /** Local emergency services — numbers for general questions (supplied by the owner). */
+  generalContacts: [
+    { id: "police-central", label: l("Politie Centrale", "Police headquarters", "Central de policía", "Polizeizentrale"), phone: "+599 717 8000" },
+    { id: "police-tipline", label: l("Politie Tiplijn", "Police tip line", "Línea de denuncias de la policía", "Polizei-Hinweistelefon"), phone: "+599 717 7251" },
+    { id: "ambulance", label: l("Ambulance", "Ambulance", "Ambulancia", "Rettungsdienst"), phone: "912" },
+    { id: "fire", label: l("Brandweer", "Fire brigade", "Bomberos", "Feuerwehr"), phone: "919" },
+    { id: "coastguard", label: l("Kustwacht", "Coast guard", "Guardia costera", "Küstenwache"), phone: "913" },
+    { id: "hospital", label: l("Ziekenhuis Fundashon Mariadal", "Hospital Fundashon Mariadal", "Hospital Fundashon Mariadal", "Krankenhaus Fundashon Mariadal"), phone: "+599 717 8900" },
     {
       id: "doctor",
       label: l("Huisarts / doktersdienst", "Doctor / GP on call", "Médico / médico de guardia", "Arzt / Bereitschaftsarzt"),
       phone: todo("TELEFOONNUMMER HUISARTS", "DOCTOR PHONE NUMBER", "TELÉFONO DEL MÉDICO", "TELEFONNUMMER DES ARZTES"),
-    },
-    {
-      id: "police",
-      label: l("Politie (geen spoed)", "Police (non-emergency)", "Policía (no urgente)", "Polizei (kein Notfall)"),
-      phone: todo("TELEFOONNUMMER POLITIE GEEN SPOED", "POLICE NON-EMERGENCY NUMBER", "TELÉFONO DE LA POLICÍA (NO URGENTE)", "POLIZEINUMMER FÜR NICHT-NOTFÄLLE"),
     },
   ] satisfies Contact[],
 

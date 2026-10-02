@@ -214,15 +214,16 @@ Bestand: `content/boat/private/manual.ts`
 - [ ] Aanleg- en ankerregels
 
 ## 12. Noodinformatie
-Bestanden: `content/site.ts` → `emergencyContacts`, `content/boat/private/manual.ts` → `contacts`, `content/house/departure.ts` → `problems`
+Bestanden: `content/site.ts` → `emergencyContacts` / `generalContacts`, `content/boat/private/manual.ts` → `contacts`, `content/house/departure.ts` → `problems`
 
-- [ ] **Controleren** dat 911 het actuele alarmnummer is
-- [ ] Telefoonnummer ziekenhuis (Fundashon Mariadal)
+- [x] Lokale hulpdiensten: 911 (politie), 133 (decompressietank), 912 (ambulance), 919 (brandweer), 913 (kustwacht)
+- [x] Ziekenhuis: +599 717 8900
 - [ ] Telefoonnummer huisarts / doktersdienst
-- [ ] Politie (geen spoed)
+- [x] Politie Centrale +599 717 8000 · Tiplijn +599 717 7251
 - [x] Bootbeheerder: +599 701 3200 (WhatsApp aangenomen op hetzelfde nummer — controleren)
 - [ ] Naam bootbeheerder (optioneel)
-- [ ] Kustwacht: telefoonnummer + VHF-kanaal
+- [x] Kustwacht: 913
+- [ ] Kustwacht: VHF-kanaal (voor de boot)
 - [ ] Locatie EHBO-doos in de villa
 - [ ] Stroomstoring: locatie stoppenkast, zaklampen
 - [ ] Geen water: wat controleren (hoofdkraan, pomp, tank)
