@@ -14,12 +14,14 @@ import { ActionLink } from "@/components/ui/action-button";
 import { FavoriteButton } from "@/components/places/favorite-button";
 import { DemoBadge, FavouriteBadge, PlaceCarousel } from "@/components/places/place-card";
 import { RecentTracker } from "@/components/places/recent-tracker";
+import { syncContent } from "@/lib/cms/sync";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => getPlaces().map((p) => ({ locale, id: p.id })));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/places/[id]">): Promise<Metadata> {
+  await syncContent();
   const { locale, id } = await params;
   const p = getPlace(id);
   if (!p || !isLocale(locale)) return {};
@@ -29,6 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/places/[
 const priceLabel = (n?: number) => (n ? "$".repeat(n) : undefined);
 
 export default async function PlacePage({ params }: PageProps<"/[locale]/places/[id]">) {
+  await syncContent();
   const { locale, id } = await params;
   const place = getPlace(id);
   if (!isLocale(locale) || !place) notFound();

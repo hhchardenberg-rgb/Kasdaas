@@ -5,13 +5,16 @@ import { isLocale } from "@/lib/i18n";
 import { dictionaries } from "@/content/ui";
 import { buildSearchIndex } from "@/lib/search-index";
 import { SearchClient } from "@/components/search/search-client";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/search">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? dictionaries[locale].search.title : "Search" };
 }
 
 export default async function SearchPage({ params }: PageProps<"/[locale]/search">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

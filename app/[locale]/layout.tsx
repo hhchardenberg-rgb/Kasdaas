@@ -14,14 +14,21 @@ import { OfflineIndicator } from "@/components/pwa/offline-indicator";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { Splash } from "@/components/pwa/splash";
 import { NavigationTracker } from "@/components/layout/navigation-tracker";
+import { syncContent } from "@/lib/cms/sync";
 
-export const dynamicParams = false;
+// Pages are cached, and rebuilt right away when the owner saves a text. This is the safety net: whatever happens,
+// a page is never older than a minute (the first visit after that rebuilds it with the current texts).
+export const revalidate = 60;
+
+// Unknown locales and ids are rejected with notFound() in the layout and pages. Not `dynamicParams = false`:
+// that would make a page impossible to rebuild after the owner edits a text (on-demand revalidation → 404).
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   return {
@@ -56,6 +63,7 @@ export const viewport: Viewport = {
 };
 
 export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   return (

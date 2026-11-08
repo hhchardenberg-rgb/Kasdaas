@@ -8,11 +8,13 @@ import { whatsappUrl } from "@/lib/links";
 import { Photo } from "@/components/ui/photo";
 import { LangSwitch } from "@/components/layout/lang-switch";
 import { UnlockForm } from "@/components/welcome/unlock-form";
+import { syncContent } from "@/lib/cms/sync";
 
 export const metadata: Metadata = { title: "Welcome", robots: { index: false, follow: false } };
 
 /** Password screen in front of the guide (see proxy.ts). */
 export default async function WelcomePage({ params }: PageProps<"/[locale]/welcome">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

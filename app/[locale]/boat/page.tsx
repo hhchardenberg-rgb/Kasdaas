@@ -11,13 +11,16 @@ import { Icon } from "@/components/ui/icon";
 import { Tx } from "@/components/ui/tx";
 import { ActionLink } from "@/components/ui/action-button";
 import { BoatLinkNotice } from "@/components/boat/link-notice";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/boat">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? tx(boatRental.title, locale) : "Boat" };
 }
 
 export default async function BoatPage({ params }: PageProps<"/[locale]/boat">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

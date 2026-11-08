@@ -7,13 +7,16 @@ import { dictionaries } from "@/content/ui";
 import { photos } from "@/content/images";
 import { PageHeader } from "@/components/ui/page-header";
 import { Photo } from "@/components/ui/photo";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/plans">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? dictionaries[locale].plans.title : "Day plans" };
 }
 
 export default async function PlansPage({ params }: PageProps<"/[locale]/plans">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

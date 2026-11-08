@@ -5,13 +5,16 @@ import { diningStyles, restaurants } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
 import { PageHeader } from "@/components/ui/page-header";
 import { PlaceBrowser, type BrowserFilter } from "@/components/places/place-browser";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/discover/restaurants">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? dictionaries[locale].discover.restaurants : "Restaurants" };
 }
 
 export default async function RestaurantsPage({ params }: PageProps<"/[locale]/discover/restaurants">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

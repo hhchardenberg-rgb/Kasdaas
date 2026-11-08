@@ -9,8 +9,10 @@ In de app zijn ontbrekende gegevens zichtbaar als gestreepte labels, bijvoorbeel
 > Vervang zo'n `todo(…)` door de echte tekst: `l("Nederlandse tekst", "English text", "Texto en español", "Deutscher Text")`,
 > of — voor taalonafhankelijke waarden zoals een telefoonnummer — gewoon `"+599 …"`.
 
-Teksten mag je in het **Nederlands** aanleveren; de Engelse, Spaanse en Duitse vertaling wordt erbij
-gemaakt (de gids is volledig viertalig: NL / EN / ES / DE).
+> ✍️ **Zelf invullen kan nu in het beheer (`/admin` → Teksten).** De eigenaar kan elk gestreept label
+> (`[… INVULLEN]`) daar zelf invullen, in het Nederlands; de Engelse, Spaanse en Duitse vertaling wordt
+> automatisch gemaakt (de gids is volledig viertalig: NL / EN / ES / DE). Onder *Teksten* staat het filter
+> **Nog invullen** met alle open punten. Aanleveren aan de ontwikkelaar hoeft dus niet meer.
 
 > ✅ **Al verwerkt uit de eigen Vrbo-advertentie (p336665):** 35 foto's (villa + Bonaire),
 > ligging (Belnem, Kralendijk, direct aan zee), ontwerp Piet Boon, Viking-keuken,

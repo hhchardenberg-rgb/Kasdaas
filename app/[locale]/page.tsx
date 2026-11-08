@@ -14,8 +14,10 @@ import { PlaceCard, PlaceCarousel } from "@/components/places/place-card";
 import { StayDates, WelcomeHeading } from "@/components/home/guest";
 import { TodaySwitch, type Period } from "@/components/home/today";
 import { notFound } from "next/navigation";
+import { syncContent } from "@/lib/cms/sync";
 
 export default async function Home({ params }: PageProps<"/[locale]">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

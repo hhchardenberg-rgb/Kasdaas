@@ -10,18 +10,21 @@ import { Icon } from "@/components/ui/icon";
 import { Tx } from "@/components/ui/tx";
 import { DemoBadge } from "@/components/places/place-card";
 import { ShareButton } from "@/components/ui/share-button";
+import { syncContent } from "@/lib/cms/sync";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => itineraries.map((i) => ({ locale, id: i.id })));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/plans/[id]">): Promise<Metadata> {
+  await syncContent();
   const { locale, id } = await params;
   const it = getItinerary(id);
   return { title: it && isLocale(locale) ? tx(it.title, locale) : "Plan" };
 }
 
 export default async function PlanPage({ params }: PageProps<"/[locale]/plans/[id]">) {
+  await syncContent();
   const { locale, id } = await params;
   const it = getItinerary(id);
   if (!isLocale(locale) || !it) notFound();

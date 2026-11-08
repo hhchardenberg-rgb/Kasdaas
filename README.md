@@ -44,7 +44,8 @@ lib/                    content access layer, i18n, token security, search index
 components/             UI (design system in app/globals.css)
 app/[locale]/…          pages (nl / en)
 app/boat/[token]        deep-link handler for the private boat manual
-app/admin               create, list and revoke boat links + QR codes (needs ADMIN_PASSWORD)
+app/admin               the admin: edit texts (CMS), accounts, boat links + QR codes (needs ADMIN_PASSWORD)
+lib/cms                 CMS: registry of editable texts, edits applied to the content, translation
 public/sw.js            service worker (offline)
 CONTENT_TODO.md         checklist of everything the owner still has to supply
 ```
@@ -63,6 +64,33 @@ external businesses were filled in. Coordinates are approximate, and route butto
 
 **CMS later:** components only read content through `lib/content.ts`. To move to a headless CMS,
 re-implement those functions (and keep the types in `lib/types.ts`). The UI stays unchanged.
+
+## Editing texts without a developer (CMS) ✍️
+
+The owner can change every Dutch text of the guide at `/admin`, without a developer or a deploy.
+
+- **Accounts.** You (the developer) sign in with the username `admin` and the `ADMIN_PASSWORD`. Under
+  *Gebruikers* you create an account for the owner: it generates a password, shown once. The owner signs in
+  with that, can change the password under *Mijn account*, and can edit texts and make boat links
+  (but not manage accounts). A password reset or deleting an account signs that person out at once.
+- **Editing.** *Teksten* lists everything by section, with search and filters (*Nog invullen*, *Aangepast*,
+  *Wacht op vertaling*). Texts that still show a striped `[… INVULLEN]` label can be filled in here.
+  A few language-neutral fields (phone numbers, links, WiFi name and password) are editable too.
+- **Translation.** After saving the Dutch text, it is translated to English, Spanish and German with the
+  Anthropic API (`ANTHROPIC_API_KEY`; model `TRANSLATION_MODEL`, default `claude-opus-5-5`). The three
+  translations can be corrected by hand; they are redone when the Dutch text changes. If translating fails,
+  the Dutch text is saved and the other languages show the Dutch text until *Opnieuw vertalen* works.
+- **Publishing.** Saving updates the guide within seconds (the pages are rebuilt on the next visit).
+  *Origineel herstellen* puts the text from the code back. A history of changes is on the overview page.
+- **Where it's stored.** Only the *differences* from the code are saved, in a private JSON file in Vercel Blob
+  (`BLOB_READ_WRITE_TOKEN`; locally `.data/`), together with the accounts (scrypt-hashed passwords).
+  The code stays the baseline: a text the owner never touched always comes from `content/`.
+
+How it works: `lib/cms/registry.ts` walks the content once and gives every text a stable key built from its
+position (e.g. `houseSections.arrival.topics.address.title`; list items use their `id`). `syncContent()`
+(called at the top of every page) sets every text to the stored edit or the pristine original, in place,
+so components read content exactly as before. **When you add a page or route that reads content, call
+`await syncContent()` first.** Renaming an `id` in `content/` orphans edits made to that item.
 
 ## Languages
 

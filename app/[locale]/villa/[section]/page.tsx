@@ -11,12 +11,14 @@ import { HashOpener } from "@/components/villa/hash-opener";
 import { HostCard } from "@/components/villa/contact";
 import { ActionLink } from "@/components/ui/action-button";
 import { CopyButton } from "@/components/ui/copy-button";
+import { syncContent } from "@/lib/cms/sync";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => houseSections.map((s) => ({ locale, section: s.id })));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/villa/[section]">): Promise<Metadata> {
+  await syncContent();
   const { locale, section } = await params;
   const s = getSection(section);
   return { title: s && isLocale(locale) ? tx(s.title, locale) : "Villa" };
@@ -39,6 +41,7 @@ function extras(topicId: string, locale: Locale): React.ReactNode {
 }
 
 export default async function SectionPage({ params }: PageProps<"/[locale]/villa/[section]">) {
+  await syncContent();
   const { locale, section: id } = await params;
   const section = getSection(id);
   if (!isLocale(locale) || !section) notFound();

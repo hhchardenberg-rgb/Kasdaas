@@ -10,13 +10,16 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Icon } from "@/components/ui/icon";
 import { Tx } from "@/components/ui/tx";
 import { HashOpener } from "@/components/villa/hash-opener";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/good-to-know">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? dictionaries[locale].practical.title : "Good to know" };
 }
 
 export default async function GoodToKnowPage({ params }: PageProps<"/[locale]/good-to-know">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

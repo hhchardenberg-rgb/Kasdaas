@@ -5,13 +5,16 @@ import { CalendarDays, ChevronRight, Heart, Info, LifeBuoy, Map as MapIcon, Sear
 import { isLocale } from "@/lib/i18n";
 import { dictionaries } from "@/content/ui";
 import { AppSettings } from "@/components/more/app-settings";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/more">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? dictionaries[locale].more.title : "More" };
 }
 
 export default async function MorePage({ params }: PageProps<"/[locale]/more">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

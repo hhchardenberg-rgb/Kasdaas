@@ -11,13 +11,16 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { Icon } from "@/components/ui/icon";
 import { Photo } from "@/components/ui/photo";
 import { PlaceCard, PlaceCarousel } from "@/components/places/place-card";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/discover">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? dictionaries[locale].discover.title : "Discover" };
 }
 
 export default async function DiscoverPage({ params }: PageProps<"/[locale]/discover">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

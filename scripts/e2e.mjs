@@ -305,17 +305,20 @@ if (process.env.ADMIN_PASSWORD) {
   const ctx = await browser.newContext({ ...iphone, locale: "nl-NL" });
   const page = await newPage(ctx);
   page.on("dialog", (d) => d.accept());
-  await page.goto(BASE + "/admin");
-  await page.getByLabel("Admin password").fill("wrong-password-123");
-  await page.getByRole("button", { name: "Sign in" }).click();
-  ok("S14 Admin rejects a wrong password", await page.getByText("Wrong password.").waitFor({ timeout: 5000 }).then(() => true, () => false));
-  await page.getByLabel("Admin password").fill(process.env.ADMIN_PASSWORD);
-  await page.getByRole("button", { name: "Sign in" }).click();
-  await page.getByRole("button", { name: "Create link" }).waitFor();
+  await page.goto(BASE + "/admin/bootlinks");
+  ok("S14 Not signed in: the admin asks to sign in", await page.getByRole("heading", { name: "Inloggen" }).isVisible());
+  await page.getByLabel("Gebruikersnaam").fill("admin");
+  await page.getByLabel("Wachtwoord").fill("wrong-password-123");
+  await page.getByRole("button", { name: "Inloggen" }).click();
+  ok("S14 Admin rejects a wrong password", await page.getByText("Gebruikersnaam of wachtwoord klopt niet.").waitFor({ timeout: 5000 }).then(() => true, () => false));
+  await page.getByLabel("Wachtwoord").fill(process.env.ADMIN_PASSWORD);
+  await page.getByRole("button", { name: "Inloggen" }).click();
+  await page.getByRole("heading", { name: /Welkom/ }).waitFor();
   ok("S14 Admin sign-in", true);
+  await page.goto(BASE + "/admin/bootlinks");
   const label = `E2E test ${Date.now()}`;
-  await page.getByLabel(/Guest \/ booking/).fill(label);
-  await page.getByRole("button", { name: "Create link" }).click();
+  await page.getByLabel(/Gast of boeking/).fill(label);
+  await page.getByRole("button", { name: "Link maken" }).click();
   const url = (await page.locator("p.font-mono").textContent({ timeout: 10000 })).trim();
   const id = (await page.locator("code").first().textContent()).trim();
   await page.reload();
@@ -327,34 +330,206 @@ if (process.env.ADMIN_PASSWORD) {
   await gp.goto(url.replace(/^https?:\/\/[^/]+/, BASE));
   ok("S14 Guest opens the manual", /\/boat\/guide$/.test(gp.url()));
 
-  await row.getByRole("button", { name: "Revoke" }).click();
+  await row.getByRole("button", { name: "Intrekken" }).click();
   await page.waitForTimeout(1500);
   await page.reload();
-  ok("S14 Link shows as revoked", (await page.locator(`[data-link-id="${id}"]`).textContent()).includes("Revoked"));
+  ok("S14 Link shows as revoked", (await page.locator(`[data-link-id="${id}"]`).textContent()).includes("Ingetrokken"));
   const res = await gp.goto(BASE + "/nl/boat/guide");
   ok("S14 Revoked: guest who already opened it loses access", res.status() === 404, String(res.status()));
   await gp.goto(url.replace(/^https?:\/\/[^/]+/, BASE));
   ok("S14 Revoked: the link itself no longer works", /link=invalid/.test(decodeURIComponent(gp.url())), gp.url());
 
-  await page.locator(`[data-link-id="${id}"]`).getByRole("button", { name: "Restore" }).click();
+  await page.locator(`[data-link-id="${id}"]`).getByRole("button", { name: "Herstellen" }).click();
   await page.waitForTimeout(1500);
   await gp.goto(url.replace(/^https?:\/\/[^/]+/, BASE));
   ok("S14 Restore makes the link work again", /\/boat\/guide$/.test(gp.url()), gp.url());
 
   const cli = createBoatToken(SECRET, new Date(Date.now() + 86400_000));
-  await page.getByLabel("Link ID or boat link").fill(`${BASE}/boat/${cli.token}`);
-  await page.getByRole("button", { name: "Revoke", exact: true }).last().click();
-  ok("S14 Revoke by pasted link", await page.getByText(`Link ${cli.id} is revoked.`).waitFor({ timeout: 5000 }).then(() => true, () => false));
+  await page.getByLabel("ID of bootlink").fill(`${BASE}/boat/${cli.token}`);
+  await page.getByRole("button", { name: "Intrekken", exact: true }).last().click();
+  ok("S14 Revoke by pasted link", await page.getByText(`Link ${cli.id} is ingetrokken.`).waitFor({ timeout: 5000 }).then(() => true, () => false));
   await gp.goto(`${BASE}/boat/${cli.token}`);
   ok("S14 Link revoked by ID no longer works", /link=invalid/.test(decodeURIComponent(gp.url())), gp.url());
 
-  await page.getByRole("button", { name: "Sign out" }).click();
-  await page.getByRole("button", { name: "Sign in" }).waitFor();
+  await page.getByRole("button", { name: "Uitloggen" }).click();
+  await page.getByRole("heading", { name: "Inloggen" }).waitFor();
   ok("S14 Sign out", true);
   await guest.close();
   await ctx.close();
 } else {
-  console.log("– S14 admin scenario skipped (set ADMIN_PASSWORD)");
+  console.log("– S14/S15 admin scenarios skipped (set ADMIN_PASSWORD)");
+}
+
+// ── Scenario 15 — the owner edits texts in the admin; translations follow automatically
+// Needs CMS_TRANSLATE_MOCK=1 on the server (a stand-in translator: "[EN] …", "[ES] …", "[DE] …").
+if (process.env.ADMIN_PASSWORD && process.env.CMS_TRANSLATE_MOCK === "1") {
+  const until = async (fn, ms = 20000) => {
+    const t0 = Date.now();
+    for (;;) {
+      if (await fn().catch(() => false)) return true;
+      if (Date.now() - t0 > ms) return false;
+      await new Promise((r) => setTimeout(r, 500));
+    }
+  };
+  const dialogs = (p) => p.on("dialog", (d) => d.accept());
+
+  // The developer creates an account for the owner.
+  const adminCtx = await browser.newContext({ ...iphone, locale: "nl-NL" });
+  const admin = await newPage(adminCtx);
+  dialogs(admin);
+  await admin.goto(BASE + "/admin");
+  await admin.getByLabel("Gebruikersnaam").fill("admin");
+  await admin.getByLabel("Wachtwoord").fill(process.env.ADMIN_PASSWORD);
+  await admin.getByRole("button", { name: "Inloggen" }).click();
+  await admin.getByRole("heading", { name: /Welkom/ }).waitFor();
+  await admin.goto(BASE + "/admin/gebruikers");
+  const username = `e2e-owner-${Date.now() % 1000000}`;
+  await admin.getByLabel("Naam", { exact: true }).fill("Test Eigenaar");
+  await admin.getByLabel("Gebruikersnaam").fill(username);
+  await admin.getByRole("button", { name: "Account maken" }).click();
+  const creds = await admin.locator("[data-credentials] pre").textContent({ timeout: 10000 });
+  const password = /Wachtwoord: (\S+)/.exec(creds)?.[1];
+  ok("S15 Developer creates an owner account with a generated password", !!password && creds.includes(username), creds);
+
+  // The owner signs in.
+  const ownerCtx = await browser.newContext({ ...iphone, locale: "nl-NL" });
+  const owner = await newPage(ownerCtx);
+  dialogs(owner);
+  await owner.goto(BASE + "/admin/teksten");
+  ok("S15 Texts need a sign-in", await owner.getByRole("heading", { name: "Inloggen" }).isVisible());
+  await owner.getByLabel("Gebruikersnaam").fill(username);
+  await owner.getByLabel("Wachtwoord").fill("wrong-password-123");
+  await owner.getByRole("button", { name: "Inloggen" }).click();
+  ok("S15 Owner login rejects a wrong password", await owner.getByText("Gebruikersnaam of wachtwoord klopt niet.").waitFor({ timeout: 5000 }).then(() => true, () => false));
+  await owner.getByLabel("Wachtwoord").fill(password);
+  await owner.getByRole("button", { name: "Inloggen" }).click();
+  await owner.getByRole("heading", { name: /Welkom/ }).waitFor();
+  ok("S15 Owner signs in", true);
+  ok("S15 Owner doesn't get the user management", (await owner.getByRole("link", { name: "Gebruikers" }).count()) === 0);
+  await owner.goto(BASE + "/admin/gebruikers");
+  ok("S15 Owner can't open the user management", /\/admin$/.test(new URL(owner.url()).pathname));
+
+  // A guest, to look at the published result.
+  const guestCtx = await browser.newContext({ ...iphone, locale: "nl-NL" });
+  const guestPage = await newPage(guestCtx);
+  await unlock(guestPage, "/nl");
+  const guestCookie = (await guestCtx.cookies()).map((c) => `${c.name}=${c.value}`).join("; ");
+  const text = (path) => fetch(BASE + path, { headers: { cookie: guestCookie } }).then((r) => r.text());
+
+  // Find and edit a text.
+  const ORIGINAL = "Alleen buiten roken";
+  const EDITED = `Roken alleen buiten, aangepast door de eigenaar ${Date.now() % 100000}`;
+  await owner.goto(BASE + "/admin/teksten?q=" + encodeURIComponent(ORIGINAL));
+  const editor = owner.locator("[data-text-key]").first();
+  const key = await editor.getAttribute("data-text-key");
+  ok("S15 Search finds the text", !!key && key.endsWith(".summary"), String(key));
+  const save = async (value) => {
+    await editor.locator('textarea[name="nl"]').fill(value);
+    await editor.getByRole("button", { name: "Opslaan", exact: true }).click();
+  };
+  await save(EDITED);
+  ok("S15 Saving shows that it was translated", await editor.getByText(/Vertaald naar Engels, Spaans en Duits/).waitFor({ timeout: 15000 }).then(() => true, () => false));
+  ok("S15 The guide shows the new Dutch text", await until(async () => (await text("/nl/villa/house-rules")).includes(EDITED)));
+  ok("S15 …and the English translation", await until(async () => (await text("/en/villa/house-rules")).includes(`[EN] ${EDITED}`)));
+  ok("S15 …and the Spanish and German translations", (await text("/es/villa/house-rules")).includes(`[ES] ${EDITED}`) && (await text("/de/villa/house-rules")).includes(`[DE] ${EDITED}`));
+  ok("S15 The edit is marked in the admin", (await owner.locator(`[data-text-key="${key}"]`).getAttribute("data-status")) === "edited" || (await until(async () => (await owner.locator(`[data-text-key="${key}"]`).getAttribute("data-status")) === "edited", 8000)));
+  ok("S15 The search index finds the new text", (await text("/nl/search?q=" + encodeURIComponent("aangepast door de eigenaar"))).length > 0);
+
+  // Translation fails: other languages fall back to Dutch until it is retried.
+  const BROKEN = `${EDITED} FAIL-TRANSLATION`;
+  await owner.goto(BASE + "/admin/teksten?q=" + encodeURIComponent("aangepast door de eigenaar"));
+  const editor2 = owner.locator(`[data-text-key="${key}"]`);
+  await editor2.locator('textarea[name="nl"]').fill(BROKEN);
+  await editor2.getByRole("button", { name: "Opslaan", exact: true }).click();
+  ok("S15 A failed translation is reported", await editor2.getByText(/vertalen lukte niet/).waitFor({ timeout: 15000 }).then(() => true, () => false));
+  ok("S15 Dutch is saved right away", await until(async () => (await text("/nl/villa/house-rules")).includes(BROKEN)));
+  ok("S15 Until translated, other languages show the Dutch text", (await text("/en/villa/house-rules")).includes(BROKEN) && !(await text("/en/villa/house-rules")).includes(`[EN] ${EDITED}`));
+  await owner.reload();
+  ok("S15 The text is marked as waiting for a translation", (await owner.locator(`[data-text-key="${key}"]`).getAttribute("data-status")) === "pending");
+
+  // Fix the text: translated again.
+  const FIXED = `${EDITED} (hersteld)`;
+  const editor3 = owner.locator(`[data-text-key="${key}"]`);
+  await editor3.locator('textarea[name="nl"]').fill(FIXED);
+  await editor3.getByRole("button", { name: "Opslaan", exact: true }).click();
+  await editor3.getByText(/Vertaald naar Engels, Spaans en Duits/).waitFor({ timeout: 15000 });
+  ok("S15 Saving again translates it", await until(async () => (await text("/de/villa/house-rules")).includes(`[DE] ${FIXED}`)));
+
+  // A translation can be corrected by hand.
+  await owner.reload();
+  const editor4 = owner.locator(`[data-text-key="${key}"]`);
+  await editor4.getByText("Vertalingen bekijken").click();
+  await editor4.locator('textarea[name="en"]').fill("Smoking outside only, e2e");
+  await editor4.getByRole("button", { name: "Vertalingen opslaan" }).click();
+  ok("S15 A hand-corrected translation is published", await until(async () => (await text("/en/villa/house-rules")).includes("Smoking outside only, e2e")));
+  ok("S15 …without touching the other languages", (await text("/de/villa/house-rules")).includes(`[DE] ${FIXED}`));
+
+  // Language-neutral field: the WiFi password.
+  await owner.goto(BASE + "/admin/teksten/verblijf");
+  const wifiEd = owner.locator('[data-text-key="wifi.password"]');
+  await wifiEd.locator('input[name="nl"]').fill("e2e-wifi-wachtwoord");
+  await wifiEd.getByRole("button", { name: "Opslaan", exact: true }).click();
+  await wifiEd.getByText(/Opgeslagen/).waitFor({ timeout: 15000 });
+  const profile = () => fetch(BASE + "/wifi.mobileconfig", { headers: { cookie: guestCookie } }).then((r) => r.text());
+  ok("S15 A changed WiFi password reaches the iPhone profile", await until(async () => (await profile()).includes("e2e-wifi-wachtwoord")));
+
+  // A link field refuses anything that isn't a web address (a "javascript:" link would reach every guest).
+  await owner.goto(BASE + "/admin/teksten?q=website");
+  const siteEd = owner.locator('[data-text-key$=".website"]').first();
+  await siteEd.locator('input[name="nl"]').fill("javascript:alert(1)");
+  await siteEd.getByRole("button", { name: "Opslaan", exact: true }).click();
+  ok("S15 A link field refuses a javascript: address", await siteEd.getByText(/begint met https/).waitFor({ timeout: 8000 }).then(() => true, () => false));
+  await owner.goto(BASE + "/admin/teksten/verblijf");
+
+  // Restore everything.
+  await owner.locator('[data-text-key="wifi.password"]').getByRole("button", { name: "Origineel herstellen" }).click();
+  await wifiEd.getByText(/oorspronkelijke tekst/).waitFor({ timeout: 15000 });
+  ok("S15 Restoring the WiFi password", await until(async () => (await profile()).includes("beachhousebonaire")));
+  await owner.goto(BASE + "/admin/teksten?q=" + encodeURIComponent("aangepast door de eigenaar"));
+  // (The card leaves these search results once the text is back to the original, so the page is checked instead.)
+  await owner.locator(`[data-text-key="${key}"]`).getByRole("button", { name: "Origineel herstellen" }).click();
+  await owner.waitForTimeout(1500); // let the save finish: a visit in the middle of it could rebuild the page from the old text
+  // Generous limit: if a page was rebuilt from the old text at that very moment, it is rebuilt again within a minute.
+  const restored = await until(async () => !(await text("/nl/villa/house-rules")).includes("aangepast door de eigenaar") && (await text("/nl/villa/house-rules")).includes(ORIGINAL), 90000);
+  const finalPage = await text("/nl/villa/house-rules");
+  ok("S15 Restoring the original text", restored, `edited text still shown: ${finalPage.includes("aangepast door de eigenaar")}, original shown: ${finalPage.includes(ORIGINAL)}`);
+  ok("S15 …and its original translation", (await text("/en/villa/house-rules")).includes("Smoking outside only") && !(await text("/en/villa/house-rules")).includes("e2e"));
+
+  // The owner changes their own password; the old one stops working.
+  await owner.goto(BASE + "/admin/account");
+  const NEWPW = "nieuw-wachtwoord-123";
+  await owner.locator('input[name="current"]').fill(password);
+  await owner.locator('input[name="next"]').fill(NEWPW);
+  await owner.locator('input[name="confirm"]').fill(NEWPW);
+  await owner.getByRole("button", { name: "Wachtwoord wijzigen" }).click();
+  ok("S15 Owner changes their own password", await owner.getByText("Je wachtwoord is gewijzigd.").waitFor({ timeout: 8000 }).then(() => true, () => false));
+  const second = await browser.newContext({ ...iphone, locale: "nl-NL" });
+  const sp = await newPage(second);
+  await sp.goto(BASE + "/admin");
+  await sp.getByLabel("Gebruikersnaam").fill(username);
+  await sp.getByLabel("Wachtwoord").fill(password);
+  await sp.getByRole("button", { name: "Inloggen" }).click();
+  ok("S15 The old password no longer works", await sp.getByText("Gebruikersnaam of wachtwoord klopt niet.").waitFor({ timeout: 5000 }).then(() => true, () => false));
+  await sp.getByLabel("Wachtwoord").fill(NEWPW);
+  await sp.getByRole("button", { name: "Inloggen" }).click();
+  ok("S15 The new password works", await sp.getByRole("heading", { name: /Welkom/ }).waitFor({ timeout: 8000 }).then(() => true, () => false));
+  await second.close();
+
+  // The developer resets the password and removes the account: sessions end.
+  await admin.goto(BASE + "/admin/gebruikers");
+  await admin.locator(`[data-account="${username}"]`).getByRole("button", { name: "Nieuw wachtwoord" }).click();
+  await admin.locator(`[data-account="${username}"] [data-credentials]`).waitFor({ timeout: 10000 });
+  await owner.goto(BASE + "/admin/teksten");
+  ok("S15 A password reset signs the owner out", await owner.getByRole("heading", { name: "Inloggen" }).isVisible());
+  await admin.locator(`[data-account="${username}"]`).getByRole("button", { name: "Verwijderen" }).click();
+  ok("S15 The account can be removed", await until(async () => {
+    await admin.reload();
+    return (await admin.locator(`[data-account="${username}"]`).count()) === 0;
+  }, 8000));
+
+  await adminCtx.close();
+  await ownerCtx.close();
+  await guestCtx.close();
 }
 
 ok("No runtime errors", errors.length === 0, errors.slice(0, 5).join(" | "));

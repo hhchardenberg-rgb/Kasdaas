@@ -8,18 +8,21 @@ import { dictionaries } from "@/content/ui";
 import type { PlaceTag } from "@/lib/types";
 import { PageHeader } from "@/components/ui/page-header";
 import { PlaceBrowser, type BrowserFilter } from "@/components/places/place-browser";
+import { syncContent } from "@/lib/cms/sync";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => categories.map((c) => ({ locale, category: c.id })));
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/discover/[category]">): Promise<Metadata> {
+  await syncContent();
   const { locale, category } = await params;
   const c = getCategory(category);
   return { title: c && isLocale(locale) ? tx(c.label, locale) : "Discover" };
 }
 
 export default async function CategoryPage({ params }: PageProps<"/[locale]/discover/[category]">) {
+  await syncContent();
   const { locale, category: id } = await params;
   const category = getCategory(id);
   if (!isLocale(locale) || !category) notFound();

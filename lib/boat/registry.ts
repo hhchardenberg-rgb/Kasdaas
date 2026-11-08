@@ -1,17 +1,10 @@
 import "server-only";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
-import { BlobPreconditionFailedError, get, put } from "@vercel/blob";
+import { jsonStore, storageAvailable } from "@/lib/storage";
 
 /**
  * Registry of boat links, so the admin page can list issued links and revoke
- * them without a redeploy.
- *
- * Storage: a private JSON file in Vercel Blob (BLOB_READ_WRITE_TOKEN).
- * Without that token, outside Vercel (local development / tests), a file in
- * `.data/` is used instead. On Vercel without the token, revoking is unavailable.
- * Tokens themselves stay stateless; the registry only adds names and the
- * revocation list on top.
+ * them without a redeploy. Tokens themselves stay stateless; the registry only
+ * adds names and the revocation list on top. Storage: see lib/storage.ts.
  */
 
 export interface BoatLinkRecord {
@@ -29,65 +22,23 @@ interface Registry {
   links: BoatLinkRecord[];
 }
 
-const PATHNAME = "admin/boat-links.json";
-const LOCAL_FILE = join(process.cwd(), ".data", "boat-links.json");
 /** Records are kept this long after their link expired, then pruned. */
 const KEEP_EXPIRED_S = 30 * 86400;
 
-const blobConfigured = () => !!process.env.BLOB_READ_WRITE_TOKEN;
+const store = jsonStore<Registry>(
+  "boat-links",
+  () => ({ links: [] }),
+  (raw) => ({ links: Array.isArray((raw as Registry)?.links) ? (raw as Registry).links : [] }),
+);
 
-export function registryAvailable(): boolean {
-  return blobConfigured() || !process.env.VERCEL;
-}
-
-async function readRaw(): Promise<{ data: Registry; etag?: string }> {
-  if (blobConfigured()) {
-    const res = await get(PATHNAME, { access: "private", useCache: false });
-    if (!res || res.statusCode !== 200) return { data: { links: [] } };
-    const text = await new Response(res.stream).text();
-    return { data: parse(text), etag: res.blob.etag };
-  }
-  if (!registryAvailable()) return { data: { links: [] } };
-  try {
-    return { data: parse(await readFile(LOCAL_FILE, "utf8")) };
-  } catch {
-    return { data: { links: [] } };
-  }
-}
-
-function parse(text: string): Registry {
-  try {
-    const d = JSON.parse(text);
-    return { links: Array.isArray(d?.links) ? d.links : [] };
-  } catch {
-    return { links: [] };
-  }
-}
-
-async function writeRaw(data: Registry, etag?: string): Promise<void> {
-  const body = JSON.stringify(data, null, 1);
-  if (blobConfigured()) {
-    await put(PATHNAME, body, {
-      access: "private",
-      contentType: "application/json",
-      addRandomSuffix: false,
-      allowOverwrite: true,
-      cacheControlMaxAge: 60,
-      ...(etag ? { ifMatch: etag } : {}),
-    });
-    return;
-  }
-  if (!registryAvailable()) throw new Error("Link storage is not configured (BLOB_READ_WRITE_TOKEN).");
-  await mkdir(dirname(LOCAL_FILE), { recursive: true });
-  await writeFile(LOCAL_FILE, body);
-}
+export const registryAvailable = storageAvailable;
 
 /** Last successful read, used only as a fallback when storage is briefly unreachable. */
 let lastKnown: Registry | null = null;
 
 /** All records, newest first. Always read fresh, so a revocation applies immediately everywhere. */
 export async function listBoatLinks(): Promise<BoatLinkRecord[]> {
-  const { data } = await readRaw();
+  const data = await store.read();
   lastKnown = data;
   return data.links;
 }
@@ -102,21 +53,12 @@ export async function registryRevokedIds(): Promise<string[]> {
   }
 }
 
-/** Read-modify-write with an optimistic lock (retries when another write got in between). */
-async function update(mutate: (links: BoatLinkRecord[]) => BoatLinkRecord[]): Promise<BoatLinkRecord[]> {
-  for (let attempt = 0; ; attempt++) {
-    const { data, etag } = await readRaw();
-    const now = Math.floor(Date.now() / 1000);
-    const links = mutate(data.links).filter((l) => !l.exp || l.exp > now - KEEP_EXPIRED_S);
-    try {
-      await writeRaw({ links }, etag);
-      lastKnown = { links };
-      return links;
-    } catch (e) {
-      if (attempt < 3 && e instanceof BlobPreconditionFailedError) continue;
-      throw e;
-    }
-  }
+async function update(mutate: (links: BoatLinkRecord[]) => BoatLinkRecord[]): Promise<void> {
+  const now = Math.floor(Date.now() / 1000);
+  const saved = await store.update((data) => ({
+    links: mutate(data.links).filter((l) => !l.exp || l.exp > now - KEEP_EXPIRED_S),
+  }));
+  lastKnown = saved;
 }
 
 export async function recordBoatLink(record: BoatLinkRecord): Promise<void> {
@@ -129,7 +71,7 @@ export async function revokeBoatLink(id: string): Promise<void> {
   await update((links) =>
     links.some((l) => l.id === id)
       ? links.map((l) => (l.id === id ? { ...l, revokedAt: l.revokedAt ?? at } : l))
-      : [{ id, exp: 0, label: "Revoked by ID", revokedAt: at }, ...links],
+      : [{ id, exp: 0, label: "Ingetrokken via ID", revokedAt: at }, ...links],
   );
 }
 

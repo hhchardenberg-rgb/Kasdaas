@@ -6,13 +6,16 @@ import { dictionaries } from "@/content/ui";
 import { placeRouteUrl } from "@/lib/links";
 import { categories } from "@/content/categories";
 import { MapView, type MapPoint } from "@/components/map/map-view";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/map">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? dictionaries[locale].map.title : "Map" };
 }
 
 export default async function MapPage({ params }: PageProps<"/[locale]/map">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

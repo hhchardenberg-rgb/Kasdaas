@@ -18,6 +18,7 @@ import { DecisionTrees, type ProblemView } from "@/components/boat/decision-tree
 import { ForgetBoatButton } from "@/components/boat/forget-button";
 import { MediaSlot } from "@/components/boat/media-slot";
 import { MapView } from "@/components/map/map-view";
+import { syncContent } from "@/lib/cms/sync";
 
 /**
  * 🔒 PRIVATE BOAT MANUAL
@@ -28,6 +29,7 @@ import { MapView } from "@/components/map/map-view";
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/boat/guide">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return {
     title: { nl: "Boothandleiding", en: "Boat manual", es: "Manual del barco", de: "Bootsanleitung" }[locale],
@@ -66,6 +68,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
 }
 
 export default async function BoatGuidePage({ params }: PageProps<"/[locale]/boat/guide">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const access = await currentBoatAccess();

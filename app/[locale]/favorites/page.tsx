@@ -4,13 +4,16 @@ import { isLocale } from "@/lib/i18n";
 import { getPlaces } from "@/lib/content";
 import { dictionaries } from "@/content/ui";
 import { FavoritesList } from "@/components/places/favorites-list";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/favorites">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? dictionaries[locale].favorites.title : "My Bonaire" };
 }
 
 export default async function FavoritesPage({ params }: PageProps<"/[locale]/favorites">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

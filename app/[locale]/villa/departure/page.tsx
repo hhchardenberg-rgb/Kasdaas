@@ -8,13 +8,16 @@ import { toRows } from "@/lib/checklist";
 import { PageHeader } from "@/components/ui/page-header";
 import { Checklist } from "@/components/ui/checklist";
 import { Tx } from "@/components/ui/tx";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/villa/departure">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? `${dictionaries[locale].departure.title} · Check-out` : "Check-out" };
 }
 
 export default async function DeparturePage({ params }: PageProps<"/[locale]/villa/departure">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

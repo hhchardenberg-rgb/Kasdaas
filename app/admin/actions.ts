@@ -1,125 +1,93 @@
 "use server";
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { issueBoatToken } from "@/lib/boat/access";
-import { recordBoatLink, restoreBoatLink, revokeBoatLink } from "@/lib/boat/registry";
-import { endAdminSession, isAdmin, isAdminPassword, startAdminSession } from "@/lib/admin-session";
-import { qrSvg } from "@/lib/qr";
-import { site } from "@/content/site";
+import { endSession, ENV_ADMIN, getSession, isEnvAdminPassword, startSession } from "@/lib/admin-session";
+import { checkLogin, findUser, setPassword, verifyPassword } from "@/lib/users";
 
 export interface LoginState {
   error?: string;
 }
 
-export interface LinkResult {
-  error?: string;
-  warning?: string;
-  url?: string;
-  id?: string;
-  expires?: string;
-  qr?: string;
-  message?: string;
-}
-
-export interface RevokeState {
+export interface PasswordState {
   error?: string;
   done?: string;
 }
 
-let failures = 0;
-let lockedUntil = 0;
+/** Failed attempts per username (and overall), to slow down guessing. */
+const attempts = new Map<string, { n: number; until: number }>();
+const WINDOW = 60_000;
+
+function locked(key: string): boolean {
+  const rec = attempts.get(key);
+  return !!rec && rec.until > Date.now();
+}
+
+function fail(key: string, limit: number) {
+  const rec = attempts.get(key) ?? { n: 0, until: 0 };
+  rec.n += 1;
+  if (rec.n >= limit) {
+    rec.until = Date.now() + WINDOW;
+    rec.n = 0;
+  }
+  attempts.set(key, rec);
+}
 
 export async function login(_prev: LoginState, form: FormData): Promise<LoginState> {
-  if (Date.now() < lockedUntil) return { error: "Too many attempts. Try again in a minute." };
-  if (!isAdminPassword(String(form.get("password") ?? ""))) {
-    failures += 1;
-    if (failures >= 5) {
-      lockedUntil = Date.now() + 60_000;
-      failures = 0;
+  const username = String(form.get("username") ?? "").trim().toLowerCase();
+  const password = String(form.get("password") ?? "");
+  if (!username || !password) return { error: "Vul je gebruikersnaam en wachtwoord in." };
+  if (locked(username) || locked("*")) return { error: "Te veel pogingen. Probeer het over een minuut opnieuw." };
+
+  let pwv: string | null = null;
+  if (username === ENV_ADMIN) {
+    if (isEnvAdminPassword(password)) pwv = "env";
+  } else {
+    try {
+      const user = await checkLogin(username, password);
+      if (user) pwv = user.pwv;
+    } catch (e) {
+      console.error("[admin] login failed", e);
+      return { error: "Inloggen lukt nu niet. Probeer het zo opnieuw." };
     }
-    return { error: "Wrong password." };
   }
-  failures = 0;
-  await startAdminSession();
-  revalidatePath("/admin");
-  return {};
+  if (!pwv) {
+    fail(username, 5);
+    fail("*", 30);
+    return { error: "Gebruikersnaam of wachtwoord klopt niet." };
+  }
+  attempts.delete(username);
+  await startSession(username, pwv);
+  redirect("/admin");
 }
 
 export async function logout(): Promise<void> {
-  await endAdminSession();
+  await endSession();
   revalidatePath("/admin");
+  redirect("/admin");
 }
 
-const fmtDate = (exp: number) => new Date(exp * 1000).toISOString().replace("T", " ").slice(0, 16) + " UTC";
-
-/** Creates a signed boat link and records it so it can be revoked later. */
-export async function createBoatLink(_prev: LinkResult, form: FormData): Promise<LinkResult> {
-  if (!(await isAdmin())) return { error: "Your session has expired. Reload the page and sign in again." };
-  const days = Math.min(60, Math.max(1, Number(form.get("days")) || 3));
-  const label = String(form.get("label") ?? "").trim().slice(0, 80) || undefined;
-  const raw = String(form.get("lang") ?? "");
-  const lang = raw === "en" || raw === "es" || raw === "de" ? raw : "nl";
+/** Lets a signed-in person change their own password. */
+export async function changePassword(_prev: PasswordState, form: FormData): Promise<PasswordState> {
+  const session = await getSession();
+  if (!session) return { error: "Je bent uitgelogd. Log opnieuw in." };
+  if (session.username === ENV_ADMIN) return { error: "Het wachtwoord van 'admin' wijzig je in de omgevingsvariabele ADMIN_PASSWORD." };
+  const current = String(form.get("current") ?? "");
+  const next = String(form.get("next") ?? "");
+  if (next.length < 10) return { error: "Kies een nieuw wachtwoord van minimaal 10 tekens." };
+  if (next !== String(form.get("confirm") ?? "")) return { error: "De twee nieuwe wachtwoorden zijn niet hetzelfde." };
+  if (locked(`pw:${session.username}`)) return { error: "Te veel pogingen. Probeer het over een minuut opnieuw." };
   try {
-    const { token, id, exp } = issueBoatToken(days);
-    const base = String(form.get("origin") || site.url).replace(/\/$/, "");
-    const url = `${base}/boat/${token}`;
-    const expires = fmtDate(exp);
-    const message = {
-      nl: `Hier vind je alle informatie over de boot 🚤\n${url}\n\nDeze link is persoonlijk en geldig tot ${expires}.`,
-      en: `Here's everything you need to know about the boat 🚤\n${url}\n\nThis link is personal and valid until ${expires}.`,
-      es: `Aquí tienes toda la información sobre el barco 🚤\n${url}\n\nEste enlace es personal y válido hasta ${expires}.`,
-      de: `Hier findest du alle Infos zum Boot 🚤\n${url}\n\nDieser Link ist persönlich und gültig bis ${expires}.`,
-    }[lang];
-    let warning: string | undefined;
-    try {
-      await recordBoatLink({ id, label, exp, createdAt: new Date().toISOString() });
-      revalidatePath("/admin");
-    } catch (e) {
-      console.error("[admin] could not record link", e);
-      warning = `The link works, but could not be saved to the list. You can still revoke it by ID: ${id}`;
+    const user = await findUser(session.username);
+    if (!user || !(await verifyPassword(current, user.hash))) {
+      fail(`pw:${session.username}`, 5);
+      return { error: "Je huidige wachtwoord klopt niet." };
     }
-    return { url, id, expires, qr: await qrSvg(url), message, warning };
+    await setPassword(user.username, next);
+    const updated = await findUser(user.username);
+    if (updated) await startSession(updated.username, updated.pwv);
+    return { done: "Je wachtwoord is gewijzigd." };
   } catch (e) {
-    return { error: e instanceof Error ? e.message : "Could not create link." };
+    console.error("[admin] password change failed", e);
+    return { error: "Opslaan lukt nu niet. Probeer het opnieuw." };
   }
-}
-
-const ID = /^[0-9a-f]{12}$/;
-
-/** Revokes a link: works immediately, no redeploy. Accepts an id, or a full link / token. */
-export async function revokeLink(_prev: RevokeState, form: FormData): Promise<RevokeState> {
-  if (!(await isAdmin())) return { error: "Your session has expired. Reload the page and sign in again." };
-  const id = idFromInput(String(form.get("id") ?? ""));
-  if (!id) return { error: "That is not a valid link ID (12 characters, 0-9 and a-f) or boat link." };
-  try {
-    await revokeBoatLink(id);
-    revalidatePath("/admin");
-    return { done: `Link ${id} is revoked.` };
-  } catch (e) {
-    console.error("[admin] revoke failed", e);
-    return { error: "Could not save the revocation. Try again." };
-  }
-}
-
-export async function restoreLink(_prev: RevokeState, form: FormData): Promise<RevokeState> {
-  if (!(await isAdmin())) return { error: "Your session has expired. Reload the page and sign in again." };
-  const id = String(form.get("id") ?? "").trim().toLowerCase();
-  if (!ID.test(id)) return { error: "Invalid ID." };
-  try {
-    await restoreBoatLink(id);
-    revalidatePath("/admin");
-    return { done: `Link ${id} works again.` };
-  } catch (e) {
-    console.error("[admin] restore failed", e);
-    return { error: "Could not save. Try again." };
-  }
-}
-
-/** Accepts "a1b2c3d4e5f6", a 36-char token or a full https://…/boat/<token> link. */
-function idFromInput(input: string): string | null {
-  const v = input.trim();
-  if (ID.test(v.toLowerCase())) return v.toLowerCase();
-  const token = v.split("/").pop()?.split(/[?#]/)[0] ?? "";
-  if (!/^[A-Za-z0-9_-]{36}$/.test(token)) return null;
-  const raw = Buffer.from(token, "base64url");
-  return raw.length === 27 ? raw.subarray(1, 7).toString("hex") : null;
 }

@@ -8,10 +8,12 @@ import { qrSvg, wifiPayload } from "@/lib/qr";
 import { Tx } from "@/components/ui/tx";
 import { WifiConnect } from "@/components/villa/wifi-connect";
 import { BackButton } from "@/components/ui/back-button";
+import { syncContent } from "@/lib/cms/sync";
 
 export const metadata: Metadata = { title: "WiFi" };
 
 export default async function WifiPage({ params }: PageProps<"/[locale]/villa/wifi">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];

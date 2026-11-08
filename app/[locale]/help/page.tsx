@@ -10,13 +10,16 @@ import { Icon } from "@/components/ui/icon";
 import { Tx } from "@/components/ui/tx";
 import { ContactList, HostCard } from "@/components/villa/contact";
 import { HashOpener } from "@/components/villa/hash-opener";
+import { syncContent } from "@/lib/cms/sync";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/help">): Promise<Metadata> {
+  await syncContent();
   const { locale } = await params;
   return { title: isLocale(locale) ? dictionaries[locale].help.title : "Help" };
 }
 
 export default async function HelpPage({ params }: PageProps<"/[locale]/help">) {
+  await syncContent();
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = dictionaries[locale];
